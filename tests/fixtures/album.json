@@ -1,0 +1,294 @@
+{
+  "album": {
+    "artist": {
+      "albums": null,
+      "albums_count": 5864,
+      "biography": null,
+      "id": 6760,
+      "image": null,
+      "name": "Miles Davis",
+      "playlists": null,
+      "tracks_appears_on": null
+    },
+    "artists": [
+      {
+        "id": 6760,
+        "name": "Miles Davis",
+        "roles": [
+          "main-artist"
+        ]
+      }
+    ],
+    "audio_info": null,
+    "awards": [
+      {
+        "awarded_at": "1272664800",
+        "id": "70",
+        "name": "Discoteca Ideal Qobuz"
+      }
+    ],
+    "composer": {
+      "albums": null,
+      "albums_count": 5864,
+      "biography": null,
+      "id": 6760,
+      "image": null,
+      "name": "Miles Davis",
+      "playlists": null,
+      "tracks_appears_on": null
+    },
+    "dates": null,
+    "description": "A muchos les gusta llamar a <em>Kind of Blue</em> el mejor disco de todos los tiempos. Y aunque su rostro, así como su nombre, adornan la portada, Miles nunca ha ocultado que su obra maestra de jazz modal fue planeada en torno a la forma de tocar de Bill Evans. Aunque el pianista, que reivindicaba las influencias de Bud Powell, Nat King Cole y Lennie Tristano, ya empezaba a agitar la esfera jazzística con sus dos primeros álbumes (<em>New Jazz Conceptions</em>, en 1957, y <em>Everybody Digs Bill Evans</em>, en 1959), este <em>Kind of Blue</em>, en el que también participaron los saxofonistas John Coltrane y Cannonball Adderley, el contrabajista Paul Chambers y el batería Jimmy Cobb, supuso la cumbre de su carrera. Abriendo un nuevo camino, es la transición perfecta entre el hard bop cargado de armonía y un periodo modal que deja gamas armónicas más amplias y, por tanto, más favorables a la creatividad en la improvisación. Fue Bill quien descubrió a Miles a muchos compositores clásicos como Bartók y Ravel, que utilizaban modalidades en sus composiciones. El trompetista también recurrió a su conocimiento de las cualidades modales del blues. Junto con el pianista, elaboró algunos esbozos de temas que los demás músicos descubrieron cuando llegaron al estudio el 2 de marzo de 1959. Miles Davis estaba obsesionado con la espontaneidad de sus acompañantes, que quería capturar en la primera toma. Por primera vez en su carrera, encontró a un pianista tan aficionado como él a la economía, el espacio y el silencio, como demuestra el último tema del disco, <em>Flamenco Sketches</em>, escrito por Bill Evans. “Me enamoré de su forma de tocar”, admitió Miles. “Desprendía esa llama serena en el piano que tanto me gustaba. Su acercamiento al instrumento, el sonido que obtenía de él, era como notas de cristal, agua brillante cayendo desde una clara cascada”. © Marc Zisman/Qobuz",
+    "duration": 2723,
+    "genre": {
+      "id": 80,
+      "name": "Jazz",
+      "path": [
+        80
+      ]
+    },
+    "goodies": [
+      {
+        "description": "Miles Davis - Kind Of Blue",
+        "file_format_id": 21,
+        "id": 129082,
+        "name": "Livret numérique",
+        "original_url": "https://static.qobuz.com/goodies/28/000129082.pdf",
+        "url": "https://static.qobuz.com/goodies/28/000129082.pdf"
+      }
+    ],
+    "hires": true,
+    "hires_streamable": true,
+    "id": "5099749522428",
+    "image": {
+      "back": null,
+      "extralarge": null,
+      "large": "https://static.qobuz.com/images/covers/28/24/5099749522428_600.jpg",
+      "mega": null,
+      "small": "https://static.qobuz.com/images/covers/28/24/5099749522428_230.jpg",
+      "thumbnail": "https://static.qobuz.com/images/covers/28/24/5099749522428_50.jpg"
+    },
+    "label": {
+      "id": 4592,
+      "name": "Columbia"
+    },
+    "maximum_bit_depth": 24,
+    "maximum_sampling_rate": 192.0,
+    "parental_warning": false,
+    "release_date_original": "1959-08-17",
+    "release_date_stream": "1959-08-17",
+    "release_type": "album",
+    "streamable": true,
+    "title": "Kind Of Blue",
+    "track_count": null,
+    "tracks": {
+      "items": [
+        {
+          "album": null,
+          "composer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+          "duration": 547,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 13176083,
+          "isrc": "USSM15900113",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 192.0,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Bill Evans, Piano\r - Paul Chambers, Bass\r - Julian \"Cannonball\" Adderley, Alto Saxophone\r - John Coltrane, Tenor Saxophone",
+          "playlist_track_id": null,
+          "streamable": true,
+          "title": "So What",
+          "track_number": 1,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": null,
+          "composer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+          "duration": 588,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 13176084,
+          "isrc": "USSM15900114",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 192.0,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Wynton Kelly, Piano\r - Paul Chambers, Bass\r - Julian \"Cannonball\" Adderley, Alto Saxophone\r - John Coltrane, Tenor Saxophone",
+          "playlist_track_id": null,
+          "streamable": true,
+          "title": "Freddie Freeloader",
+          "track_number": 2,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": null,
+          "composer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+          "duration": 335,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 13176085,
+          "isrc": "USSM15900115",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 192.0,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Patti Matheny\r - Bill Evans, Piano\r - Darren Salmieri\r - Seth Foster, Mastering Engineer\r - Paul Chambers, Bass\r - Fred Plaut, Recording Engineer\r - John Coltrane, Tenor Saxophone",
+          "playlist_track_id": null,
+          "streamable": true,
+          "title": "Blue in Green",
+          "track_number": 3,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": null,
+          "composer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+          "duration": 692,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 13176086,
+          "isrc": "USSM15900116",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 192.0,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Miles Davis, Associated Performer, Composer, Lyricist, Main Artist, Trumpet, Associated Performer, Composer, Lyricist, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - Bill Evans, Piano\r - Paul Chambers, Bass\r - Julian \"Cannonball\" Adderley, Alto Saxophone\r - John Coltrane, Tenor Saxophone",
+          "playlist_track_id": null,
+          "streamable": true,
+          "title": "All Blues",
+          "track_number": 4,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": null,
+          "composer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+          "duration": 561,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 13176087,
+          "isrc": "USSM15900117",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 192.0,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 6760,
+            "image": null,
+            "name": "Miles Davis",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Bill Evans, Piano\r - Paul Chambers, Bass\r - Julian \"Cannonball\" Adderley, Alto Saxophone\r - John Coltrane, Tenor Saxophone",
+          "playlist_track_id": null,
+          "streamable": true,
+          "title": "Flamenco Sketches",
+          "track_number": 5,
+          "version": null,
+          "work": null
+        }
+      ],
+      "total": 5
+    },
+    "tracks_count": 5,
+    "upc": "5099749522428",
+    "version": null
+  },
+  "similar": null
+}

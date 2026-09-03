@@ -1,0 +1,41 @@
+{
+  "playback": {
+    "bit_depth": 24,
+    "bit_perfect_mode": "Disabled",
+    "buffer_progress": 0.32582253217697144,
+    "duration": 547,
+    "gapless_next_track_id": 0,
+    "gapless_ready": false,
+    "is_playing": true,
+    "muted": false,
+    "normalization_gain": null,
+    "position": 5,
+    "queue_len": 5,
+    "repeat": "off",
+    "sample_rate": 192000,
+    "shuffle": false,
+    "track_id": 13176083,
+    "volume": 0.75
+  },
+  "track": {
+    "album": "Unknown Album",
+    "album_id": null,
+    "album_version": null,
+    "artist": "Miles Davis",
+    "artist_id": 6760,
+    "artwork_url": null,
+    "bit_depth": 24,
+    "context_id": "5099749522428",
+    "context_kind": "album",
+    "duration_secs": 547,
+    "hires": true,
+    "id": 13176083,
+    "is_local": false,
+    "parental_warning": false,
+    "sample_rate": 192.0,
+    "source": "qobuz",
+    "streamable": true,
+    "title": "So What",
+    "version": null
+  }
+}

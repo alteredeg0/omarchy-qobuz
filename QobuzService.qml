@@ -28,12 +28,17 @@ Item {
   readonly property bool playing: playerState.playback === Model.PLAYBACK_PLAYING
   readonly property var track: playerState.track
 
-  // /api/artwork/current 302-redirects to the real cover. Qt follows the
-  // redirect and sends no Origin header, so qbzd's CSRF guard stays happy.
-  // The id in the query string is pure cache-busting between tracks.
-  readonly property string artworkUrl: (playerState.track && playerState.track.id)
-    ? "http://" + host + "/api/artwork/current?t=" + playerState.track.id
-    : ""
+  // Prefer the cover resolved from /api/album. qbzd's own
+  // /api/artwork/current 404s for anything queued from an album id, because it
+  // derives from the track's artwork_url, which qbzd leaves null — it is only
+  // a fallback for the cases where qbzd did fill that field in. Qt follows its
+  // 302 and sends no Origin header, so the CSRF guard stays happy; the ?t= is
+  // cache-busting between tracks.
+  readonly property string artworkUrl: {
+    if (!playerState.track || !playerState.track.id) return ""
+    if (playerState.track.artworkUrl) return playerState.track.artworkUrl
+    return "http://" + host + "/api/artwork/current?t=" + playerState.track.id
+  }
 
   readonly property string loginHint: "qbzd login"
 
@@ -77,6 +82,21 @@ Item {
     if (nowPlayingProcess.running || !authenticated) return
     nowPlayingProcess.command = [apiHelper, "/api/now-playing"]
     nowPlayingProcess.running = true
+  }
+
+  // qbzd never resolves a track's cover or album title (artwork_url is null,
+  // album is "Unknown Album", and /api/artwork/current 404s as a result), but
+  // it does tell us which album the track was played from. One lookup per
+  // album fills in both.
+  property string albumFetched: ""
+
+  function refreshAlbum() {
+    if (albumProcess.running || !authenticated) return
+    var id = Model.albumLookupId(playerState)
+    if (id === "" || id === albumFetched) return
+    albumFetched = id
+    albumProcess.command = [apiHelper, "/api/album?id=" + encodeURIComponent(id)]
+    albumProcess.running = true
   }
 
   function refresh() {
@@ -173,7 +193,23 @@ Item {
       waitForEnd: true
       onStreamFinished: {
         var payload = service.parseJson(text)
-        if (payload !== null) service.apply(Model.applyNowPlaying(service.playerState, payload))
+        if (payload === null) return
+        service.apply(Model.applyNowPlaying(service.playerState, payload))
+        // now-playing is where contextId first appears, so the album lookup
+        // can only be decided after it lands.
+        service.refreshAlbum()
+      }
+    }
+  }
+
+  Process {
+    id: albumProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        if (payload !== null) service.apply(Model.applyAlbum(service.playerState, payload))
       }
     }
   }

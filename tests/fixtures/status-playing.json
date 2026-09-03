@@ -1,0 +1,47 @@
+{
+  "api_version": 1,
+  "audio": {
+    "backend": "system",
+    "bit_depth": 24,
+    "bit_perfect": "Disabled",
+    "configured_device": null,
+    "device_open": true,
+    "device_present": true,
+    "sample_rate": 192000
+  },
+  "auth": {
+    "state": "logged_in",
+    "subscription": "Studio",
+    "user_id": 2173359
+  },
+  "data_root": "/home/javih/.local/share/qbzd",
+  "driver_tick_age_ms": 106,
+  "last_errors": {
+    "auth": null,
+    "stream": null,
+    "transport": null
+  },
+  "network": {
+    "online": true
+  },
+  "playback": {
+    "artist": "Miles Davis",
+    "duration": 588,
+    "muted": false,
+    "position": 146,
+    "queue_len": 5,
+    "state": "playing",
+    "title": "Freddie Freeloader",
+    "track_id": 13176084,
+    "volume": 0.5
+  },
+  "qconnect": {
+    "device_name": "QBZ (javier-herrera)",
+    "enabled": false,
+    "last_transport_reconnect": null,
+    "session_active": false,
+    "state": "off"
+  },
+  "uptime_secs": 271,
+  "version": "2.0.2"
+}

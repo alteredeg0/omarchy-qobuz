@@ -47,6 +47,15 @@ function str(value) {
   return value === null || value === undefined ? "" : String(value)
 }
 
+// qbzd fills `album` with the literal string "Unknown Album" for anything it
+// has not resolved, and it never resolves it for tracks queued from an album
+// id. Showing that to the user is worse than showing nothing — the real title
+// arrives later via applyAlbum().
+function albumTitle(raw) {
+  var value = str(raw.album_title || raw.album)
+  return value === "Unknown Album" ? "" : value
+}
+
 // qbzd spells the same field several ways across endpoints (status carries a
 // flat title/artist, now-playing a nested track object), so accept both.
 function normalizeTrack(raw) {
@@ -58,12 +67,17 @@ function normalizeTrack(raw) {
     id: id,
     title: title,
     artist: str(raw.artist_name || raw.artist || raw.performer),
-    album: str(raw.album_title || raw.album),
+    album: albumTitle(raw),
     artworkUrl: str(raw.artwork_url || raw.album_image_url || raw.image),
     duration: num(raw.duration_secs !== undefined ? raw.duration_secs : raw.duration, 0),
+    // now-playing reports kHz (192.0), /api/status reports Hz (192000).
     sampleRate: num(raw.sample_rate, 0),
     bitDepth: num(raw.bit_depth, 0),
-    hires: raw.hires === true
+    hires: raw.hires === true,
+    // What the track was played from. The only handle we get on the album,
+    // since album_id is null on everything qbzd returns.
+    contextKind: str(raw.context_kind),
+    contextId: str(raw.context_id)
   }
 }
 
@@ -135,14 +149,71 @@ function applyNowPlaying(state, payload) {
 
   var track = normalizeTrack(payload.track || payload)
   if (track) {
+    // Keep an album title/cover already resolved via applyAlbum(): this
+    // endpoint reports "Unknown Album" and a null artwork_url forever.
+    var prev = state.track
+    if (prev && prev.id === track.id) {
+      if (!track.album && prev.album) track.album = prev.album
+      if (!track.artworkUrl && prev.artworkUrl) track.artworkUrl = prev.artworkUrl
+    }
     next.track = track
     if (track.duration > 0) next.duration = track.duration
   } else if (payload.track === null) {
     next.track = null
   }
-  if (payload.position_secs !== undefined) next.position = num(payload.position_secs, next.position)
-  if (payload.state !== undefined) next.playback = normalizePlayback(payload.state)
+
+  // The real payload nests everything transport-related under `playback`;
+  // there is no top-level position_secs or state.
+  var pb = payload.playback
+  if (pb && typeof pb === "object") {
+    if (pb.position !== undefined) next.position = num(pb.position, next.position)
+    if (pb.duration !== undefined) next.duration = num(pb.duration, next.duration)
+    if (pb.volume !== undefined) next.volume = num(pb.volume, next.volume)
+    if (pb.muted !== undefined) next.muted = pb.muted === true
+    if (pb.shuffle !== undefined) next.shuffle = pb.shuffle === true
+    if (pb.repeat !== undefined) next.repeat = normalizeRepeat(pb.repeat)
+    if (pb.queue_len !== undefined) next.queueLength = num(pb.queue_len, next.queueLength)
+    if (pb.is_playing !== undefined) {
+      next.playback = pb.is_playing === true ? PLAYBACK_PLAYING
+        : (next.playback === PLAYBACK_PLAYING ? PLAYBACK_PAUSED : next.playback)
+    }
+  }
   return next
+}
+
+// /api/album?id=<upc> — the only way to get a cover and a real album title.
+// qbzd leaves track.artwork_url null and track.album "Unknown Album", and
+// /api/artwork/current 404s as a direct consequence.
+function applyAlbum(state, payload) {
+  var next = shallowCopy(state)
+  if (!next.track || !payload || typeof payload !== "object" || errorOf(payload)) return next
+
+  var album = payload.album || payload
+  if (!album || typeof album !== "object") return next
+
+  // Only adopt it if it really is this track's album.
+  var id = str(album.id)
+  if (id && next.track.contextId && id !== next.track.contextId) return next
+
+  var image = album.image || {}
+  var cover = str(image.large || image.small || image.thumbnail || image.extralarge)
+  var title = str(album.title)
+
+  if (!cover && !title) return next
+  var track = shallowCopy(next.track)
+  if (title) track.album = title
+  if (cover) track.artworkUrl = cover
+  next.track = track
+  return next
+}
+
+// The album lookup is worth doing only when there is something to gain and a
+// handle to do it with.
+function albumLookupId(state) {
+  var t = state.track
+  if (!t || t.contextKind !== "album" || !t.contextId) return ""
+  if (t.artworkUrl && t.album) return ""
+  return t.contextId
 }
 
 // /api/queue — note `upcoming`/`history`, not the wiki's `tracks`.
@@ -167,7 +238,15 @@ function applyQueue(state, payload) {
   next.upcoming = upcoming
 
   var current = normalizeTrack(payload.current_track)
-  if (current) next.track = current
+  if (current) {
+    // Don't discard an album title/cover already resolved for this same track.
+    var prev = state.track
+    if (prev && prev.id === current.id) {
+      if (!current.album && prev.album) current.album = prev.album
+      if (!current.artworkUrl && prev.artworkUrl) current.artworkUrl = prev.artworkUrl
+    }
+    next.track = current
+  }
   return next
 }
 
@@ -334,6 +413,9 @@ if (typeof module !== "undefined" && module.exports) {
     applyStatus: applyStatus,
     applyNowPlaying: applyNowPlaying,
     applyQueue: applyQueue,
+    applyAlbum: applyAlbum,
+    albumLookupId: albumLookupId,
+    albumTitle: albumTitle,
     reduceEvent: reduceEvent,
     needsQueueRefetch: needsQueueRefetch,
     errorOf: errorOf,

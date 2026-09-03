@@ -99,6 +99,13 @@ one:
   (`3` unreachable, `4` needs auth).
 - `bin/qbzd-events` — the event stream as newline-delimited JSON.
 
+Cover art needs a detour. qbzd leaves every track's `artwork_url` null and its
+`album` set to the literal `"Unknown Album"` when the track was queued from an
+album id, and `/api/artwork/current` 404s as a direct consequence. The track
+does carry `context_kind`/`context_id`, so the service does one
+`/api/album?id=<upc>` lookup per album and takes the cover and the real title
+from there.
+
 State comes from **polling `/api/status`**, with the event stream only as an
 accelerator. That is deliberate: on qbzd 2.0.2 `/api/events` sends zero bytes —
 not even HTTP response headers — until the first event fires, so an idle stream
@@ -122,7 +129,10 @@ returns `upcoming`/`history`/`current_track` rather than a flat `tracks` array,
 the previous-track route is `/api/playback/previous` (`/prev` 404s), and
 `/api/playback/mute` does not exist.
 
-Saving any file under `~/.config/omarchy/plugins/` hot-reloads the plugin.
+Saving any file under `~/.config/omarchy/plugins/` hot-reloads the plugin —
+**except** `QobuzModel.js`. QML caches imported JS libraries past
+`Qt.clearComponentCache()`, so changes to the reducer need `omarchy restart
+shell` to take effect. Editing QML alone reloads normally.
 
 ## Scope
 

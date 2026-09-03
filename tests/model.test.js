@@ -253,3 +253,109 @@ test("reducers never mutate the state they are given", () => {
   M.reduceEvent(base, { type: "VolumeChanged", data: { volume: 0.9 } })
   assert.equal(JSON.stringify(base), frozen)
 })
+
+// ---------------------------------------------------------------------------
+// Captures from a logged-in qbzd playing an album queued by id — the case
+// where qbzd resolves neither the cover nor the album title.
+// ---------------------------------------------------------------------------
+
+test("applyStatus on the real playing payload", () => {
+  const s = M.applyStatus(M.emptyState(), fixture("status-playing.json"))
+  assert.equal(s.daemonUp, true)
+  assert.equal(s.authState, "ok", "'logged_in' is not 'needs_auth', so it counts as ok")
+  assert.equal(s.playback, "playing")
+  assert.equal(s.track.title, "Freddie Freeloader")
+  assert.equal(s.track.artist, "Miles Davis")
+  assert.equal(s.position, 146)
+  assert.equal(s.duration, 588)
+  assert.equal(s.queueLength, 5)
+})
+
+test("applyNowPlaying reads the nested playback block", () => {
+  // The wiki implies top-level position_secs/state; the daemon nests them.
+  const s = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(s.track.title, "So What")
+  assert.equal(s.track.id, "13176083")
+  assert.equal(s.position, 5, "position comes from payload.playback")
+  assert.equal(s.duration, 547)
+  assert.equal(s.volume, 0.75)
+  assert.equal(s.playback, "playing", "derived from playback.is_playing")
+  assert.equal(s.shuffle, false)
+  assert.equal(s.repeat, "off")
+  assert.equal(s.queueLength, 5)
+})
+
+test("'Unknown Album' is suppressed rather than shown", () => {
+  const s = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(s.track.album, "", "qbzd's placeholder must not reach the UI")
+  assert.equal(M.albumTitle({ album: "Unknown Album" }), "")
+  assert.equal(M.albumTitle({ album: "Kind Of Blue" }), "Kind Of Blue")
+})
+
+test("the track keeps the context it was played from", () => {
+  const s = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(s.track.contextKind, "album")
+  assert.equal(s.track.contextId, "5099749522428")
+  assert.equal(s.track.artworkUrl, "", "qbzd leaves artwork_url null")
+})
+
+test("qualityLabel handles now-playing's kHz and status's Hz alike", () => {
+  const np = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(M.qualityLabel(np.track), "24-bit 192 kHz", "sample_rate is 192.0 here")
+
+  const st = M.applyStatus(M.emptyState(), fixture("status-playing.json"))
+  assert.equal(st.track.sampleRate, 0, "status carries no per-track rate")
+})
+
+test("applyAlbum fills in the cover and the real album title", () => {
+  let s = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(M.albumLookupId(s), "5099749522428", "a lookup is worth doing")
+
+  s = M.applyAlbum(s, fixture("album.json"))
+  assert.equal(s.track.album, "Kind Of Blue")
+  assert.equal(s.track.artworkUrl,
+    "https://static.qobuz.com/images/covers/28/24/5099749522428_600.jpg")
+  assert.equal(M.albumLookupId(s), "", "nothing left to gain, so no second lookup")
+})
+
+test("applyAlbum ignores a response for a different album", () => {
+  const s = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  const other = M.applyAlbum(s, { album: { id: "9999999999999", title: "Wrong", image: { large: "http://x" } } })
+  assert.equal(other.track.album, "")
+  assert.equal(other.track.artworkUrl, "")
+})
+
+test("albumLookupId declines when there is no handle or nothing to gain", () => {
+  assert.equal(M.albumLookupId(M.emptyState()), "", "no track")
+  assert.equal(M.albumLookupId({ track: { contextKind: "playlist", contextId: "7" } }), "",
+    "only albums have a cover to look up this way")
+  assert.equal(M.albumLookupId({ track: { contextKind: "album", contextId: "" } }), "")
+  assert.equal(M.albumLookupId({ track: { contextKind: "album", contextId: "1", album: "A", artworkUrl: "u" } }), "")
+})
+
+test("a resolved cover survives the next status and queue poll", () => {
+  let s = M.applyAlbum(
+    M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json")),
+    fixture("album.json"))
+  assert.equal(s.track.artworkUrl.length > 0, true)
+
+  // Same track id, so neither poll may clobber what we resolved.
+  s = M.applyQueue(s, fixture("queue-playing.json"))
+  assert.equal(s.track.album, "Kind Of Blue")
+  assert.equal(s.track.artworkUrl.length > 0, true)
+
+  s = M.applyNowPlaying(s, fixture("nowplaying-playing.json"))
+  assert.equal(s.track.album, "Kind Of Blue")
+  assert.equal(s.track.artworkUrl.length > 0, true)
+})
+
+test("applyQueue on the real 5-track queue", () => {
+  const s = M.applyQueue(M.emptyState(), fixture("queue-playing.json"))
+  assert.equal(s.queueLength, 5)
+  assert.equal(s.queueIndex, 0)
+  assert.equal(s.upcoming.length, 4)
+  assert.equal(s.upcoming[0].title, "Freddie Freeloader")
+  assert.equal(s.upcoming[0].artist, "Miles Davis")
+  assert.equal(s.upcoming[0].duration, 588)
+  assert.equal(s.track.title, "So What")
+})
