@@ -92,9 +92,18 @@ Item {
       // Swallow clicks so they don't reach the dismiss layer behind.
       MouseArea { anchors.fill: parent; onClicked: {} }
 
+      // BorderSurface does NOT inset its children — `padding` only exposes
+      // contentLeftInset and friends, which each child has to apply itself
+      // (this is what /usr/share/omarchy/shell/plugins/clipboard/Clipboard.qml
+      // does). Filling the parent instead bleeds covers, durations and the
+      // player bar over the card's own border.
       Item {
         id: keyCatcher
         anchors.fill: parent
+        anchors.topMargin: card.contentTopInset
+        anchors.rightMargin: card.contentRightInset
+        anchors.bottomMargin: card.contentBottomInset
+        anchors.leftMargin: card.contentLeftInset
         focus: true
 
         Keys.onEscapePressed: root.goBack()
@@ -148,6 +157,7 @@ Item {
           anchors.left: sidebar.right
           anchors.leftMargin: Style.space(28)
           anchors.right: parent.right
+          anchors.rightMargin: Style.space(10)
           anchors.top: parent.top
           anchors.bottom: player.top
           anchors.bottomMargin: Style.space(12)
@@ -167,11 +177,17 @@ Item {
           }
 
           Flickable {
+            id: scroller
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: header.bottom
             anchors.topMargin: Style.space(14)
             anchors.bottom: parent.bottom
+            // Without an explicit contentWidth the content item does not track
+            // the Flickable's width, and anything sizing off `parent.width`
+            // computes its layout from the wrong number — which is how the
+            // cover grid ended up one column wider than the card.
+            contentWidth: width
             contentHeight: body.implicitHeight
             clip: true
             boundsBehavior: Flickable.StopAtBounds
@@ -180,7 +196,7 @@ Item {
               id: body
               // Cap the measure: a track list stretched across a 3000px
               // monitor puts the duration a screen away from the title.
-              width: Math.min(parent.width, Style.space(1180))
+              width: Math.min(scroller.width, Style.space(1180))
               spacing: Style.space(18)
 
               // Status is app-only and wins over the shared view.
@@ -206,6 +222,7 @@ Item {
         Rectangle {
           anchors.left: parent.left
           anchors.right: parent.right
+          anchors.rightMargin: Style.space(10)
           anchors.bottom: player.top
           height: Math.max(1, Style.space(1))
           color: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, 0.1)
@@ -215,6 +232,9 @@ Item {
           id: player
           anchors.left: parent.left
           anchors.right: parent.right
+          // Match the main area's right inset so the volume slider lines up
+          // with the content above it rather than reaching further out.
+          anchors.rightMargin: Style.space(10)
           anchors.bottom: parent.bottom
           bar: header.bar
           service: root.service
