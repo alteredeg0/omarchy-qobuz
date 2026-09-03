@@ -465,3 +465,47 @@ test("artist album counts are pluralised", () => {
   const none = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 0 })
   assert.equal(none.subtitle, "")
 })
+
+// ---------------------------------------------------------------------------
+// Hi-Res marking. The JAS mark means at least 24-bit / 96 kHz.
+// ---------------------------------------------------------------------------
+
+test("sampleRateKhz normalises both units the daemon reports", () => {
+  // now-playing says 192.0, /api/status and the catalogue say 192000.
+  assert.equal(M.sampleRateKhz({ sampleRate: 192.0 }), 192)
+  assert.equal(M.sampleRateKhz({ sampleRate: 192000 }), 192)
+  assert.equal(M.sampleRateKhz({ sampleRate: 44100 }), 44.1)
+  assert.equal(M.sampleRateKhz({ sampleRate: 0 }), 0)
+  assert.equal(M.sampleRateKhz(null), 0)
+})
+
+test("isHiRes trusts the daemon's flag first", () => {
+  assert.equal(M.isHiRes({ hires: true }), true)
+  assert.equal(M.isHiRes({ hires: true, bitDepth: 16, sampleRate: 44.1 }), true,
+    "the release flag wins over a downsampled stream reading")
+})
+
+test("isHiRes falls back to the 24-bit / 96 kHz threshold", () => {
+  assert.equal(M.isHiRes({ bitDepth: 24, sampleRate: 192.0 }), true)
+  assert.equal(M.isHiRes({ bitDepth: 24, sampleRate: 192000 }), true)
+  assert.equal(M.isHiRes({ bitDepth: 24, sampleRate: 96 }), true, "96 kHz is the boundary")
+  assert.equal(M.isHiRes({ bitDepth: 24, sampleRate: 48 }), false, "24-bit alone is not hi-res")
+  assert.equal(M.isHiRes({ bitDepth: 16, sampleRate: 192 }), false, "192 kHz alone is not hi-res")
+  assert.equal(M.isHiRes({ bitDepth: 16, sampleRate: 44.1 }), false, "CD quality is not hi-res")
+  assert.equal(M.isHiRes({}), false)
+  assert.equal(M.isHiRes(null), false)
+})
+
+test("the real playing track is marked hi-res", () => {
+  const np = M.applyNowPlaying(M.emptyState(), fixture("nowplaying-playing.json"))
+  assert.equal(M.isHiRes(np.track), true)
+  assert.equal(M.qualityLabel(np.track), "24-bit 192 kHz")
+})
+
+test("search results carry the flag the mark keys off", () => {
+  const r = M.normalizeSearch(fixture("search-all.json"))
+  assert.equal(M.isHiRes(r.albums[0]), true, "Kind Of Blue is a hi-res release")
+  // Artists and playlists are never hi-res: there is no format to speak of.
+  assert.equal(M.isHiRes(r.artists[0]), false)
+  assert.equal(M.isHiRes(r.playlists[0]), false)
+})

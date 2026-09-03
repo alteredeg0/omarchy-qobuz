@@ -94,29 +94,15 @@ Item {
         textFormat: Text.PlainText
       }
 
-      // "24-bit 192 kHz" — the reason to be on Qobuz in the first place.
-      Rectangle {
-        visible: root.qualityText !== ""
-        radius: Style.cornerRadius
-        color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.18)
-        implicitWidth: qualityLabel.implicitWidth + Style.space(12)
-        implicitHeight: qualityLabel.implicitHeight + Style.space(4)
-
-        Text {
-          id: qualityLabel
-          anchors.centerIn: parent
-          text: root.qualityText
-          color: Color.accent
-          font.family: root.fontFamily
-          font.pixelSize: Style.font.caption
-          font.bold: true
-          textFormat: Text.PlainText
-        }
+      // The official Hi-Res AUDIO mark plus the actual rate — the reason to
+      // be on Qobuz in the first place.
+      QobuzHiResBadge {
+        bar: root.bar
+        track: root.track
+        markSize: Style.space(22)
       }
     }
   }
-
-  readonly property string qualityText: Model.qualityLabel(track)
 
   function placeholderTitle() {
     if (!playerState.daemonUp) return "qbzd no responde"

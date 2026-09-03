@@ -84,25 +84,15 @@ Item {
           textFormat: Text.PlainText
         }
 
-        Rectangle {
+        // Just the mark here: a search row has no space for the rate, and
+        // the catalogue endpoints do not report one anyway.
+        QobuzHiResBadge {
           id: badge
           anchors.verticalCenter: parent.verticalCenter
-          visible: root.item && root.item.hires === true
-          radius: Style.cornerRadius
-          color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.18)
-          implicitWidth: badgeText.implicitWidth + Style.space(8)
-          implicitHeight: badgeText.implicitHeight + Style.space(2)
-
-          Text {
-            id: badgeText
-            anchors.centerIn: parent
-            text: "HI-RES"
-            color: Color.accent
-            font.family: root.fontFamily
-            font.pixelSize: Style.font.caption
-            font.bold: true
-            textFormat: Text.PlainText
-          }
+          bar: root.bar
+          track: root.item
+          showRate: false
+          markSize: Style.space(15)
         }
       }
 

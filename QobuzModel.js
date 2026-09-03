@@ -514,17 +514,33 @@ function formatDuration(seconds) {
   return h > 0 ? h + ":" + pad(m) + ":" + pad(s) : m + ":" + pad(s)
 }
 
-// "24-bit 192 kHz" / "Hi-Res" / "" — shown as a badge next to the title.
+// Normalise the sample rate to kHz. now-playing reports 192.0 while
+// /api/status and the catalogue endpoints report 192000.
+function sampleRateKhz(track) {
+  if (!track) return 0
+  var rate = num(track.sampleRate, 0)
+  return rate > 1000 ? rate / 1000 : rate
+}
+
+// Whether the JAS "Hi-Res AUDIO" mark applies. Prefer qbzd's own flag, which
+// mirrors what Qobuz says about the release; fall back to the specification's
+// threshold (at least 24-bit and 96 kHz) when the flag is missing, so a track
+// carrying only its format still gets marked correctly.
+function isHiRes(track) {
+  if (!track) return false
+  if (track.hires === true) return true
+  return num(track.bitDepth, 0) >= 24 && sampleRateKhz(track) >= 96
+}
+
+// "24-bit 192 kHz" / "Hi-Res" / "" — the rate shown beside the mark.
 function qualityLabel(track) {
   if (!track) return ""
   var parts = []
-  if (track.bitDepth > 0) parts.push(track.bitDepth + "-bit")
-  if (track.sampleRate > 0) {
-    var khz = track.sampleRate > 1000 ? track.sampleRate / 1000 : track.sampleRate
-    parts.push((Math.round(khz * 10) / 10) + " kHz")
-  }
+  if (num(track.bitDepth, 0) > 0) parts.push(track.bitDepth + "-bit")
+  var khz = sampleRateKhz(track)
+  if (khz > 0) parts.push((Math.round(khz * 10) / 10) + " kHz")
   if (parts.length) return parts.join(" ")
-  return track.hires ? "Hi-Res" : ""
+  return track.hires === true ? "Hi-Res" : ""
 }
 
 function trackLabel(state, maxChars) {
@@ -584,6 +600,8 @@ if (typeof module !== "undefined" && module.exports) {
     canHandle: canHandle,
     formatDuration: formatDuration,
     qualityLabel: qualityLabel,
+    isHiRes: isHiRes,
+    sampleRateKhz: sampleRateKhz,
     trackLabel: trackLabel,
     progressFraction: progressFraction
   }

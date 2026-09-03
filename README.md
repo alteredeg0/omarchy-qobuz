@@ -96,6 +96,26 @@ Media keys need no setup: qbzd publishes MPRIS as
 `org.mpris.MediaPlayer2.com.blitzfc.qbz`, which Omarchy's own media bindings
 already drive.
 
+## The Hi-Res mark
+
+Tracks Qobuz reports as hi-res are marked with the official Japan Audio Society
+**Hi-Res AUDIO** logo — in the panel beside the sample rate, and on search
+results. `assets/hi-res-audio.svg` comes from Wikipedia, which tags it
+**PD-textlogo**: too simple to attract copyright, so shipping it is fine. It is
+still a JAS **trademark**, used here descriptively to mark content, not to
+certify this software. Don't recolour or redraw it, and check JAS's terms
+before shipping a fork as a product.
+
+The mark is a fixed gold-and-black square by definition, so it is the one
+element that deliberately ignores the theme — it carries its own contrast and
+reads on light and dark alike. Qt's SVG renderer handles it (`qt6-svg` is
+required, and it is already a Quickshell dependency); if it ever fails to load,
+the badge falls back to a themed `HI-RES` wordmark rather than vanishing.
+
+`Model.isHiRes()` trusts qbzd's own `hires` flag first and otherwise applies
+the specification's threshold — at least 24-bit **and** 96 kHz — so a track
+carrying only its format still gets marked correctly.
+
 ## How it works
 
 `QobuzService.qml` is a `service`-kind singleton — the bar instantiates widgets
