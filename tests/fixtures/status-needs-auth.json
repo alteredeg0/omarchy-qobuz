@@ -1,0 +1,47 @@
+{
+  "api_version": 1,
+  "audio": {
+    "backend": "system",
+    "bit_depth": null,
+    "bit_perfect": null,
+    "configured_device": null,
+    "device_open": false,
+    "device_present": true,
+    "sample_rate": null
+  },
+  "auth": {
+    "state": "needs_auth",
+    "subscription": null,
+    "user_id": null
+  },
+  "data_root": "/home/javih/.local/share/qbzd",
+  "driver_tick_age_ms": 141,
+  "last_errors": {
+    "auth": null,
+    "stream": null,
+    "transport": null
+  },
+  "network": {
+    "online": true
+  },
+  "playback": {
+    "artist": null,
+    "duration": null,
+    "muted": false,
+    "position": null,
+    "queue_len": 0,
+    "state": "stopped",
+    "title": null,
+    "track_id": null,
+    "volume": 0.75
+  },
+  "qconnect": {
+    "device_name": "QBZ (javier-herrera)",
+    "enabled": false,
+    "last_transport_reconnect": null,
+    "session_active": false,
+    "state": "off"
+  },
+  "uptime_secs": 819,
+  "version": "2.0.2"
+}

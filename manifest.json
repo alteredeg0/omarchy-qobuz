@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "id": "javih.qobuz",
+  "name": "Qobuz",
+  "version": "0.1.0",
+  "author": "Javier Herrera",
+  "license": "MIT",
+  "description": "Now playing and playback control for Qobuz, driven by the qbzd headless daemon.",
+  "kinds": [
+    "bar-widget",
+    "service"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml",
+    "service": "QobuzService.qml"
+  },
+  "barWidget": {
+    "displayName": "Qobuz",
+    "description": "Track in the bar; cover art, transport, progress, volume and queue in a panel.",
+    "category": "Audio",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "host": "127.0.0.1:8182",
+      "showLabel": true,
+      "maxLabelChars": 32,
+      "hideWhenIdle": false
+    },
+    "schema": [
+      {
+        "key": "host",
+        "type": "string",
+        "label": "qbzd host",
+        "description": "Host and port of the qbzd control API. Point it at another machine to control a remote player.",
+        "defaultValue": "127.0.0.1:8182"
+      },
+      {
+        "key": "showLabel",
+        "type": "boolean",
+        "label": "Show the track in the bar",
+        "description": "Off leaves just the play/pause glyph. A vertical bar always collapses to the glyph.",
+        "defaultValue": true
+      },
+      {
+        "key": "maxLabelChars",
+        "type": "integer",
+        "label": "Maximum label length",
+        "min": 8,
+        "max": 120,
+        "step": 1,
+        "defaultValue": 32
+      },
+      {
+        "key": "hideWhenIdle",
+        "type": "boolean",
+        "label": "Hide when nothing is playing",
+        "description": "Collapse the widget out of the bar while qbzd is stopped.",
+        "defaultValue": false
+      }
+    ]
+  }
+}

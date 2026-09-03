@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Talk to the qbzd control API and print one compact JSON object on stdout.
+#
+# Why curl and not QML's XMLHttpRequest: qbzd answers 403 to any request that
+# carries an Origin header (its CSRF guard). curl never sends one.
+#
+# Usage: qbzd-api [-X METHOD] [-d JSON_BODY] PATH
+#   PATH is everything after the host, e.g. /api/status
+#
+# Exit codes mirror the qbzd CLI so the QML side can tell the states apart:
+#   0 ok · 1 runtime error · 2 usage · 3 daemon unreachable
+#   4 not logged in · 5 audio/device error · 6 not found
+set -uo pipefail
+
+method=GET
+body=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -X) method="${2:-}"; shift 2 ;;
+    -d) body="${2:-}"; method=POST; shift 2 ;;
+    --) shift; break ;;
+    -*) echo "qbzd-api: unknown option $1" >&2; exit 2 ;;
+    *) break ;;
+  esac
+done
+
+path="${1:-}"
+[[ -n "$path" ]] || { echo "qbzd-api: missing PATH" >&2; exit 2; }
+
+host="${QBZD_HOST:-127.0.0.1:8182}"
+config="${XDG_CONFIG_HOME:-$HOME/.config}/qbzd/qbzd.toml"
+
+# [server] token in qbzd.toml, when the user has locked the API down.
+token=""
+if [[ -r "$config" ]]; then
+  token=$(awk '
+    /^[[:space:]]*\[/ { section=$0; next }
+    section ~ /\[server\]/ && /^[[:space:]]*token[[:space:]]*=/ {
+      sub(/^[^=]*=[[:space:]]*/, ""); gsub(/^["'\'']|["'\'']$/, ""); print; exit
+    }' "$config" 2>/dev/null)
+fi
+
+args=(--silent --show-error --max-time 10 -w '\n%{http_code}' -X "$method")
+[[ -n "$token" ]] && args+=(-H "Authorization: Bearer $token")
+[[ -n "$body"  ]] && args+=(-H 'Content-Type: application/json' -d "$body")
+
+response=$(curl "${args[@]}" "http://${host}${path}" 2>/dev/null) || {
+  echo '{"error":{"code":"unreachable","message":"qbzd is not responding"}}'
+  exit 3
+}
+
+code="${response##*$'\n'}"
+payload="${response%$'\n'*}"
+[[ -n "$payload" ]] || payload='{}'
+
+# Collapse to a single line: the QML side reads stdout with a newline SplitParser.
+printf '%s\n' "$payload" | jq -c . 2>/dev/null || printf '%s\n' "$payload"
+
+case "$code" in
+  2??) exit 0 ;;
+  404) exit 6 ;;
+  400|422) exit 2 ;;
+  401|403|409)
+    # 409 is what qbzd returns for needs_auth; distinguish it from other conflicts.
+    if printf '%s' "$payload" | grep -q '"needs_auth"'; then exit 4; fi
+    exit 1 ;;
+  503) exit 5 ;;
+  000) exit 3 ;;
+  *) exit 1 ;;
+esac

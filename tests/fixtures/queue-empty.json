@@ -1,0 +1,13 @@
+{
+  "current_index": null,
+  "current_track": null,
+  "history": [],
+  "history_len": 0,
+  "limit": 100,
+  "offset": 0,
+  "repeat": "off",
+  "shuffle": false,
+  "stop_after_track_id": null,
+  "total_tracks": 0,
+  "upcoming": []
+}

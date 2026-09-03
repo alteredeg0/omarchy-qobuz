@@ -1,0 +1,126 @@
+import QtQuick
+import qs.Commons
+import qs.Ui
+import "QobuzModel.js" as Model
+
+// Cover art plus the track identity, at the top of the panel.
+Item {
+  id: root
+
+  property var bar: null
+  property var service: null
+
+  readonly property var playerState: service ? service.playerState : Model.emptyState()
+  readonly property var track: playerState.track
+  readonly property color foreground: bar ? bar.foreground : Color.popups.text
+  readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
+
+  readonly property real artSize: Style.space(96)
+
+  implicitHeight: Math.max(artSize, textColumn.implicitHeight)
+
+  Row {
+    anchors.fill: parent
+    spacing: Style.space(12)
+
+    Rectangle {
+      id: artFrame
+      width: root.artSize
+      height: root.artSize
+      radius: Style.cornerRadius
+      color: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, 0.08)
+      clip: true
+
+      Image {
+        id: art
+        anchors.fill: parent
+        // Qt follows the 302 from /api/artwork/current and sends no Origin
+        // header, which is what qbzd's CSRF guard rejects.
+        source: root.service ? root.service.artworkUrl : ""
+        fillMode: Image.PreserveAspectCrop
+        asynchronous: true
+        cache: false
+        visible: status === Image.Ready
+      }
+
+      Text {
+        anchors.centerIn: parent
+        visible: art.status !== Image.Ready
+        text: "󰝚"
+        color: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, 0.4)
+        font.family: root.fontFamily
+        font.pixelSize: Style.font.displayLarge
+      }
+    }
+
+    Column {
+      id: textColumn
+      width: parent.width - artFrame.width - Style.space(12)
+      spacing: Style.space(4)
+      anchors.verticalCenter: parent.verticalCenter
+
+      Text {
+        width: parent.width
+        text: root.track ? root.track.title : root.placeholderTitle()
+        color: root.foreground
+        font.family: root.fontFamily
+        font.pixelSize: Style.font.subtitle
+        font.bold: true
+        elide: Text.ElideRight
+        textFormat: Text.PlainText
+        maximumLineCount: 2
+        wrapMode: Text.Wrap
+      }
+
+      Text {
+        width: parent.width
+        visible: !!root.track && root.track.artist !== ""
+        text: root.track ? root.track.artist : ""
+        color: root.foreground
+        font.family: root.fontFamily
+        font.pixelSize: Style.font.body
+        elide: Text.ElideRight
+        textFormat: Text.PlainText
+      }
+
+      Text {
+        width: parent.width
+        visible: !!root.track && root.track.album !== ""
+        text: root.track ? root.track.album : ""
+        color: Qt.darker(root.foreground, 1.4)
+        font.family: root.fontFamily
+        font.pixelSize: Style.font.bodySmall
+        elide: Text.ElideRight
+        textFormat: Text.PlainText
+      }
+
+      // "24-bit 192 kHz" — the reason to be on Qobuz in the first place.
+      Rectangle {
+        visible: root.qualityText !== ""
+        radius: Style.cornerRadius
+        color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.18)
+        implicitWidth: qualityLabel.implicitWidth + Style.space(12)
+        implicitHeight: qualityLabel.implicitHeight + Style.space(4)
+
+        Text {
+          id: qualityLabel
+          anchors.centerIn: parent
+          text: root.qualityText
+          color: Color.accent
+          font.family: root.fontFamily
+          font.pixelSize: Style.font.caption
+          font.bold: true
+          textFormat: Text.PlainText
+        }
+      }
+    }
+  }
+
+  readonly property string qualityText: Model.qualityLabel(track)
+
+  function placeholderTitle() {
+    if (!playerState.daemonUp) return "qbzd no responde"
+    if (playerState.authState === "needs_auth") return "Sin sesión de Qobuz"
+    return "Nada sonando"
+  }
+}

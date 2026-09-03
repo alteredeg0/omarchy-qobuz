@@ -1,0 +1,48 @@
+# Maintainer: Javier Herrera <javier.herrera@afronta.com>
+#
+# qbzd is published only as a standalone tarball in the qbz releases; the
+# AUR's qbz-bin ships the desktop GUI and nothing else. This package covers
+# the daemon so javih.qobuz has a backend it can talk to.
+pkgname=qbzd-bin
+pkgver=2.0.2
+pkgrel=1
+pkgdesc="QBZ headless Qobuz playback daemon (HTTP API on :8182, SSE, MPRIS, Qobuz Connect)"
+arch=('x86_64' 'aarch64')
+url="https://github.com/vicrodh/qbz"
+license=('MIT')
+# Measured with ldd against the shipped binary: libasound, libgcc_s, libm, libc.
+depends=('alsa-lib' 'gcc-libs')
+optdepends=(
+    'pipewire-alsa: PipeWire audio support'
+    'pipewire-pulse: PulseAudio compatibility'
+    'alsa-utils: better ALSA device names for bit-perfect output'
+)
+provides=('qbzd')
+conflicts=('qbzd')
+# Upstream ships a stripped-down prebuilt binary; leave it alone.
+options=('!strip')
+source_x86_64=("${pkgname}-${pkgver}-x86_64.tar.gz::${url}/releases/download/v${pkgver}/qbzd-${pkgver}-linux-amd64.tar.gz")
+source_aarch64=("${pkgname}-${pkgver}-aarch64.tar.gz::${url}/releases/download/v${pkgver}/qbzd-${pkgver}-linux-aarch64.tar.gz")
+sha256sums_x86_64=('6bcdb2616f339b7905fc58f48edf7e3bc2e0e9eadc1ce6235b60c7fdf34b804c')
+sha256sums_aarch64=('adade56509544c00187476d58acef78538d3e5d475370263d98397dc61f200c9')
+
+package() {
+    if [ "$CARCH" = "x86_64" ]; then
+        _arch="amd64"
+    else
+        _arch="aarch64"
+    fi
+
+    cd "${srcdir}/qbzd-${pkgver}-linux-${_arch}"
+
+    install -Dm755 "qbzd" "${pkgdir}/usr/bin/qbzd"
+
+    # Shipped unit already points at /usr/bin/qbzd run, so install it as-is.
+    install -Dm644 "qbzd.service" "${pkgdir}/usr/lib/systemd/user/qbzd.service"
+
+    install -Dm644 "completions/qbzd.bash" "${pkgdir}/usr/share/bash-completion/completions/qbzd"
+    install -Dm644 "completions/qbzd.zsh"  "${pkgdir}/usr/share/zsh/site-functions/_qbzd"
+    install -Dm644 "completions/qbzd.fish" "${pkgdir}/usr/share/fish/vendor_completions.d/qbzd.fish"
+
+    install -Dm644 "README.md" "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+}

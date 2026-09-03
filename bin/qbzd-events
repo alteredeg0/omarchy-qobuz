@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Stream qbzd events as newline-delimited JSON, one object per line.
+#
+# The QML side consumes this with a plain "\n" SplitParser, so all SSE frame
+# handling stays here. Prefers `qbzd watch` (upstream already emits NDJSON);
+# falls back to curl against /api/events, converting SSE frames to NDJSON.
+#
+# Measured caveat (qbzd 2.0.2): /api/events sends no bytes at all — not even
+# HTTP headers — until the first event fires. An idle stream is therefore
+# indistinguishable from a hung one, which is why the service polls
+# /api/status as its heartbeat and treats this stream only as an accelerator.
+set -uo pipefail
+
+host="${QBZD_HOST:-127.0.0.1:8182}"
+
+if command -v qbzd >/dev/null 2>&1; then
+  exec qbzd --host "$host" watch
+fi
+
+# Fallback: SSE frames are "event: <Type>\ndata: <json>\n\n". Fold each frame
+# into a single {"type":...,"data":...} line.
+exec curl --silent --no-buffer --max-time 0 "http://${host}/api/events" \
+  | awk '
+      /^event:[[:space:]]*/ { sub(/^event:[[:space:]]*/, ""); type=$0; next }
+      /^data:[[:space:]]*/  { sub(/^data:[[:space:]]*/, "");  data=(data == "" ? $0 : data $0); next }
+      /^$/ {
+        if (type != "" || data != "") {
+          if (data == "") data = "{}"
+          printf "{\"type\":\"%s\",\"data\":%s}\n", type, data
+          fflush()
+        }
+        type=""; data=""; next
+      }
+    '

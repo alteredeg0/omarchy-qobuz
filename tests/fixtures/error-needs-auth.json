@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "needs_auth",
+    "hint": "run: qbzd login",
+    "message": "not logged in to Qobuz"
+  }
+}
