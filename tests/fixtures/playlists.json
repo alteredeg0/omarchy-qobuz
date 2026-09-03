@@ -1,0 +1,211 @@
+{
+  "playlists": [
+    {
+      "description": "BOC TH Palindromic Tracks",
+      "duration": 3724,
+      "genres": [],
+      "id": 63239555,
+      "images": [
+        "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/31/57/0801061025731_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/31/57/0801061025731_300.jpg"
+      ],
+      "is_public": true,
+      "name": "Tomorrow's Harvest Palindromic Tracks",
+      "owner": {
+        "id": 2173359,
+        "name": "JaviH"
+      },
+      "slug": "tomorrow-s-harvest",
+      "tracks": null,
+      "tracks_count": 17,
+      "users_count": 0
+    },
+    {
+      "description": "",
+      "duration": 1518,
+      "genres": [],
+      "id": 52448365,
+      "images": [
+        "https://static.qobuz.com/images/covers/lc/3p/dny0pi6cc3plc_50.jpg",
+        "https://static.qobuz.com/images/covers/rb/ta/t47wxsbq8tarb_50.jpg",
+        "https://static.qobuz.com/images/covers/lb/4c/tx2r2mhxg4clb_50.jpg",
+        "https://static.qobuz.com/images/covers/fa/hn/rb3vs9wrrhnfa_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/lc/3p/dny0pi6cc3plc_150.jpg",
+        "https://static.qobuz.com/images/covers/rb/ta/t47wxsbq8tarb_150.jpg",
+        "https://static.qobuz.com/images/covers/lb/4c/tx2r2mhxg4clb_150.jpg",
+        "https://static.qobuz.com/images/covers/fa/hn/rb3vs9wrrhnfa_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/lc/3p/dny0pi6cc3plc_300.jpg",
+        "https://static.qobuz.com/images/covers/rb/ta/t47wxsbq8tarb_300.jpg",
+        "https://static.qobuz.com/images/covers/lb/4c/tx2r2mhxg4clb_300.jpg",
+        "https://static.qobuz.com/images/covers/fa/hn/rb3vs9wrrhnfa_300.jpg"
+      ],
+      "is_public": false,
+      "name": "AdriBBoy",
+      "owner": {
+        "id": 2173359,
+        "name": "JaviH"
+      },
+      "slug": "adribboy",
+      "tracks": null,
+      "tracks_count": 9,
+      "users_count": 0
+    },
+    {
+      "description": "",
+      "duration": 8875,
+      "genres": [],
+      "id": 32074624,
+      "images": [
+        "https://static.qobuz.com/images/covers/za/e2/r794al61ke2za_50.jpg",
+        "https://static.qobuz.com/images/covers/qc/f6/ss9dxvfxif6qc_50.jpg",
+        "https://static.qobuz.com/images/covers/28/23/0828766372328_50.jpg",
+        "https://static.qobuz.com/images/covers/gb/pw/qaok1k8cmpwgb_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/za/e2/r794al61ke2za_150.jpg",
+        "https://static.qobuz.com/images/covers/qc/f6/ss9dxvfxif6qc_150.jpg",
+        "https://static.qobuz.com/images/covers/28/23/0828766372328_150.jpg",
+        "https://static.qobuz.com/images/covers/gb/pw/qaok1k8cmpwgb_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/za/e2/r794al61ke2za_300.jpg",
+        "https://static.qobuz.com/images/covers/qc/f6/ss9dxvfxif6qc_300.jpg",
+        "https://static.qobuz.com/images/covers/28/23/0828766372328_300.jpg",
+        "https://static.qobuz.com/images/covers/gb/pw/qaok1k8cmpwgb_300.jpg"
+      ],
+      "is_public": true,
+      "name": "Trance",
+      "owner": {
+        "id": 2173359,
+        "name": "JaviH"
+      },
+      "slug": "trance",
+      "tracks": null,
+      "tracks_count": 20,
+      "users_count": 0
+    },
+    {
+      "description": "Sello pionero de música electrónica, R&S situó a Bélgica en el centro de esta escena sonora, fichando antes que nadie a artistas que en el futuro se revelarían fundamentales, desde Derrick May a Aphex Twin, pasando por Juan Atkins, Jaydee, Joey Beltram, James Blake, DJ Krush, Paula Temple o Ken Ishii. Un playlist en forma de loop espacio-temporal.",
+      "duration": 21300,
+      "genres": [
+        {
+          "id": 64,
+          "name": "Électronique",
+          "slug": "electro"
+        }
+      ],
+      "id": 1778649,
+      "images": [
+        "https://static.qobuz.com/images/covers/bb/nl/wt2a3jn7xnlbb_50.jpg",
+        "https://static.qobuz.com/images/covers/ua/20/djtemfuwr20ua_50.jpg",
+        "https://static.qobuz.com/images/covers/fb/51/e9457qdjm51fb_50.jpg",
+        "https://static.qobuz.com/images/covers/kc/xd/xu4wauu8oxdkc_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/bb/nl/wt2a3jn7xnlbb_150.jpg",
+        "https://static.qobuz.com/images/covers/ua/20/djtemfuwr20ua_150.jpg",
+        "https://static.qobuz.com/images/covers/fb/51/e9457qdjm51fb_150.jpg",
+        "https://static.qobuz.com/images/covers/kc/xd/xu4wauu8oxdkc_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/bb/nl/wt2a3jn7xnlbb_300.jpg",
+        "https://static.qobuz.com/images/covers/ua/20/djtemfuwr20ua_300.jpg",
+        "https://static.qobuz.com/images/covers/fb/51/e9457qdjm51fb_300.jpg",
+        "https://static.qobuz.com/images/covers/kc/xd/xu4wauu8oxdkc_300.jpg"
+      ],
+      "is_public": true,
+      "name": "R&S Records",
+      "owner": {
+        "id": 691362,
+        "name": "Qobuz España"
+      },
+      "slug": "r-s-records",
+      "tracks": null,
+      "tracks_count": 60,
+      "users_count": 10
+    },
+    {
+      "description": "Disfrute de lo mejor de la música rock en la mejor calidad de audio posible. 50 títulos legendarios en Hi-Res, con The Who, The Rolling Stones, Elvis Presley, The Beatles, David Bowie, The Clash, AC/DC, Led Zeppelin, Pink Floyd, Bruce Springsteen, Eric Clapton, Bob Dylan, The Beach Boys, Aerosmith, Sex Pistols, Nirvana, Guns N' Roses, Metallica, U2...\r\nFoto : The Rolling Stones © Joe Sia",
+      "duration": 22250,
+      "genres": [
+        {
+          "id": 112,
+          "name": "Pop/Rock",
+          "slug": "pop-rock"
+        }
+      ],
+      "id": 4827360,
+      "images": [
+        "https://static.qobuz.com/images/covers/1z/u1/y9ybxgi1hu11z_50.jpg",
+        "https://static.qobuz.com/images/covers/ea/z8/v225yyn9cz8ea_50.jpg",
+        "https://static.qobuz.com/images/covers/eb/dq/hra7d7d7gdqeb_50.jpg",
+        "https://static.qobuz.com/images/covers/ma/f9/ljuez9eu6f9ma_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/1z/u1/y9ybxgi1hu11z_150.jpg",
+        "https://static.qobuz.com/images/covers/ea/z8/v225yyn9cz8ea_150.jpg",
+        "https://static.qobuz.com/images/covers/eb/dq/hra7d7d7gdqeb_150.jpg",
+        "https://static.qobuz.com/images/covers/ma/f9/ljuez9eu6f9ma_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/1z/u1/y9ybxgi1hu11z_300.jpg",
+        "https://static.qobuz.com/images/covers/ea/z8/v225yyn9cz8ea_300.jpg",
+        "https://static.qobuz.com/images/covers/eb/dq/hra7d7d7gdqeb_300.jpg",
+        "https://static.qobuz.com/images/covers/ma/f9/ljuez9eu6f9ma_300.jpg"
+      ],
+      "is_public": true,
+      "name": "Hi-Res Masters: Rock Essentials",
+      "owner": {
+        "id": 691362,
+        "name": "Qobuz España"
+      },
+      "slug": "hi-res-masters-rock-essentials",
+      "tracks": null,
+      "tracks_count": 79,
+      "users_count": 140
+    },
+    {
+      "description": "¡Descubre el Gusto de Qobuz en todos los géneros y en todas sus formas, desde grandes clásicos de la discoteca Ideal hasta los descubrimientos Qobuzissime de los últimos años!",
+      "duration": 26442,
+      "genres": [],
+      "id": 1607266,
+      "images": [
+        "https://static.qobuz.com/images/covers/15/54/0825646395415_50.jpg",
+        "https://static.qobuz.com/images/covers/78/33/5413356083378_50.jpg",
+        "https://static.qobuz.com/images/covers/7b/19/nqbqdhrne197b_50.jpg",
+        "https://static.qobuz.com/images/covers/85/08/0190295900885_50.jpg"
+      ],
+      "images150": [
+        "https://static.qobuz.com/images/covers/15/54/0825646395415_150.jpg",
+        "https://static.qobuz.com/images/covers/78/33/5413356083378_150.jpg",
+        "https://static.qobuz.com/images/covers/7b/19/nqbqdhrne197b_150.jpg",
+        "https://static.qobuz.com/images/covers/85/08/0190295900885_150.jpg"
+      ],
+      "images300": [
+        "https://static.qobuz.com/images/covers/15/54/0825646395415_300.jpg",
+        "https://static.qobuz.com/images/covers/78/33/5413356083378_300.jpg",
+        "https://static.qobuz.com/images/covers/7b/19/nqbqdhrne197b_300.jpg",
+        "https://static.qobuz.com/images/covers/85/08/0190295900885_300.jpg"
+      ],
+      "is_public": true,
+      "name": "Te damos la bienvenida a Qobuz",
+      "owner": {
+        "id": 691362,
+        "name": "Qobuz España"
+      },
+      "slug": "bienvenido-a-qobuz",
+      "tracks": null,
+      "tracks_count": 100,
+      "users_count": 59360
+    }
+  ]
+}

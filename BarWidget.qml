@@ -74,8 +74,31 @@ Panel {
     function search(query: string): string {
       if (!root.service) return "no service"
       root.open()
+      root.service.goTo(Model.VIEW_SEARCH)
       root.service.search(query)
       return "searching: " + query
+    }
+    // Jump the panel straight to a section, for a keybinding or a script:
+    // `omarchy-shell javih.qobuz view library`.
+    function view(name: string): string {
+      if (!root.service) return "no service"
+      var wanted = String(name).toLowerCase()
+      var allowed = [Model.VIEW_QUEUE, Model.VIEW_SEARCH, Model.VIEW_LIBRARY,
+                     Model.VIEW_DISCOVER, Model.VIEW_LYRICS]
+      if (allowed.indexOf(wanted) === -1) return "unknown view: " + wanted + " (" + allowed.join(", ") + ")"
+      root.open()
+      root.service.goTo(wanted)
+      return wanted
+    }
+    // Open an album, artist or playlist page directly:
+    // `omarchy-shell javih.qobuz browse album 5099749522428`.
+    function browse(kind: string, id: string): string {
+      if (!root.service) return "no service"
+      var item = { kind: String(kind).toLowerCase(), id: String(id) }
+      if (!Model.isBrowsable(item)) return "not browsable: " + item.kind + " (album, artist, playlist)"
+      root.open()
+      root.service.openItem(item)
+      return "opening " + item.kind + " " + item.id
     }
     function results(): string {
       var r = root.playerState.search
@@ -118,13 +141,17 @@ Panel {
     bar: root.bar
     open: root.opened
     focusTarget: keys
-    contentWidth: panel.fittedContentWidth(Style.space(400))
-    contentHeight: panel.fittedContentHeight(content.implicitHeight + Style.space(28), Style.space(620))
+    contentWidth: panel.fittedContentWidth(Style.space(440))
+    contentHeight: panel.fittedContentHeight(content.implicitHeight + Style.space(28), Style.space(680))
 
     PanelKeyCatcher {
       id: keys
       anchors.fill: parent
-      onCloseRequested: root.close()
+      onCloseRequested: {
+        // Back out of a drill-down before closing the whole panel.
+        if (root.service && root.playerState.view === Model.VIEW_BROWSE) root.service.closeBrowse()
+        else root.close()
+      }
       onTabRequested: function (direction) { root.switchPanel(direction) }
       onActivateRequested: if (root.service) root.service.togglePlayback()
       onMoveRequested: function (dx, dy) {
@@ -135,11 +162,16 @@ Panel {
       onTextKey: function (t) {
         if (!root.service) return
         var key = String(t).toLowerCase()
-        if (key === "/") { search.focusField(); return }
+        if (key === "/") { root.service.goTo(Model.VIEW_SEARCH); search.focusField(); return }
         if (key === " ") root.service.togglePlayback()
         else if (key === "r") root.service.refresh()
         else if (key === "s") root.service.toggleShuffle()
         else if (key === "l") root.service.cycleRepeat()
+        // Jump straight to a view: q ueue, b iblioteca, d escubrir, t exto.
+        else if (key === "q") root.service.goTo(Model.VIEW_QUEUE)
+        else if (key === "b") root.service.goTo(Model.VIEW_LIBRARY)
+        else if (key === "d") root.service.goTo(Model.VIEW_DISCOVER)
+        else if (key === "t") root.service.goTo(Model.VIEW_LYRICS)
       }
 
       Flickable {
@@ -217,23 +249,34 @@ Panel {
 
           // ---- Normal operation -------------------------------------------
 
+          readonly property bool live: root.playerState.daemonUp
+                                       && root.playerState.authState !== "needs_auth"
+
           PanelSeparator {
             width: parent.width
             foreground: root.barForeground
-            visible: root.playerState.daemonUp && root.playerState.authState !== "needs_auth"
+            visible: content.live
           }
 
           QobuzTransport {
             width: parent.width
             bar: root.bar
             service: root.service
-            visible: root.playerState.daemonUp && root.playerState.authState !== "needs_auth"
+            visible: content.live
           }
 
           PanelSeparator {
             width: parent.width
             foreground: root.barForeground
-            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
+            visible: content.live
+          }
+
+          // Everything below here is one view at a time.
+          QobuzNav {
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            visible: content.live
           }
 
           QobuzSearch {
@@ -242,25 +285,44 @@ Panel {
             bar: root.bar
             service: root.service
             keyCatcher: keys
-            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
-          }
-
-          PanelSeparator {
-            width: parent.width
-            foreground: root.barForeground
-            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
-                     && root.playerState.search.total === 0
+            visible: content.live && root.playerState.view === Model.VIEW_SEARCH
           }
 
           QobuzQueueView {
             width: parent.width
             bar: root.bar
             service: root.service
-            // Results take over the lower half of the panel while a search is
-            // on screen; the queue comes back when it is cleared.
-            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
-                     && root.playerState.search.total === 0
+            visible: content.live && root.playerState.view === Model.VIEW_QUEUE
           }
+
+          QobuzLibrary {
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            visible: content.live && root.playerState.view === Model.VIEW_LIBRARY
+          }
+
+          QobuzDiscover {
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            visible: content.live && root.playerState.view === Model.VIEW_DISCOVER
+          }
+
+          QobuzLyrics {
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            visible: content.live && root.playerState.view === Model.VIEW_LYRICS
+          }
+
+          QobuzBrowse {
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            visible: content.live && root.playerState.view === Model.VIEW_BROWSE
+          }
+
         }
       }
     }

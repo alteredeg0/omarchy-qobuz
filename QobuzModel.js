@@ -37,9 +37,32 @@ function emptyState() {
     lastError: "",
     search: { query: "", albums: [], tracks: [], artists: [], playlists: [], total: 0 },
     searchRunning: false,
-    searchError: ""
+    searchError: "",
+
+    // Which section of the panel is on screen below the transport.
+    view: VIEW_QUEUE,
+    // Favourites and the user's own playlists.
+    libraryType: "albums",   // "albums" | "tracks" | "artists" | "playlists"
+    library: [],
+    libraryRunning: false,
+    // A drilled-into album, artist or playlist. Null when not browsing.
+    browse: null,
+    browseRunning: false,
+    // Where "back" returns to, so browse can be entered from any view.
+    browseFrom: VIEW_QUEUE,
+    discover: [],
+    discoverRunning: false,
+    lyrics: null,
+    lyricsRunning: false
   }
 }
+
+var VIEW_QUEUE = "queue"
+var VIEW_SEARCH = "search"
+var VIEW_LIBRARY = "library"
+var VIEW_DISCOVER = "discover"
+var VIEW_BROWSE = "browse"
+var VIEW_LYRICS = "lyrics"
 
 function num(value, fallback) {
   var n = Number(value)
@@ -56,8 +79,39 @@ function str(value) {
 // {id, title, image, ...}. Unwrap both rather than stringifying an object.
 function nameOf(value) {
   if (value === null || value === undefined) return ""
-  if (typeof value === "object") return str(value.name || value.title)
-  return str(value)
+  if (typeof value !== "object") return str(value)
+  // Artist pages and release lists nest one level deeper again:
+  // {name: {display: "Miles Davis"}}, and sometimes just {display: ...}.
+  if (value.display !== undefined) return str(value.display)
+  var inner = value.name !== undefined ? value.name : value.title
+  if (inner && typeof inner === "object") return str(inner.display || inner.name || inner.title)
+  return str(inner)
+}
+
+// Albums name their artist in one of two places and never both: search and
+// artist pages fill `artist`, the discover rails leave it null and fill
+// `artists[]` instead. Credit the main artists, and don't let a long
+// collaboration list swamp the row.
+function artistsLabel(raw) {
+  if (!raw) return ""
+  var single = nameOf(raw.artist)
+  if (single) return single
+
+  var list = raw.artists
+  if (!list || !list.length) return ""
+
+  var main = []
+  for (var i = 0; i < list.length; i++) {
+    var roles = list[i] && list[i].roles
+    var isMain = !roles || roles.length === 0 || roles.indexOf("main-artist") !== -1
+    if (isMain) {
+      var name = nameOf(list[i])
+      if (name) main.push(name)
+    }
+  }
+  if (!main.length) main = [nameOf(list[0])]
+  if (main.length > 2) return main.slice(0, 2).join(", ") + " y " + (main.length - 2) + " más"
+  return main.join(", ")
 }
 
 // qbzd fills `album` with the literal string "Unknown Album" for anything it
@@ -375,7 +429,7 @@ function normalizeSearchItem(kind, raw) {
       return {
         kind: "album", id: id,
         title: str(raw.title),
-        subtitle: nameOf(raw.artist),
+        subtitle: artistsLabel(raw),
         imageUrl: imageUrl(raw, false),
         duration: num(raw.duration, 0),
         trackCount: num(raw.tracks_count !== undefined ? raw.tracks_count : raw.track_count, 0),
@@ -452,6 +506,226 @@ function applySearch(state, payload, query) {
   return next
 }
 
+// ---- Catalogue: favourites, playlists, artist pages, album detail --------
+
+// Every catalogue endpoint returns the same four entity shapes, so the search
+// normalisers double as the generic ones and one delegate renders them all.
+function normalizeCatalogItem(kind, raw) { return normalizeSearchItem(kind, raw) }
+
+function normalizeItems(kind, list) {
+  var out = []
+  if (!list || !list.length) return out
+  for (var i = 0; i < list.length; i++) {
+    var item = normalizeCatalogItem(kind, list[i])
+    if (item) out.push(item)
+  }
+  return out
+}
+
+// Buckets come as {items, total, limit, offset} on some endpoints and as a
+// bare array on others.
+function itemsOf(bucket) {
+  if (!bucket) return []
+  if (bucket.length !== undefined) return bucket
+  return bucket.items || []
+}
+
+// /api/favorites?type=<albums|tracks|artists>
+// -> {type, favorites: {albums|tracks|artists: {items, ...}, user}}
+//
+// The request takes the plural, but the response echoes `type` back in the
+// SINGULAR ("album") while the bucket stays plural ("albums"), so the echoed
+// value cannot be used as the key.
+function pluralKind(kind) {
+  var k = str(kind)
+  if (k === "") return ""
+  return k.charAt(k.length - 1) === "s" ? k : k + "s"
+}
+
+function normalizeFavorites(payload) {
+  var out = { type: "albums", items: [] }
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return out
+
+  var buckets = payload.favorites || {}
+  var kind = pluralKind(payload.type)
+  // Fall back to whichever bucket is actually populated.
+  if (!kind || !buckets[kind]) {
+    var candidates = ["albums", "tracks", "artists"]
+    for (var i = 0; i < candidates.length; i++) {
+      if (buckets[candidates[i]]) { kind = candidates[i]; break }
+    }
+  }
+  if (!kind) return out
+
+  out.type = kind
+  out.items = normalizeItems(kind, itemsOf(buckets[kind]))
+  return out
+}
+
+// /api/playlists -> {playlists: [...]}, a bare array, no envelope.
+function normalizePlaylists(payload) {
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return []
+  return normalizeItems("playlists", itemsOf(payload.playlists))
+}
+
+// /api/album?id=<upc> -> {album: {..., tracks: {items, total}}, similar}
+function normalizeAlbumDetail(payload) {
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return null
+  var album = payload.album || payload
+  if (!album || !album.id) return null
+  return {
+    kind: "album",
+    id: str(album.id),
+    title: str(album.title),
+    subtitle: artistsLabel(album),
+    imageUrl: imageUrl(album, true),
+    duration: num(album.duration, 0),
+    trackCount: num(album.tracks_count !== undefined ? album.tracks_count : album.track_count, 0),
+    hires: album.hires === true,
+    // Album tracks carry no album of their own; stamp the parent on so rows
+    // and the play action have it.
+    tracks: normalizeItems("tracks", itemsOf(album.tracks))
+  }
+}
+
+// /api/playlist?id=<n> -> {playlist: {..., tracks: [...]}}
+function normalizePlaylistDetail(payload) {
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return null
+  var pl = payload.playlist || payload
+  if (!pl || !pl.id) return null
+  return {
+    kind: "playlist",
+    id: str(pl.id),
+    title: str(pl.name || pl.title),
+    subtitle: nameOf(pl.owner),
+    imageUrl: imageUrl(pl, true),
+    duration: num(pl.duration, 0),
+    trackCount: num(pl.tracks_count, 0),
+    hires: false,
+    tracks: normalizeItems("tracks", itemsOf(pl.tracks))
+  }
+}
+
+// /api/artist?id=<n> -> {view, page: {name: {display}, images: {portrait},
+//                        top_tracks, releases: [{type, items, has_more}]}}
+var RELEASE_GROUP_LABELS = {
+  album: "ÁLBUMES", live: "EN DIRECTO", compilation: "RECOPILATORIOS",
+  epSingle: "EPS Y SINGLES", download: "SOLO DESCARGA",
+  awardedRelease: "PREMIADOS", other: "OTROS"
+}
+
+// An artist page gives its portrait as {hash, format}, not a URL — unlike
+// search results, which hand over the finished link. The path is the one
+// those links use:
+//   https://static.qobuz.com/images/artists/covers/<size>/<hash>.<format>
+function artistPortraitUrl(portrait, size) {
+  if (!portrait || typeof portrait !== "object") return ""
+  var hash = str(portrait.hash)
+  if (!hash) return ""
+  var format = str(portrait.format) || "jpg"
+  return "https://static.qobuz.com/images/artists/covers/" + (size || "large") +
+         "/" + hash + "." + format
+}
+
+function normalizeArtistPage(payload) {
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return null
+  var page = payload.page || payload
+  if (!page || !page.id) return null
+
+  var groups = []
+  var seen = {}
+  var releases = page.releases || []
+  for (var i = 0; i < releases.length; i++) {
+    var group = releases[i]
+    if (!group) continue
+    var items = normalizeItems("albums", itemsOf(group.items))
+    if (!items.length) continue
+    var type = str(group.type)
+    // qbzd repeats `awardedRelease` twice with different contents; merge
+    // rather than rendering the same heading twice.
+    if (seen[type] !== undefined) {
+      groups[seen[type]].items = groups[seen[type]].items.concat(items)
+      continue
+    }
+    seen[type] = groups.length
+    groups.push({ type: type, label: RELEASE_GROUP_LABELS[type] || type.toUpperCase(), items: items })
+  }
+
+  return {
+    kind: "artist",
+    id: str(page.id),
+    title: nameOf(page.name),
+    subtitle: str(page.artist_category),
+    imageUrl: artistPortraitUrl(page.images ? page.images.portrait : null, "large"),
+    duration: 0, trackCount: 0, hires: false,
+    topTracks: normalizeItems("tracks", itemsOf(page.top_tracks)),
+    releaseGroups: groups
+  }
+}
+
+// /api/discover?section=index -> {section, data: {containers: {<key>: {id, data: {items}}}}}
+var DISCOVER_LABELS = {
+  new_releases: "NOVEDADES",
+  most_streamed: "MÁS ESCUCHADOS",
+  press_awards: "PREMIOS DE LA PRENSA",
+  qobuzissims: "QOBUZISSIMS",
+  album_of_the_week: "ÁLBUM DE LA SEMANA",
+  ideal_discography: "DISCOGRAFÍA IDEAL",
+  playlists: "PLAYLISTS",
+  playlists_tags: "POR GÉNERO"
+}
+// Order matters more than the map iteration order the daemon happens to use.
+var DISCOVER_ORDER = ["album_of_the_week", "new_releases", "most_streamed",
+                      "qobuzissims", "press_awards", "ideal_discography", "playlists"]
+
+function normalizeDiscover(payload) {
+  var out = []
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return out
+  var data = payload.data || {}
+  var containers = data.containers || {}
+
+  var keys = []
+  for (var i = 0; i < DISCOVER_ORDER.length; i++)
+    if (containers[DISCOVER_ORDER[i]]) keys.push(DISCOVER_ORDER[i])
+  for (var key in containers)
+    if (Object.prototype.hasOwnProperty.call(containers, key) && keys.indexOf(key) === -1)
+      keys.push(key)
+
+  for (var j = 0; j < keys.length; j++) {
+    var container = containers[keys[j]]
+    var bucket = container && container.data
+    // The playlist rails hold playlists; everything else holds albums.
+    var kind = keys[j].indexOf("playlist") === 0 ? "playlists" : "albums"
+    var items = normalizeItems(kind, itemsOf(bucket))
+    if (!items.length) continue
+    out.push({ key: keys[j], label: DISCOVER_LABELS[keys[j]] || keys[j].replace(/_/g, " ").toUpperCase(), items: items })
+  }
+  return out
+}
+
+// /api/lyrics?id=current -> {track_id, synced, lines}
+function normalizeLyrics(payload) {
+  var out = { trackId: "", synced: false, lines: [] }
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return out
+  out.trackId = str(payload.track_id)
+  out.synced = payload.synced === true
+  var lines = payload.lines || []
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i]
+    var text = typeof line === "object" ? str(line.text || line.line) : str(line)
+    out.lines.push(text)
+  }
+  return out
+}
+
+// /api/favorites/add and /remove want a typed pair, and the singular kind.
+function favoriteBodyFor(item) {
+  if (!item || !item.id) return null
+  var kind = str(item.kind)
+  if (kind !== "track" && kind !== "album" && kind !== "artist") return null
+  return { fav_type: kind, item_id: String(item.id) }
+}
+
 // Which POST body /api/play wants for a given result. The wiki's
 // {"content": "album:ID"} is rejected — the daemon wants a typed id field.
 function playBodyFor(item) {
@@ -463,6 +737,91 @@ function playBodyFor(item) {
     case "playlist": return { playlist_id: Number(item.id) }
   }
   return null
+}
+
+// ---- View navigation ------------------------------------------------------
+
+// Browse is a drill-down, not a tab: entering it remembers where to go back
+// to, so the same album row works from search, library and discover alike.
+function enterBrowse(state, detail) {
+  var next = shallowCopy(state)
+  next.browseFrom = state.view === VIEW_BROWSE ? state.browseFrom : state.view
+  next.browse = detail
+  next.browseRunning = false
+  next.view = VIEW_BROWSE
+  return next
+}
+
+function beginBrowse(state) {
+  var next = shallowCopy(state)
+  next.browseFrom = state.view === VIEW_BROWSE ? state.browseFrom : state.view
+  next.browse = null
+  next.browseRunning = true
+  next.view = VIEW_BROWSE
+  return next
+}
+
+function leaveBrowse(state) {
+  var next = shallowCopy(state)
+  next.view = state.browseFrom || VIEW_QUEUE
+  next.browse = null
+  next.browseRunning = false
+  return next
+}
+
+function setView(state, view) {
+  var next = shallowCopy(state)
+  next.view = view
+  if (view !== VIEW_BROWSE) { next.browse = null; next.browseRunning = false }
+  return next
+}
+
+function applyFavorites(state, payload) {
+  var next = shallowCopy(state)
+  next.libraryRunning = false
+  var favorites = normalizeFavorites(payload)
+  next.libraryType = favorites.type
+  next.library = favorites.items
+  return next
+}
+
+function applyPlaylists(state, payload) {
+  var next = shallowCopy(state)
+  next.libraryRunning = false
+  next.libraryType = "playlists"
+  next.library = normalizePlaylists(payload)
+  return next
+}
+
+function applyLyrics(state, payload) {
+  var next = shallowCopy(state)
+  next.lyricsRunning = false
+  var err = errorOf(payload)
+  // "no lyrics for this track" is an ordinary answer, not a failure.
+  next.lyrics = err ? { trackId: "", synced: false, lines: [], message: err.message }
+                    : normalizeLyrics(payload)
+  return next
+}
+
+function applyDiscover(state, payload) {
+  var next = shallowCopy(state)
+  next.discoverRunning = false
+  next.discover = normalizeDiscover(payload)
+  return next
+}
+
+// Only albums, artists and playlists have a page worth opening; a track just
+// plays.
+function isBrowsable(item) {
+  if (!item || !item.id) return false
+  return item.kind === "album" || item.kind === "artist" || item.kind === "playlist"
+}
+
+function browsePath(item) {
+  if (!isBrowsable(item)) return ""
+  if (item.kind === "album") return "/api/album?id=" + encodeURIComponent(item.id)
+  if (item.kind === "artist") return "/api/artist?id=" + encodeURIComponent(item.id)
+  return "/api/playlist?id=" + encodeURIComponent(item.id)
 }
 
 function errorOf(payload) {
@@ -586,12 +945,41 @@ if (typeof module !== "undefined" && module.exports) {
     albumLookupId: albumLookupId,
     albumTitle: albumTitle,
     nameOf: nameOf,
+    artistsLabel: artistsLabel,
     imageUrl: imageUrl,
     SEARCH_KINDS: SEARCH_KINDS,
     normalizeSearchItem: normalizeSearchItem,
     normalizeSearch: normalizeSearch,
     applySearch: applySearch,
     playBodyFor: playBodyFor,
+    normalizeCatalogItem: normalizeCatalogItem,
+    normalizeFavorites: normalizeFavorites,
+    normalizePlaylists: normalizePlaylists,
+    normalizeAlbumDetail: normalizeAlbumDetail,
+    normalizePlaylistDetail: normalizePlaylistDetail,
+    normalizeArtistPage: normalizeArtistPage,
+    normalizeDiscover: normalizeDiscover,
+    normalizeLyrics: normalizeLyrics,
+    favoriteBodyFor: favoriteBodyFor,
+    pluralKind: pluralKind,
+    VIEW_QUEUE: VIEW_QUEUE,
+    VIEW_SEARCH: VIEW_SEARCH,
+    VIEW_LIBRARY: VIEW_LIBRARY,
+    VIEW_DISCOVER: VIEW_DISCOVER,
+    VIEW_BROWSE: VIEW_BROWSE,
+    VIEW_LYRICS: VIEW_LYRICS,
+    enterBrowse: enterBrowse,
+    beginBrowse: beginBrowse,
+    leaveBrowse: leaveBrowse,
+    setView: setView,
+    applyFavorites: applyFavorites,
+    applyPlaylists: applyPlaylists,
+    applyLyrics: applyLyrics,
+    applyDiscover: applyDiscover,
+    isBrowsable: isBrowsable,
+    browsePath: browsePath,
+    artistPortraitUrl: artistPortraitUrl,
+    itemsOf: itemsOf,
     reduceEvent: reduceEvent,
     needsQueueRefetch: needsQueueRefetch,
     errorOf: errorOf,

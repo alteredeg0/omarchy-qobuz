@@ -188,6 +188,128 @@ Item {
     post("/api/queue/add", { track_ids: [Number(item.id)] })
   }
 
+  // ---- Library, browse, discover, lyrics ---------------------------------
+
+  property int libraryLimit: 50
+
+  function setView(view) { apply(Model.setView(playerState, view)) }
+
+  // Switching tabs is also what triggers the fetch: nothing loads until the
+  // user asks to see it, and nothing reloads if it is already there.
+  function goTo(view) {
+    setView(view)
+    if (view === Model.VIEW_LIBRARY && (playerState.library || []).length === 0) loadLibrary(playerState.libraryType)
+    else if (view === Model.VIEW_DISCOVER && (playerState.discover || []).length === 0) loadDiscover()
+    else if (view === Model.VIEW_LYRICS) loadLyrics()
+  }
+
+  function loadLibrary(type) {
+    if (!authenticated || libraryProcess.running) return
+    var kind = String(type || playerState.libraryType || "albums")
+    apply(Object.assign({}, playerState, { libraryRunning: true, libraryType: kind }))
+    libraryProcess.command = kind === "playlists"
+      ? [apiHelper, "/api/playlists?limit=" + libraryLimit]
+      : [apiHelper, "/api/favorites?type=" + kind + "&limit=" + libraryLimit]
+    libraryProcess.running = true
+  }
+
+  function loadDiscover() {
+    if (!authenticated || discoverProcess.running) return
+    apply(Object.assign({}, playerState, { discoverRunning: true }))
+    discoverProcess.command = [apiHelper, "/api/discover?section=index"]
+    discoverProcess.running = true
+  }
+
+  // Drill into an album, artist or playlist. Tracks are not browsable — a
+  // click on one plays it instead.
+  function openItem(item) {
+    if (!Model.isBrowsable(item) || !authenticated) return
+    apply(Model.beginBrowse(playerState))
+    browseProcess.running = false
+    browseProcess.command = [apiHelper, Model.browsePath(item)]
+    browseProcess.running = true
+  }
+
+  function closeBrowse() { apply(Model.leaveBrowse(playerState)) }
+
+  // One place for "what does clicking this do", so every list behaves alike:
+  // a click explores what can be explored and plays what cannot; the
+  // secondary action is always the other useful one.
+  function activateItem(item) {
+    if (Model.isBrowsable(item)) openItem(item)
+    else playItem(item)
+  }
+
+  function secondaryItem(item) {
+    if (Model.isBrowsable(item)) playItem(item)
+    else queueTrack(item)
+  }
+
+  function secondaryLabel(item) {
+    if (Model.isBrowsable(item)) return "Clic: abrir · Clic derecho: reproducir"
+    return "Clic: reproducir · Clic derecho: añadir a la cola"
+  }
+
+  function loadLyrics() {
+    if (!authenticated || lyricsProcess.running) return
+    apply(Object.assign({}, playerState, { lyricsRunning: true }))
+    lyricsProcess.command = [apiHelper, "/api/lyrics?id=current"]
+    lyricsProcess.running = true
+  }
+
+  // ---- Favourites --------------------------------------------------------
+
+  // Membership is only known for whatever the library view has loaded, so the
+  // heart reflects that and otherwise offers to add.
+  function isFavorite(item) {
+    if (!item || !item.id) return false
+    if (playerState.libraryType !== Model.pluralKind(item.kind)) return false
+    var list = playerState.library || []
+    for (var i = 0; i < list.length; i++)
+      if (String(list[i].id) === String(item.id)) return true
+    return false
+  }
+
+  // Set when a favourite changes, so the library reloads once the write
+  // lands rather than showing a stale list until the user switches tabs.
+  property bool libraryStale: false
+
+  function favoriteAdd(item) {
+    var body = Model.favoriteBodyFor(item)
+    if (!body) return
+    libraryStale = true
+    post("/api/favorites/add", body)
+  }
+
+  function favoriteRemove(item) {
+    var body = Model.favoriteBodyFor(item)
+    if (!body) return
+    libraryStale = true
+    post("/api/favorites/remove", body)
+  }
+
+  function favoriteToggle(item) {
+    if (isFavorite(item)) favoriteRemove(item)
+    else favoriteAdd(item)
+  }
+
+  // The now-playing track as a catalogue item, so the same favourite and
+  // browse actions work on it.
+  function currentAsItem() {
+    var t = playerState.track
+    if (!t || !t.id) return null
+    return { kind: "track", id: t.id, title: t.title, subtitle: t.artist,
+             imageUrl: t.artworkUrl, duration: t.duration, trackCount: 0,
+             hires: Model.isHiRes(t) }
+  }
+
+  function currentAlbumAsItem() {
+    var t = playerState.track
+    if (!t || t.contextKind !== "album" || !t.contextId) return null
+    return { kind: "album", id: t.contextId, title: t.album, subtitle: t.artist,
+             imageUrl: t.artworkUrl, duration: 0, trackCount: 0, hires: Model.isHiRes(t) }
+  }
+
   // ---- Reads: process plumbing -------------------------------------------
 
   Process {
@@ -204,7 +326,15 @@ Item {
         // Status carries only a flat title/artist; pull the rich metadata
         // once per track change rather than on every poll.
         var after = afterState.track ? afterState.track.id : ""
-        if (after !== "" && after !== before) service.refreshNowPlaying()
+        if (after !== "" && after !== before) {
+          service.refreshNowPlaying()
+          // Lyrics belong to the track that was playing when they were
+          // fetched; drop them rather than captioning the wrong song.
+          if (service.playerState.lyrics) {
+            service.apply(Object.assign({}, service.playerState, { lyrics: null }))
+          }
+          if (service.playerState.view === Model.VIEW_LYRICS) service.loadLyrics()
+        }
       }
     }
     onExited: function (code) {
@@ -238,6 +368,75 @@ Item {
         // can only be decided after it lands.
         service.refreshAlbum()
       }
+    }
+  }
+
+  Process {
+    id: libraryProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        if (payload === null) return
+        service.apply(service.playerState.libraryType === "playlists"
+          ? Model.applyPlaylists(service.playerState, payload)
+          : Model.applyFavorites(service.playerState, payload))
+      }
+    }
+    onExited: function (code) {
+      if (code !== 0) service.apply(Object.assign({}, service.playerState, { libraryRunning: false }))
+    }
+  }
+
+  Process {
+    id: browseProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        if (payload === null) return
+        // One endpoint per kind, and each wraps its payload differently, so
+        // pick the normaliser by what came back rather than by what we asked.
+        var detail = payload.page ? Model.normalizeArtistPage(payload)
+                   : (payload.playlist ? Model.normalizePlaylistDetail(payload)
+                                       : Model.normalizeAlbumDetail(payload))
+        service.apply(Model.enterBrowse(service.playerState, detail))
+      }
+    }
+    onExited: function (code) {
+      if (code !== 0) service.apply(Object.assign({}, service.playerState, { browseRunning: false }))
+    }
+  }
+
+  Process {
+    id: discoverProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        if (payload !== null) service.apply(Model.applyDiscover(service.playerState, payload))
+      }
+    }
+    onExited: function (code) {
+      if (code !== 0) service.apply(Object.assign({}, service.playerState, { discoverRunning: false }))
+    }
+  }
+
+  Process {
+    id: lyricsProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        if (payload !== null) service.apply(Model.applyLyrics(service.playerState, payload))
+      }
+    }
+    onExited: function (code) {
+      if (code !== 0) service.apply(Object.assign({}, service.playerState, { lyricsRunning: false }))
     }
   }
 
@@ -280,8 +479,15 @@ Item {
     stdout: StdioCollector { waitForEnd: true }
     onExited: function (code) {
       // A mutation lands before the next scheduled poll; reconcile at once.
-      if (code === 0) service.refresh()
-      else if (code === 3) service.apply(Object.assign({}, service.playerState, { daemonUp: false }))
+      if (code === 0) {
+        service.refresh()
+        if (service.libraryStale) {
+          service.libraryStale = false
+          if (service.playerState.libraryType !== "playlists") service.loadLibrary(service.playerState.libraryType)
+        }
+      } else if (code === 3) {
+        service.apply(Object.assign({}, service.playerState, { daemonUp: false }))
+      }
     }
   }
 

@@ -1,0 +1,966 @@
+{
+  "playlist": {
+    "description": "BOC TH Palindromic Tracks",
+    "duration": 3724,
+    "genres": [],
+    "id": 63239555,
+    "images": [
+      "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+    ],
+    "images150": [
+      "https://static.qobuz.com/images/covers/31/57/0801061025731_150.jpg"
+    ],
+    "images300": [
+      "https://static.qobuz.com/images/covers/31/57/0801061025731_300.jpg"
+    ],
+    "is_public": true,
+    "name": "Tomorrow's Harvest Palindromic Tracks",
+    "owner": {
+      "id": 2173359,
+      "name": "JaviH"
+    },
+    "slug": "tomorrow-s-harvest",
+    "tracks": {
+      "items": [
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 176,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822235,
+          "isrc": "GBBPW1300024",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393152418,
+          "streamable": true,
+          "title": "Gemini",
+          "track_number": 1,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 210,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822251,
+          "isrc": "GBBPW1300040",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393152614,
+          "streamable": true,
+          "title": "Semena Mertvykh",
+          "track_number": 17,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 287,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822236,
+          "isrc": "GBBPW1300025",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393152713,
+          "streamable": true,
+          "title": "Reach For The Dead",
+          "track_number": 2,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 247,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822250,
+          "isrc": "GBBPW1300039",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393153585,
+          "streamable": true,
+          "title": "Come To Dust",
+          "track_number": 16,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 193,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822237,
+          "isrc": "GBBPW1300026",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154076,
+          "streamable": true,
+          "title": "White Cyclosa",
+          "track_number": 3,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 339,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822249,
+          "isrc": "GBBPW1300038",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154178,
+          "streamable": true,
+          "title": "New Seeds",
+          "track_number": 15,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 395,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822238,
+          "isrc": "GBBPW1300027",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154201,
+          "streamable": true,
+          "title": "Jacquard Causeway",
+          "track_number": 4,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 136,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822248,
+          "isrc": "GBBPW1300037",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154486,
+          "streamable": true,
+          "title": "Sundown",
+          "track_number": 14,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 92,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822239,
+          "isrc": "GBBPW1300028",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154544,
+          "streamable": true,
+          "title": "Telepath",
+          "track_number": 5,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 232,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822247,
+          "isrc": "GBBPW1300036",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393154853,
+          "streamable": true,
+          "title": "Nothing Is Real",
+          "track_number": 13,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 222,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822240,
+          "isrc": "GBBPW1300029",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393155188,
+          "streamable": true,
+          "title": "Cold Earth",
+          "track_number": 6,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 119,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822246,
+          "isrc": "GBBPW1300035",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393155272,
+          "streamable": true,
+          "title": "Uritual",
+          "track_number": 12,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 138,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822241,
+          "isrc": "GBBPW1300030",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393155471,
+          "streamable": true,
+          "title": "Transmisiones Ferox",
+          "track_number": 7,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 268,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822245,
+          "isrc": "GBBPW1300034",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393155591,
+          "streamable": true,
+          "title": "Split Your Infinities",
+          "track_number": 11,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 256,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822242,
+          "isrc": "GBBPW1300031",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393155954,
+          "streamable": true,
+          "title": "Sick Times",
+          "track_number": 8,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 245,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822244,
+          "isrc": "GBBPW1300033",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393156051,
+          "streamable": true,
+          "title": "Palace Posy",
+          "track_number": 10,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ]
+            },
+            "id": "0801061025731",
+            "image": {
+              "back": null,
+              "extralarge": null,
+              "large": "https://static.qobuz.com/images/covers/31/57/0801061025731_600.jpg",
+              "mega": null,
+              "small": "https://static.qobuz.com/images/covers/31/57/0801061025731_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/31/57/0801061025731_50.jpg"
+            },
+            "label": {
+              "id": 12523,
+              "name": "Warp Records"
+            },
+            "title": "Tomorrow's Harvest"
+          },
+          "composer": null,
+          "copyright": "2013 Warp Records",
+          "duration": 169,
+          "hires": true,
+          "hires_streamable": true,
+          "id": 9822243,
+          "isrc": "GBBPW1300032",
+          "maximum_bit_depth": 24,
+          "maximum_sampling_rate": 44.1,
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "albums": null,
+            "albums_count": null,
+            "biography": null,
+            "id": 410459,
+            "image": null,
+            "name": "Boards of Canada",
+            "playlists": null,
+            "tracks_appears_on": null
+          },
+          "performers": "Boards of Canada, MainArtist - Warp Publishing, MusicPublisher",
+          "playlist_track_id": 11393156079,
+          "streamable": true,
+          "title": "Collapse",
+          "track_number": 9,
+          "version": null,
+          "work": null
+        }
+      ],
+      "total": 17
+    },
+    "tracks_count": 17,
+    "users_count": 0
+  }
+}

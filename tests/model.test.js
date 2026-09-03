@@ -509,3 +509,246 @@ test("search results carry the flag the mark keys off", () => {
   assert.equal(M.isHiRes(r.artists[0]), false)
   assert.equal(M.isHiRes(r.playlists[0]), false)
 })
+
+// ---------------------------------------------------------------------------
+// Catalogue: favourites, playlists, album/playlist detail, artist pages,
+// discover rails and lyrics. All fixtures are live captures.
+// ---------------------------------------------------------------------------
+
+test("nameOf unwraps the double nesting artist pages use", () => {
+  // Release lists nest twice: {artist: {name: {display: "Miles Davis"}}}.
+  assert.equal(M.nameOf({ id: 6760, name: { display: "Miles Davis" } }), "Miles Davis")
+  assert.equal(M.nameOf({ display: "Miles Davis" }), "Miles Davis")
+})
+
+test("normalizeFavorites keys off the bucket, not the echoed type", () => {
+  // The request takes "albums" but the response echoes type "album",
+  // while the bucket stays plural — using the echo as the key finds nothing.
+  const raw = fixture("favorites-albums.json")
+  assert.equal(raw.type, "album", "the daemon really does answer in the singular")
+
+  const f = M.normalizeFavorites(raw)
+  assert.equal(f.type, "albums")
+  assert.equal(f.items.length, 5)
+  assert.equal(f.items[0].kind, "album")
+  assert.equal(f.items[0].title, "Marrow Deep")
+  assert.equal(f.items[0].subtitle, "Mastodon")
+})
+
+test("normalizeFavorites handles each kind", () => {
+  const tracks = M.normalizeFavorites(fixture("favorites-tracks.json"))
+  assert.equal(tracks.type, "tracks")
+  assert.equal(tracks.items[0].title, "Chelsea Hotel #2")
+  assert.equal(tracks.items[0].subtitle, "Leonard Cohen")
+
+  const artists = M.normalizeFavorites(fixture("favorites-artists.json"))
+  assert.equal(artists.type, "artists")
+  assert.equal(artists.items[0].title, "Reyna Tropical")
+})
+
+test("pluralKind", () => {
+  assert.equal(M.pluralKind("album"), "albums")
+  assert.equal(M.pluralKind("albums"), "albums")
+  assert.equal(M.pluralKind("track"), "tracks")
+  assert.equal(M.pluralKind(""), "")
+})
+
+test("normalizePlaylists reads the bare array", () => {
+  const p = M.normalizePlaylists(fixture("playlists.json"))
+  assert.equal(p.length, 6)
+  assert.equal(p[0].kind, "playlist")
+  assert.equal(p[0].title, "Tomorrow's Harvest Palindromic Tracks")
+  assert.equal(p[0].trackCount, 17)
+})
+
+test("normalizeAlbumDetail carries its track listing", () => {
+  const a = M.normalizeAlbumDetail(fixture("album.json"))
+  assert.equal(a.kind, "album")
+  assert.equal(a.title, "Kind Of Blue")
+  assert.equal(a.subtitle, "Miles Davis")
+  assert.equal(a.trackCount, 5)
+  assert.equal(a.tracks.length, 5)
+  assert.equal(a.tracks[0].title, "So What")
+  assert.equal(a.tracks[0].subtitle, "Miles Davis")
+  assert.equal(a.imageUrl.length > 0, true)
+})
+
+test("normalizePlaylistDetail carries its track listing", () => {
+  const p = M.normalizePlaylistDetail(fixture("playlist.json"))
+  assert.equal(p.kind, "playlist")
+  assert.equal(p.trackCount, 17)
+  assert.equal(p.tracks.length, 17)
+})
+
+test("normalizeArtistPage groups releases and merges duplicate groups", () => {
+  const a = M.normalizeArtistPage(fixture("artist.json"))
+  assert.equal(a.kind, "artist")
+  assert.equal(a.title, "Miles Davis", "name is {display: ...}")
+  assert.equal(a.topTracks.length, 30)
+  assert.equal(a.topTracks[0].title, "So What")
+
+  const types = a.releaseGroups.map((g) => g.type)
+  assert.equal(new Set(types).size, types.length, "no group type appears twice")
+
+  // qbzd returns awardedRelease twice (7 then 10); they must merge, not
+  // render as two identical headings.
+  const awarded = a.releaseGroups.find((g) => g.type === "awardedRelease")
+  assert.equal(awarded.items.length, 17)
+  assert.equal(a.releaseGroups[0].label, "ÁLBUMES")
+})
+
+test("normalizeDiscover orders the rails and picks the right kind per rail", () => {
+  const rails = M.normalizeDiscover(fixture("discover-index.json"))
+  assert.equal(rails.length > 0, true)
+  assert.equal(rails[0].key, "album_of_the_week", "editorial order, not map order")
+  assert.equal(rails[0].label, "ÁLBUM DE LA SEMANA")
+
+  const albums = rails.find((r) => r.key === "new_releases")
+  assert.equal(albums.items[0].kind, "album")
+
+  const playlists = rails.find((r) => r.key === "playlists")
+  assert.equal(playlists.items[0].kind, "playlist")
+
+  for (const rail of rails) assert.equal(rail.items.length > 0, true, `${rail.key} is not empty`)
+})
+
+test("normalizeLyrics and the empty cases", () => {
+  assert.deepEqual(M.normalizeLyrics({ track_id: 7, synced: true, lines: ["a", "", "b"] }),
+    { trackId: "7", synced: true, lines: ["a", "", "b"] })
+  assert.deepEqual(M.normalizeLyrics({ lines: [{ text: "a" }, { text: "b" }] }).lines, ["a", "b"])
+  assert.deepEqual(M.normalizeLyrics(null).lines, [])
+})
+
+test("applyLyrics treats 'no lyrics' as an answer, not an error", () => {
+  const s = M.applyLyrics(M.emptyState(),
+    { error: { code: "not_found", message: "no lyrics for this track" } })
+  assert.equal(s.lyricsRunning, false)
+  assert.deepEqual(s.lyrics.lines, [])
+  assert.equal(s.lyrics.message, "no lyrics for this track")
+})
+
+test("favoriteBodyFor takes the singular kind, and refuses playlists", () => {
+  assert.deepEqual(M.favoriteBodyFor({ kind: "track", id: 13176083 }),
+    { fav_type: "track", item_id: "13176083" })
+  assert.deepEqual(M.favoriteBodyFor({ kind: "album", id: "509" }),
+    { fav_type: "album", item_id: "509" })
+  assert.equal(M.favoriteBodyFor({ kind: "playlist", id: "1" }), null,
+    "the route only takes track|album|artist")
+  assert.equal(M.favoriteBodyFor(null), null)
+})
+
+test("isBrowsable and browsePath", () => {
+  assert.equal(M.isBrowsable({ kind: "album", id: "1" }), true)
+  assert.equal(M.isBrowsable({ kind: "artist", id: "1" }), true)
+  assert.equal(M.isBrowsable({ kind: "playlist", id: "1" }), true)
+  assert.equal(M.isBrowsable({ kind: "track", id: "1" }), false, "a track just plays")
+  assert.equal(M.isBrowsable({ kind: "album" }), false, "no id, nothing to open")
+
+  assert.equal(M.browsePath({ kind: "album", id: "509" }), "/api/album?id=509")
+  assert.equal(M.browsePath({ kind: "artist", id: "6760" }), "/api/artist?id=6760")
+  assert.equal(M.browsePath({ kind: "playlist", id: "63239555" }), "/api/playlist?id=63239555")
+  assert.equal(M.browsePath({ kind: "track", id: "1" }), "")
+})
+
+test("browse remembers where it was entered from", () => {
+  let s = M.setView(M.emptyState(), M.VIEW_DISCOVER)
+  s = M.beginBrowse(s)
+  assert.equal(s.view, M.VIEW_BROWSE)
+  assert.equal(s.browseRunning, true)
+  assert.equal(s.browseFrom, M.VIEW_DISCOVER)
+
+  s = M.enterBrowse(s, M.normalizeAlbumDetail(fixture("album.json")))
+  assert.equal(s.browseRunning, false)
+  assert.equal(s.browse.title, "Kind Of Blue")
+
+  s = M.leaveBrowse(s)
+  assert.equal(s.view, M.VIEW_DISCOVER, "back goes where you came from")
+  assert.equal(s.browse, null)
+})
+
+test("browsing from a browse keeps the original origin", () => {
+  // Album -> its artist -> back should return to the library, not to a
+  // half-remembered intermediate page.
+  let s = M.setView(M.emptyState(), M.VIEW_LIBRARY)
+  s = M.enterBrowse(s, { kind: "album", id: "1", title: "A" })
+  s = M.enterBrowse(s, { kind: "artist", id: "2", title: "B" })
+  assert.equal(s.browseFrom, M.VIEW_LIBRARY)
+  assert.equal(M.leaveBrowse(s).view, M.VIEW_LIBRARY)
+})
+
+test("setView drops a stale browse detail", () => {
+  let s = M.enterBrowse(M.emptyState(), { kind: "album", id: "1", title: "A" })
+  s = M.setView(s, M.VIEW_QUEUE)
+  assert.equal(s.browse, null)
+  assert.equal(s.browseRunning, false)
+})
+
+test("library reducers clear their running flag", () => {
+  const busy = { ...M.emptyState(), libraryRunning: true }
+  assert.equal(M.applyFavorites(busy, fixture("favorites-albums.json")).libraryRunning, false)
+  assert.equal(M.applyPlaylists(busy, fixture("playlists.json")).libraryRunning, false)
+  assert.equal(M.applyPlaylists(busy, fixture("playlists.json")).libraryType, "playlists")
+  assert.equal(M.applyDiscover({ ...M.emptyState(), discoverRunning: true },
+    fixture("discover-index.json")).discoverRunning, false)
+})
+
+test("catalogue views never disturb playback", () => {
+  let s = M.applyStatus(M.emptyState(), fixture("status-playing.json"))
+  const before = { track: s.track, position: s.position, playback: s.playback, volume: s.volume }
+  s = M.applyFavorites(s, fixture("favorites-albums.json"))
+  s = M.applyPlaylists(s, fixture("playlists.json"))
+  s = M.applyDiscover(s, fixture("discover-index.json"))
+  s = M.enterBrowse(s, M.normalizeArtistPage(fixture("artist.json")))
+  assert.deepEqual({ track: s.track, position: s.position, playback: s.playback, volume: s.volume }, before)
+})
+
+test("artistPortraitUrl builds the link the page only hints at", () => {
+  // An artist page gives {hash, format}; search results give the finished
+  // URL. Both must end up pointing at the same file.
+  assert.equal(
+    M.artistPortraitUrl({ hash: "33a9c9bc1f351aa593ac0f7658299e27", format: "jpg" }, "large"),
+    "https://static.qobuz.com/images/artists/covers/large/33a9c9bc1f351aa593ac0f7658299e27.jpg")
+  assert.equal(M.artistPortraitUrl({ hash: "abc" }, "small"),
+    "https://static.qobuz.com/images/artists/covers/small/abc.jpg", "format defaults to jpg")
+  assert.equal(M.artistPortraitUrl(null, "large"), "")
+  assert.equal(M.artistPortraitUrl({ format: "jpg" }, "large"), "", "no hash, no url")
+
+  const page = M.normalizeArtistPage(fixture("artist.json"))
+  assert.equal(page.imageUrl,
+    "https://static.qobuz.com/images/artists/covers/large/33a9c9bc1f351aa593ac0f7658299e27.jpg")
+})
+
+test("artistsLabel credits the artist wherever the endpoint put them", () => {
+  // Search and artist pages fill `artist`; discover rails leave it null and
+  // fill `artists[]` instead.
+  assert.equal(M.artistsLabel({ artist: { name: "Miles Davis" } }), "Miles Davis")
+  assert.equal(M.artistsLabel({
+    artist: null,
+    artists: [{ name: "Erykah Badu", roles: ["main-artist"] },
+              { name: "The Alchemist", roles: ["main-artist"] }]
+  }), "Erykah Badu, The Alchemist")
+
+  // Featured players must not displace the headline act.
+  assert.equal(M.artistsLabel({
+    artists: [{ name: "A", roles: ["main-artist"] }, { name: "B", roles: ["featured-artist"] }]
+  }), "A")
+
+  // A long collaboration list is summarised rather than swamping the row.
+  assert.equal(M.artistsLabel({
+    artists: [{ name: "A", roles: ["main-artist"] }, { name: "B", roles: ["main-artist"] },
+              { name: "C", roles: ["main-artist"] }, { name: "D", roles: ["main-artist"] }]
+  }), "A, B y 2 más")
+
+  assert.equal(M.artistsLabel({}), "")
+  assert.equal(M.artistsLabel(null), "")
+})
+
+test("every album source ends up with an artist on screen", () => {
+  const rails = M.normalizeDiscover(fixture("discover-index.json"))
+  const week = rails.find((r) => r.key === "album_of_the_week")
+  assert.equal(week.items[0].subtitle, "Erykah Badu, The Alchemist")
+
+  assert.equal(M.normalizeSearch(fixture("search-all.json")).albums[0].subtitle, "Miles Davis")
+  assert.equal(M.normalizeAlbumDetail(fixture("album.json")).subtitle, "Miles Davis")
+  assert.equal(M.normalizeFavorites(fixture("favorites-albums.json")).items[0].subtitle, "Mastodon")
+})

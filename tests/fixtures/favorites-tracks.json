@@ -1,0 +1,529 @@
+{
+  "favorites": {
+    "tracks": {
+      "items": [
+        {
+          "album": {
+            "artist": {
+              "albums_count": 2276,
+              "id": 35383,
+              "image": null,
+              "name": "Leonard Cohen",
+              "picture": null,
+              "slug": "leonard-cohen"
+            },
+            "displayable": true,
+            "downloadable": false,
+            "duration": 9337,
+            "genre": {
+              "id": 117,
+              "name": "Pop",
+              "path": [
+                112,
+                117
+              ],
+              "slug": "pop"
+            },
+            "hires": false,
+            "hires_streamable": false,
+            "id": "0696998688421",
+            "image": {
+              "large": "https://static.qobuz.com/images/covers/21/84/0696998688421_600.jpg",
+              "small": "https://static.qobuz.com/images/covers/21/84/0696998688421_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/21/84/0696998688421_50.jpg"
+            },
+            "label": {
+              "albums_count": 27953,
+              "id": 4592,
+              "name": "Columbia",
+              "slug": "columbia",
+              "supplier_id": 23
+            },
+            "maximum_bit_depth": 16,
+            "maximum_channel_count": 2,
+            "maximum_sampling_rate": 44.1,
+            "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+            "media_count": 2,
+            "parental_warning": false,
+            "previewable": true,
+            "purchasable": false,
+            "purchasable_at": null,
+            "qobuz_id": 18439166,
+            "release_date_download": "2002-01-28",
+            "release_date_original": "2002-01-28",
+            "release_date_purchase": "2002-01-28",
+            "release_date_stream": "2002-01-28",
+            "released_at": 1012172400,
+            "sampleable": true,
+            "streamable": true,
+            "streamable_at": 1780696800,
+            "title": "The Essential Leonard Cohen",
+            "tracks_count": 31,
+            "upc": "0696998688421",
+            "version": null
+          },
+          "audio_info": {
+            "replaygain_track_gain": -2.14,
+            "replaygain_track_peak": 0.97406
+          },
+          "composer": {
+            "id": 35383,
+            "name": "Leonard Cohen"
+          },
+          "copyright": "(P) 1974 Sony Music Entertainment Inc.",
+          "displayable": true,
+          "downloadable": true,
+          "duration": 185,
+          "favorited_at": 1788368393,
+          "hires": false,
+          "hires_streamable": false,
+          "id": 18439175,
+          "isrc": "USSM10203146",
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "id": 35383,
+            "name": "Leonard Cohen"
+          },
+          "performers": "Leonard Cohen, Associated Performer, Composer, Lyricist, Main Artist, Associated Performer, Composer, Lyricist\r - John Lissauer, Producer",
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1780696800,
+          "release_date_download": "2002-01-28",
+          "release_date_original": "2002-01-28",
+          "release_date_purchase": "2002-01-28",
+          "release_date_stream": "2002-01-28",
+          "sampleable": true,
+          "streamable": true,
+          "streamable_at": 1780696800,
+          "title": "Chelsea Hotel #2",
+          "track_number": 9,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "artist": {
+              "albums_count": 45,
+              "id": 2235897,
+              "image": null,
+              "name": "Lorenzo Senni",
+              "picture": null,
+              "slug": "lorenzo-senni"
+            },
+            "displayable": true,
+            "downloadable": false,
+            "duration": 1888,
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ],
+              "slug": "alternatif-et-inde"
+            },
+            "hires": false,
+            "hires_streamable": false,
+            "id": "e65cmeyqnrtnc",
+            "image": {
+              "large": "https://static.qobuz.com/images/covers/nc/rt/e65cmeyqnrtnc_600.jpg",
+              "small": "https://static.qobuz.com/images/covers/nc/rt/e65cmeyqnrtnc_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/nc/rt/e65cmeyqnrtnc_50.jpg"
+            },
+            "label": {
+              "albums_count": 1414,
+              "id": 12523,
+              "name": "Warp Records",
+              "slug": "warp-records",
+              "supplier_id": 31
+            },
+            "maximum_bit_depth": 16,
+            "maximum_channel_count": 2,
+            "maximum_sampling_rate": 44.1,
+            "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+            "media_count": 1,
+            "parental_warning": false,
+            "previewable": true,
+            "purchasable": false,
+            "purchasable_at": null,
+            "qobuz_id": 79180027,
+            "release_date_download": "2016-11-11",
+            "release_date_original": "2016-11-11",
+            "release_date_purchase": "2016-11-11",
+            "release_date_stream": "2016-11-11",
+            "released_at": 1478818800,
+            "sampleable": true,
+            "streamable": true,
+            "streamable_at": 1785448800,
+            "title": "Persona",
+            "tracks_count": 6,
+            "upc": "0801061939434",
+            "version": null
+          },
+          "audio_info": {
+            "replaygain_track_gain": -10.03,
+            "replaygain_track_peak": 0.965668
+          },
+          "copyright": "2016 Warp Records",
+          "displayable": true,
+          "downloadable": true,
+          "duration": 182,
+          "favorited_at": 1788367926,
+          "hires": false,
+          "hires_streamable": false,
+          "id": 79180031,
+          "isrc": "GBBPW1600120",
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "id": 2235897,
+            "name": "Lorenzo Senni"
+          },
+          "performers": "Lorenzo Senni, MainArtist - Warp Publishing, MusicPublisher",
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1785448800,
+          "release_date_download": "2016-11-11",
+          "release_date_original": "2016-11-11",
+          "release_date_purchase": "2016-11-11",
+          "release_date_stream": "2016-11-11",
+          "sampleable": true,
+          "streamable": true,
+          "streamable_at": 1785448800,
+          "title": "One Life, One Chance",
+          "track_number": 4,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "artist": {
+              "albums_count": 116,
+              "id": 148682,
+              "image": null,
+              "name": "Fools Garden",
+              "picture": null,
+              "slug": "fools-garden"
+            },
+            "displayable": true,
+            "downloadable": false,
+            "duration": 2607,
+            "genre": {
+              "id": 117,
+              "name": "Pop",
+              "path": [
+                112,
+                117
+              ],
+              "slug": "pop"
+            },
+            "hires": false,
+            "hires_streamable": false,
+            "id": "s9mbjjhcqikb9",
+            "image": {
+              "large": "https://static.qobuz.com/images/covers/b9/ik/s9mbjjhcqikb9_600.jpg",
+              "small": "https://static.qobuz.com/images/covers/b9/ik/s9mbjjhcqikb9_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/b9/ik/s9mbjjhcqikb9_50.jpg"
+            },
+            "label": {
+              "albums_count": 2295,
+              "id": 8720046,
+              "name": "BMG Rights Management GmbH",
+              "slug": "bmg-rights-management-gmbh-4",
+              "supplier_id": 1
+            },
+            "maximum_bit_depth": 16,
+            "maximum_channel_count": 2,
+            "maximum_sampling_rate": 44.1,
+            "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+            "media_count": 1,
+            "parental_warning": false,
+            "previewable": true,
+            "purchasable": false,
+            "purchasable_at": null,
+            "qobuz_id": 380476120,
+            "release_date_download": "1995-01-01",
+            "release_date_original": "1995-01-01",
+            "release_date_purchase": "1995-01-01",
+            "release_date_stream": "1995-01-01",
+            "released_at": 788914800,
+            "sampleable": true,
+            "streamable": true,
+            "streamable_at": 1783029600,
+            "title": "Dish of the Day",
+            "tracks_count": 11,
+            "upc": "4250330544736",
+            "version": null
+          },
+          "audio_info": {
+            "replaygain_track_gain": -7.42,
+            "replaygain_track_peak": 0.980865
+          },
+          "composer": {
+            "id": 167619,
+            "name": "Peter Freudenthaler"
+          },
+          "copyright": "℗ 1995 BMG Rights Management GmbH",
+          "displayable": true,
+          "downloadable": true,
+          "duration": 191,
+          "favorited_at": 1787038708,
+          "hires": false,
+          "hires_streamable": false,
+          "id": 380476123,
+          "isrc": "DEAF70927221",
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "id": 148682,
+            "name": "Fools Garden"
+          },
+          "performers": "Fools Garden, MainArtist - Peter Freudenthaler, ComposerLyricist - Volker Hinkel, ComposerLyricist",
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1783029600,
+          "release_date_download": "1995-01-01",
+          "release_date_original": "1995-01-01",
+          "release_date_purchase": "1995-01-01",
+          "release_date_stream": "1995-01-01",
+          "sampleable": true,
+          "streamable": true,
+          "streamable_at": 1783029600,
+          "title": "Lemon Tree",
+          "track_number": 3,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "artist": {
+              "albums_count": 91,
+              "id": 62574,
+              "image": null,
+              "name": "No Doubt",
+              "picture": null,
+              "slug": "no-doubt"
+            },
+            "displayable": true,
+            "downloadable": false,
+            "duration": 3558,
+            "genre": {
+              "id": 117,
+              "name": "Pop",
+              "path": [
+                112,
+                117
+              ],
+              "slug": "pop"
+            },
+            "hires": false,
+            "hires_streamable": false,
+            "id": "jn6a0fpdsjr7b",
+            "image": {
+              "large": "https://static.qobuz.com/images/covers/7b/jr/jn6a0fpdsjr7b_600.jpg",
+              "small": "https://static.qobuz.com/images/covers/7b/jr/jn6a0fpdsjr7b_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/7b/jr/jn6a0fpdsjr7b_50.jpg"
+            },
+            "label": {
+              "albums_count": 2,
+              "id": 1743,
+              "name": "TRAUMA",
+              "slug": "trauma",
+              "supplier_id": 1
+            },
+            "maximum_bit_depth": 16,
+            "maximum_channel_count": 2,
+            "maximum_sampling_rate": 44.1,
+            "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+            "media_count": 1,
+            "parental_warning": false,
+            "previewable": true,
+            "purchasable": false,
+            "purchasable_at": null,
+            "qobuz_id": 54859227,
+            "release_date_download": "1995-10-10",
+            "release_date_original": "1995-10-10",
+            "release_date_purchase": "1995-10-10",
+            "release_date_stream": "1995-10-10",
+            "released_at": 813279600,
+            "sampleable": true,
+            "streamable": true,
+            "streamable_at": 1782597600,
+            "title": "Tragic Kingdom",
+            "tracks_count": 14,
+            "upc": "0606949258023",
+            "version": null
+          },
+          "audio_info": {
+            "replaygain_track_gain": -8.03,
+            "replaygain_track_peak": 0.933197
+          },
+          "composer": {
+            "id": 36502,
+            "name": "Gwen Stefani"
+          },
+          "copyright": "℗ 1995 UMG Recordings, Inc.",
+          "displayable": true,
+          "downloadable": true,
+          "duration": 262,
+          "favorited_at": 1786969382,
+          "hires": false,
+          "hires_streamable": false,
+          "id": 54859237,
+          "isrc": "USIR19500279",
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "id": 62574,
+            "name": "No Doubt"
+          },
+          "performers": "No Doubt, MainArtist - Matthew Wilder, Producer - Phil Kaffel, RecordingEngineer - Holman Palmer, MixingEngineer - Paul Palmer, MixingEngineer - GWEN STEFANI, Vocalist, ComposerLyricist - Eric Stefani, ComposerLyricist",
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1782511200,
+          "release_date_download": "1995-10-10",
+          "release_date_original": "1995-10-10",
+          "release_date_purchase": "1995-10-10",
+          "release_date_stream": "1995-10-10",
+          "sampleable": true,
+          "streamable": true,
+          "streamable_at": 1782597600,
+          "title": "Don't Speak",
+          "track_number": 10,
+          "version": null,
+          "work": null
+        },
+        {
+          "album": {
+            "artist": {
+              "albums_count": 169,
+              "id": 160773,
+              "image": null,
+              "name": "Suede",
+              "picture": null,
+              "slug": "suede"
+            },
+            "displayable": true,
+            "downloadable": false,
+            "duration": 16146,
+            "genre": {
+              "id": 113,
+              "name": "Alternativa & Indie",
+              "path": [
+                112,
+                119,
+                113
+              ],
+              "slug": "alternatif-et-inde"
+            },
+            "hires": false,
+            "hires_streamable": false,
+            "id": "5032698631650",
+            "image": {
+              "large": "https://static.qobuz.com/images/covers/50/16/5032698631650_600.jpg",
+              "small": "https://static.qobuz.com/images/covers/50/16/5032698631650_230.jpg",
+              "thumbnail": "https://static.qobuz.com/images/covers/50/16/5032698631650_50.jpg"
+            },
+            "label": {
+              "albums_count": 857,
+              "id": 101156,
+              "name": "Edsel",
+              "slug": "edsel",
+              "supplier_id": 17
+            },
+            "maximum_bit_depth": 16,
+            "maximum_channel_count": 2,
+            "maximum_sampling_rate": 44.1,
+            "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+            "media_count": 2,
+            "parental_warning": true,
+            "previewable": true,
+            "purchasable": false,
+            "purchasable_at": null,
+            "qobuz_id": 34921949,
+            "release_date_download": "2016-09-30",
+            "release_date_original": "2016-09-30",
+            "release_date_purchase": "2016-09-30",
+            "release_date_stream": "2016-09-30",
+            "released_at": 1475186400,
+            "sampleable": true,
+            "streamable": true,
+            "streamable_at": 1783548000,
+            "title": "Coming Up - 20th Anniversary Edition (Audio Version)",
+            "tracks_count": 63,
+            "upc": "5032698631650",
+            "version": null
+          },
+          "audio_info": {
+            "replaygain_track_gain": -10.99,
+            "replaygain_track_peak": 0.851227
+          },
+          "composer": {
+            "id": 53026,
+            "name": "Anderson"
+          },
+          "copyright": "(P) 1996 Suede Ltd.",
+          "displayable": true,
+          "downloadable": true,
+          "duration": 245,
+          "favorited_at": 1786965716,
+          "hires": false,
+          "hires_streamable": false,
+          "id": 34921953,
+          "isrc": "GBL2J1000036",
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "maximum_technical_specifications": "16 bits / 44.1 kHz - Stereo ",
+          "media_number": 1,
+          "parental_warning": false,
+          "performer": {
+            "id": 160773,
+            "name": "Suede"
+          },
+          "performers": "Suede, MainArtist - Anderson, Composer - Oakes, Composer - Bmg Rights Management (uk) Ltd, MusicPublisher",
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1783548000,
+          "release_date_download": "2016-09-30",
+          "release_date_original": "2016-09-30",
+          "release_date_purchase": "2016-09-30",
+          "release_date_stream": "2016-09-30",
+          "sampleable": true,
+          "streamable": true,
+          "streamable_at": 1783548000,
+          "title": "Trash",
+          "track_number": 1,
+          "version": null,
+          "work": null
+        }
+      ],
+      "limit": 5,
+      "offset": 0,
+      "total": 99
+    },
+    "user": {
+      "id": 2173359,
+      "login": "javi.herrera@gmail.com"
+    }
+  },
+  "type": "track"
+}

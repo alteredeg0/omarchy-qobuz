@@ -1,0 +1,74 @@
+{
+  "favorites": {
+    "artists": {
+      "items": [
+        {
+          "albums_count": 17,
+          "favorited_at": 1787427319,
+          "id": 4943006,
+          "image": {
+            "extralarge": "https://static.qobuz.com/images/artists/covers/large/1e7392ec5b95ce07b2776f7ddd1087a0.jpg",
+            "large": "https://static.qobuz.com/images/artists/covers/large/1e7392ec5b95ce07b2776f7ddd1087a0.jpg",
+            "medium": "https://static.qobuz.com/images/artists/covers/medium/1e7392ec5b95ce07b2776f7ddd1087a0.jpg",
+            "mega": "https://static.qobuz.com/images/artists/covers/large/1e7392ec5b95ce07b2776f7ddd1087a0.jpg",
+            "small": "https://static.qobuz.com/images/artists/covers/small/1e7392ec5b95ce07b2776f7ddd1087a0.jpg"
+          },
+          "name": "Reyna Tropical",
+          "slug": "reyna-tropical"
+        },
+        {
+          "albums_count": 116,
+          "favorited_at": 1787427316,
+          "id": 1188188,
+          "image": {
+            "extralarge": "https://static.qobuz.com/images/artists/covers/large/6b2c1c60c867c8e61b98bb1a803793cd.jpg",
+            "large": "https://static.qobuz.com/images/artists/covers/large/6b2c1c60c867c8e61b98bb1a803793cd.jpg",
+            "medium": "https://static.qobuz.com/images/artists/covers/medium/6b2c1c60c867c8e61b98bb1a803793cd.jpg",
+            "mega": "https://static.qobuz.com/images/artists/covers/large/6b2c1c60c867c8e61b98bb1a803793cd.jpg",
+            "small": "https://static.qobuz.com/images/artists/covers/small/6b2c1c60c867c8e61b98bb1a803793cd.jpg"
+          },
+          "name": "Helado Negro",
+          "slug": "helado-negro"
+        },
+        {
+          "albums_count": 48,
+          "favorited_at": 1785536993,
+          "id": 719824,
+          "image": {
+            "extralarge": "https://static.qobuz.com/images/artists/covers/large/82a66281f9f5e8e1e66acd7f1afce62b.jpg",
+            "large": "https://static.qobuz.com/images/artists/covers/large/82a66281f9f5e8e1e66acd7f1afce62b.jpg",
+            "medium": "https://static.qobuz.com/images/artists/covers/medium/82a66281f9f5e8e1e66acd7f1afce62b.jpg",
+            "mega": "https://static.qobuz.com/images/artists/covers/large/82a66281f9f5e8e1e66acd7f1afce62b.jpg",
+            "small": "https://static.qobuz.com/images/artists/covers/small/82a66281f9f5e8e1e66acd7f1afce62b.jpg"
+          },
+          "name": "The Internet",
+          "slug": "the-internet"
+        },
+        {
+          "albums_count": 45,
+          "favorited_at": 1779020405,
+          "id": 4029975,
+          "image": null,
+          "name": "El Último Vecino",
+          "slug": "el-ltimo-vecino"
+        },
+        {
+          "albums_count": 5,
+          "favorited_at": 1777052251,
+          "id": 29261360,
+          "image": null,
+          "name": "CERVATANA",
+          "slug": "cervatana"
+        }
+      ],
+      "limit": 5,
+      "offset": 0,
+      "total": 31
+    },
+    "user": {
+      "id": 2173359,
+      "login": "javi.herrera@gmail.com"
+    }
+  },
+  "type": "artist"
+}

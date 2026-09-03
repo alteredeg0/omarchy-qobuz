@@ -76,25 +76,49 @@ Set with `omarchy bar set javih.qobuz <key> <value>`.
 **In the bar:** left click opens the panel · middle click toggles playback ·
 scroll changes volume.
 
-**In the panel:** `/` focus search · `Space` play/pause · `←`/`→`
-previous/next · `s` shuffle · `l` repeat · `r` refresh · `Esc` close ·
+**In the panel:** `q` queue · `/` search · `b` library · `d` discover ·
+`t` lyrics · `Space` play/pause · `←`/`→` previous/next · `s` shuffle ·
+`l` repeat · `r` refresh · `Esc` back out of a page, or close the panel ·
 `Tab` next panel.
 
-**In search results:** click plays the album/track/artist/playlist, right
-click appends a track to the queue. The queue section hides itself while
-results are on screen.
+**In any list:** left click **opens** an album, artist or playlist and
+**plays** a track; right click does the other one — plays the album, or
+appends the track to the queue. Hovering a row says which.
 
 **IPC:** `omarchy-shell javih.qobuz {open,close,toggle,refresh,status}`, plus
-`search <query>` and `results` — so a Hyprland binding can go straight to a
-query:
+`search <query>`, `results`, `view <queue|search|library|discover|lyrics>` and
+`browse <album|artist|playlist> <id>`. Handy for keybindings:
 
 ```lua
 o.bind("SUPER SHIFT, Q", "Search Qobuz", "omarchy-shell javih.qobuz search ''")
+o.bind("SUPER SHIFT, L", "Qobuz library", "omarchy-shell javih.qobuz view library")
 ```
 
 Media keys need no setup: qbzd publishes MPRIS as
 `org.mpris.MediaPlayer2.com.blitzfc.qbz`, which Omarchy's own media bindings
 already drive.
+
+## The panel
+
+Now playing and the transport stay put at the top; everything below is one
+view at a time, chosen from the tab strip:
+
+| View | What it holds |
+|---|---|
+| **Cola** | The upcoming queue. Click a track to jump to it. |
+| **Buscar** | Catalogue search across albums, tracks, artists and playlists. |
+| **Biblioteca** | Your favourite albums, tracks and artists, and your playlists. |
+| **Descubrir** | Qobuz's editorial rails — album of the week, new releases, most streamed, press awards. |
+| **Letra** | Lyrics for the current track. |
+
+Opening an album, artist or playlist drills into its own page — cover, a play
+button, a favourite toggle, and the track listing (an artist gets top tracks
+plus every release group). The back button names wherever you came from, so
+the same album row behaves identically whether you reached it from search,
+your library or a discover rail.
+
+Each view fetches only when first opened, and the library keeps whichever tab
+you were on.
 
 ## The Hi-Res mark
 
@@ -163,10 +187,21 @@ values (`albums`, not `album`), and `/api/play` takes a typed id —
 `{"album_id": "..."}`, `{"track_id": N}`, `{"artist_id": N}`,
 `{"playlist_id": N}` — not the documented `{"content": "album:ID"}`.
 
-Catalogue responses also nest what the playback ones keep flat: a search
-track's artist is `performer.name` (its own `artist` is null) and its album is
-an object, so anything reading those fields has to unwrap them or it renders
-`[object Object]`.
+Catalogue responses also nest what the playback ones keep flat, inconsistently
+enough to be worth listing:
+
+- A search track's artist is `performer.name`; its own `artist` is null.
+- An artist page names itself in `name.display`, and release lists nest again
+  as `artist.name.display`.
+- Discover albums leave `artist` null and fill `artists[]` instead.
+- An artist page's portrait is `{hash, format}`, not a URL — it has to be
+  assembled as `static.qobuz.com/images/artists/covers/<size>/<hash>.<format>`.
+- `/api/favorites?type=albums` answers with `type: "album"`, **singular**,
+  while the bucket it fills stays plural — so the echoed value cannot be used
+  as the key to read the response back.
+
+Anything reading these has to unwrap them or it renders `[object Object]`,
+which is what `nameOf`, `artistsLabel` and `artistPortraitUrl` are for.
 
 Saving any file under `~/.config/omarchy/plugins/` hot-reloads the plugin —
 **except** `QobuzModel.js`. QML caches imported JS libraries past
@@ -175,14 +210,15 @@ shell` to take effect. Editing QML alone reloads normally.
 
 ## Scope
 
-Done: now playing with cover art, transport, progress, volume, shuffle/repeat,
-the queue, and catalogue search across albums, tracks, artists and playlists
-with play-or-queue from the results.
+Everything qbzd exposes for listening is wired up: now playing with cover art,
+transport, progress, volume, shuffle/repeat, the queue, search, favourites
+(add and remove), your playlists, album/artist/playlist pages, the discover
+rails and lyrics.
 
-Not wired up yet: favourites, playlist management, album/artist browsing,
-discover rails and lyrics. qbzd exposes all of them (`/api/favorites`,
-`/api/playlists`, `/api/artist`, `/api/discover`, `/api/lyrics`) and the
-service is shaped to take them without restructuring.
+Not covered: creating or editing playlists (`/api/playlist/create`, `/update`,
+`/tracks/add`, `/tracks/remove`), Qobuz Connect device control, scrobbler
+setup, and the radio/suggestion endpoints. All are reachable through `qbzd`
+on the command line.
 
 ## License
 

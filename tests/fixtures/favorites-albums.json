@@ -1,0 +1,402 @@
+{
+  "favorites": {
+    "albums": {
+      "items": [
+        {
+          "articles": [],
+          "artist": {
+            "albums_count": 79,
+            "id": 363726,
+            "image": null,
+            "name": "Mastodon",
+            "picture": null,
+            "slug": "mastodon"
+          },
+          "artists": [
+            {
+              "id": 363726,
+              "name": "Mastodon",
+              "roles": [
+                "main-artist"
+              ]
+            }
+          ],
+          "displayable": true,
+          "downloadable": true,
+          "duration": 3923,
+          "favorited_at": 1788368941,
+          "genre": {
+            "color": "#0070ef",
+            "id": 116,
+            "name": "Metal",
+            "path": [
+              116
+            ],
+            "slug": "metal"
+          },
+          "hires": true,
+          "hires_streamable": true,
+          "id": "cevquklj84f3l",
+          "image": {
+            "back": null,
+            "large": "https://static.qobuz.com/images/covers/3l/4f/cevquklj84f3l_600.jpg",
+            "small": "https://static.qobuz.com/images/covers/3l/4f/cevquklj84f3l_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/3l/4f/cevquklj84f3l_50.jpg"
+          },
+          "label": {
+            "albums_count": 964,
+            "id": 244153,
+            "name": "Loma Vista Recordings",
+            "slug": "loma-vista-recordings-2",
+            "supplier_id": 1
+          },
+          "maximum_bit_depth": 24,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 48,
+          "media_count": 1,
+          "parental_warning": true,
+          "popularity": 0,
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1788213600,
+          "qobuz_id": 447093725,
+          "release_date_download": "2026-08-28",
+          "release_date_original": "2026-08-28",
+          "release_date_stream": "2026-08-28",
+          "released_at": 1787868000,
+          "sampleable": true,
+          "slug": "marrow-deep-mastodon",
+          "streamable": true,
+          "streamable_at": 1788213600,
+          "title": "Marrow Deep",
+          "tracks_count": 12,
+          "upc": "0888072796775",
+          "url": "https://www.qobuz.com/fr-fr/album/marrow-deep-mastodon/cevquklj84f3l",
+          "version": null
+        },
+        {
+          "articles": [],
+          "artist": {
+            "albums_count": 90,
+            "id": 37926,
+            "image": null,
+            "name": "Erykah Badu",
+            "picture": null,
+            "slug": "erykah-badu"
+          },
+          "artists": [
+            {
+              "id": 37926,
+              "name": "Erykah Badu",
+              "roles": [
+                "main-artist"
+              ]
+            },
+            {
+              "id": 106370,
+              "name": "The Alchemist",
+              "roles": [
+                "main-artist"
+              ]
+            }
+          ],
+          "displayable": true,
+          "downloadable": true,
+          "duration": 3772,
+          "favorited_at": 1788368928,
+          "genre": {
+            "color": "#0070ef",
+            "id": 134,
+            "name": "Soul",
+            "path": [
+              127,
+              134
+            ],
+            "slug": "soul"
+          },
+          "hires": true,
+          "hires_streamable": true,
+          "id": "kxend2k5wdg06",
+          "image": {
+            "back": null,
+            "large": "https://static.qobuz.com/images/covers/06/dg/kxend2k5wdg06_600.jpg",
+            "small": "https://static.qobuz.com/images/covers/06/dg/kxend2k5wdg06_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/06/dg/kxend2k5wdg06_50.jpg"
+          },
+          "label": {
+            "albums_count": 546,
+            "id": 1630797,
+            "name": "Young",
+            "slug": "young-8",
+            "supplier_id": 28
+          },
+          "maximum_bit_depth": 24,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "media_count": 1,
+          "parental_warning": true,
+          "popularity": 0,
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1788040800,
+          "qobuz_id": 440245353,
+          "release_date_download": "2026-08-28",
+          "release_date_original": "2026-08-28",
+          "release_date_stream": "2026-08-28",
+          "released_at": 1787868000,
+          "sampleable": true,
+          "slug": "before-the-world-blows-erykah-badu-the-alchemist",
+          "streamable": true,
+          "streamable_at": 1788040800,
+          "title": "Before The World Blows",
+          "tracks_count": 16,
+          "upc": "0889030051561",
+          "url": "https://www.qobuz.com/fr-fr/album/before-the-world-blows-erykah-badu-the-alchemist/kxend2k5wdg06",
+          "version": null
+        },
+        {
+          "articles": [],
+          "artist": {
+            "albums_count": 3,
+            "id": 32493240,
+            "image": null,
+            "name": "Helado Tropical",
+            "picture": null,
+            "slug": "helado-tropical"
+          },
+          "artists": [
+            {
+              "id": 32493240,
+              "name": "Helado Tropical",
+              "roles": [
+                "main-artist"
+              ]
+            },
+            {
+              "id": 1188188,
+              "name": "Helado Negro",
+              "roles": [
+                "main-artist"
+              ]
+            },
+            {
+              "id": 4943006,
+              "name": "Reyna Tropical",
+              "roles": [
+                "main-artist"
+              ]
+            }
+          ],
+          "displayable": true,
+          "downloadable": true,
+          "duration": 1562,
+          "favorited_at": 1787427128,
+          "genre": {
+            "color": "#0070ef",
+            "id": 113,
+            "name": "Alternativa & Indie",
+            "path": [
+              112,
+              119,
+              113
+            ],
+            "slug": "alternatif-et-inde"
+          },
+          "hires": true,
+          "hires_streamable": true,
+          "id": "vl2v7hwho6r1l",
+          "image": {
+            "back": null,
+            "large": "https://static.qobuz.com/images/covers/1l/6r/vl2v7hwho6r1l_600.jpg",
+            "small": "https://static.qobuz.com/images/covers/1l/6r/vl2v7hwho6r1l_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/1l/6r/vl2v7hwho6r1l_50.jpg"
+          },
+          "label": {
+            "albums_count": 181,
+            "id": 1500270,
+            "name": "Psychic Hotline",
+            "slug": "psychic-hotline",
+            "supplier_id": 70
+          },
+          "maximum_bit_depth": 24,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 48,
+          "media_count": 1,
+          "parental_warning": false,
+          "popularity": 0,
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1787263200,
+          "qobuz_id": 408973617,
+          "release_date_download": "2026-07-17",
+          "release_date_original": "2026-07-17",
+          "release_date_stream": "2026-07-17",
+          "released_at": 1784239200,
+          "sampleable": true,
+          "slug": "helado-tropical-helado-tropical-helado-negro-reyna-tropical",
+          "streamable": true,
+          "streamable_at": 1787176800,
+          "title": "Helado Tropical",
+          "tracks_count": 9,
+          "upc": "0850068258734",
+          "url": "https://www.qobuz.com/fr-fr/album/helado-tropical-helado-tropical-helado-negro-reyna-tropical/vl2v7hwho6r1l",
+          "version": null
+        },
+        {
+          "articles": [],
+          "artist": {
+            "albums_count": 72,
+            "id": 2730692,
+            "image": null,
+            "name": "Overmono",
+            "picture": null,
+            "slug": "overmono"
+          },
+          "artists": [
+            {
+              "id": 2730692,
+              "name": "Overmono",
+              "roles": [
+                "main-artist"
+              ]
+            }
+          ],
+          "displayable": true,
+          "downloadable": true,
+          "duration": 2407,
+          "favorited_at": 1786091405,
+          "genre": {
+            "color": "#0070ef",
+            "id": 64,
+            "name": "Electrónica",
+            "path": [
+              64
+            ],
+            "slug": "electro"
+          },
+          "hires": true,
+          "hires_streamable": true,
+          "id": "fl6c7o9e6rdqz",
+          "image": {
+            "back": null,
+            "large": "https://static.qobuz.com/images/covers/qz/rd/fl6c7o9e6rdqz_600.jpg",
+            "small": "https://static.qobuz.com/images/covers/qz/rd/fl6c7o9e6rdqz_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/qz/rd/fl6c7o9e6rdqz_50.jpg"
+          },
+          "label": {
+            "albums_count": 1790,
+            "id": 9313,
+            "name": "XL Recordings",
+            "slug": "xl-recordings",
+            "supplier_id": 28
+          },
+          "maximum_bit_depth": 24,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "media_count": 1,
+          "parental_warning": false,
+          "popularity": 0,
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1787522400,
+          "qobuz_id": 411932370,
+          "release_date_download": "2026-08-07",
+          "release_date_original": "2026-08-07",
+          "release_date_stream": "2026-08-07",
+          "released_at": 1786053600,
+          "sampleable": true,
+          "slug": "pure-devotion-overmono",
+          "streamable": true,
+          "streamable_at": 1787522400,
+          "title": "Pure Devotion",
+          "tracks_count": 11,
+          "upc": "0191404166864",
+          "url": "https://www.qobuz.com/fr-fr/album/pure-devotion-overmono/fl6c7o9e6rdqz",
+          "version": null
+        },
+        {
+          "articles": [],
+          "artist": {
+            "albums_count": 40,
+            "id": 1801343,
+            "image": null,
+            "name": "Amenra",
+            "picture": null,
+            "slug": "amenra"
+          },
+          "artists": [
+            {
+              "id": 1801343,
+              "name": "Amenra",
+              "roles": [
+                "main-artist"
+              ]
+            }
+          ],
+          "displayable": true,
+          "downloadable": true,
+          "duration": 3167,
+          "favorited_at": 1786033690,
+          "genre": {
+            "color": "#0070ef",
+            "id": 113,
+            "name": "Alternativa & Indie",
+            "path": [
+              112,
+              119,
+              113
+            ],
+            "slug": "alternatif-et-inde"
+          },
+          "hires": false,
+          "hires_streamable": false,
+          "id": "zyepechroi2cc",
+          "image": {
+            "back": null,
+            "large": "https://static.qobuz.com/images/covers/cc/i2/zyepechroi2cc_600.jpg",
+            "small": "https://static.qobuz.com/images/covers/cc/i2/zyepechroi2cc_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/cc/i2/zyepechroi2cc_50.jpg"
+          },
+          "label": {
+            "albums_count": 3,
+            "id": 4289819,
+            "name": "Hypertension",
+            "slug": "hypertension-3",
+            "supplier_id": 95
+          },
+          "maximum_bit_depth": 16,
+          "maximum_channel_count": 2,
+          "maximum_sampling_rate": 44.1,
+          "media_count": 1,
+          "parental_warning": false,
+          "popularity": 0,
+          "previewable": true,
+          "purchasable": true,
+          "purchasable_at": 1786226400,
+          "qobuz_id": 188585794,
+          "release_date_download": "2008-06-02",
+          "release_date_original": "2008-06-02",
+          "release_date_stream": "2008-06-02",
+          "released_at": 1212357600,
+          "sampleable": true,
+          "slug": "mass-iiii-amenra",
+          "streamable": true,
+          "streamable_at": 1786226400,
+          "title": "Mass Iiii",
+          "tracks_count": 7,
+          "upc": "5425015710624",
+          "url": "https://www.qobuz.com/fr-fr/album/mass-iiii-amenra/zyepechroi2cc",
+          "version": null
+        }
+      ],
+      "limit": 5,
+      "offset": 0,
+      "total": 83
+    },
+    "user": {
+      "id": 2173359,
+      "login": "javi.herrera@gmail.com"
+    }
+  },
+  "type": "album"
+}
