@@ -18,6 +18,9 @@ Item {
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property bool playing: playerState.playback === Model.PLAYBACK_PLAYING
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   implicitHeight: Style.space(84)
 
   // ---- Now playing -------------------------------------------------------
@@ -68,7 +71,7 @@ Item {
 
       Text {
         width: parent.width
-        text: root.track ? root.track.title : "Nada sonando"
+        text: root.track ? root.track.title : root.t("state.nothingPlaying")
         color: root.foreground
         font.family: root.fontFamily
         font.pixelSize: Style.font.body
@@ -110,7 +113,7 @@ Item {
 
       Button {
         iconText: "󰒞"
-        tooltipText: root.playerState.shuffle ? "Aleatorio activado" : "Aleatorio desactivado"
+        tooltipText: root.t(root.playerState.shuffle ? "action.shuffleOn" : "action.shuffleOff")
         foreground: root.foreground
         fontFamily: root.fontFamily
         active: root.playerState.shuffle
@@ -121,7 +124,7 @@ Item {
 
       Button {
         iconText: "󰒮"
-        tooltipText: "Anterior"
+        tooltipText: root.t("action.previous")
         foreground: root.foreground
         fontFamily: root.fontFamily
         enabled: Model.canHandle(root.playerState, "previous")
@@ -131,7 +134,7 @@ Item {
 
       Button {
         iconText: root.playing ? "󰏤" : "󰐊"
-        tooltipText: root.playing ? "Pausar" : "Reproducir"
+        tooltipText: root.t(root.playing ? "action.pause" : "action.play")
         iconSize: Style.font.heading
         bordered: true
         foreground: root.foreground
@@ -143,7 +146,7 @@ Item {
 
       Button {
         iconText: "󰒭"
-        tooltipText: "Siguiente"
+        tooltipText: root.t("action.next")
         foreground: root.foreground
         fontFamily: root.fontFamily
         enabled: Model.canHandle(root.playerState, "next")
@@ -153,8 +156,8 @@ Item {
 
       Button {
         iconText: root.playerState.repeat === "one" ? "󰑘" : "󰑖"
-        tooltipText: root.playerState.repeat === "off" ? "Repetición desactivada"
-                   : (root.playerState.repeat === "all" ? "Repetir todo" : "Repetir pista")
+        tooltipText: root.t(root.playerState.repeat === "off" ? "action.repeatOff"
+                   : (root.playerState.repeat === "all" ? "action.repeatAll" : "action.repeatOne"))
         foreground: root.foreground
         fontFamily: root.fontFamily
         active: root.playerState.repeat !== "off"

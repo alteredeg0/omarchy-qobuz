@@ -209,19 +209,21 @@ test("qualityLabel", () => {
 })
 
 test("trackLabel reflects each degraded state and elides long titles", () => {
+  const fb = { daemonDown: "qbzd", noSession: "No session", idle: "Qobuz" }
+
   const down = M.emptyState()
-  assert.equal(M.trackLabel(down, 40), "qbzd")
+  assert.equal(M.trackLabel(down, 40, fb), "qbzd")
 
   const loggedOut = M.applyStatus(M.emptyState(), fixture("status-needs-auth.json"))
-  assert.equal(M.trackLabel(loggedOut, 40), "Sin sesión")
+  assert.equal(M.trackLabel(loggedOut, 40, fb), "No session")
 
   const idle = { ...loggedOut, authState: "ok", track: null }
-  assert.equal(M.trackLabel(idle, 40), "Qobuz")
+  assert.equal(M.trackLabel(idle, 40, fb), "Qobuz")
 
   const playing = { ...idle, track: { title: "So What", artist: "Miles Davis" } }
-  assert.equal(M.trackLabel(playing, 40), "Miles Davis — So What")
-  assert.equal(M.trackLabel(playing, 12), "Miles Davis…")
-  assert.equal(M.trackLabel(playing, 0), "Miles Davis — So What", "0 means no limit")
+  assert.equal(M.trackLabel(playing, 40, fb), "Miles Davis — So What")
+  assert.equal(M.trackLabel(playing, 12, fb), "Miles Davis…")
+  assert.equal(M.trackLabel(playing, 0, fb), "Miles Davis — So What", "0 means no limit")
 })
 
 test("progressFraction stays inside 0..1", () => {
@@ -413,6 +415,7 @@ test("normalizeSearch on the real all-kinds response", () => {
   assert.equal(r.tracks[0].albumTitle, "Kind Of Blue")
 
   assert.equal(r.artists[0].title, "Miles Davis")
+  assert.equal(r.artists[0].albumsCount > 0, true)
   // Playlists use `name`; their `title` is always null.
   assert.equal(r.playlists[0].title, "Hi-Res Masters: Miles Davis")
   assert.equal(r.playlists[0].trackCount, 41)
@@ -457,13 +460,11 @@ test("search results do not disturb playback state", () => {
   assert.deepEqual({ track: s.track, position: s.position, playback: s.playback }, before)
 })
 
-test("artist album counts are pluralised", () => {
-  const one = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 1 })
-  assert.equal(one.subtitle, "1 álbum")
-  const many = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 11 })
-  assert.equal(many.subtitle, "11 álbumes")
-  const none = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 0 })
-  assert.equal(none.subtitle, "")
+test("artist items carry a count, not a phrase", () => {
+  // Wording it is QobuzStrings' job; the model must stay language-free.
+  const a = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 11 })
+  assert.equal(a.albumsCount, 11)
+  assert.equal(a.subtitle, "")
 })
 
 // ---------------------------------------------------------------------------
@@ -594,14 +595,13 @@ test("normalizeArtistPage groups releases and merges duplicate groups", () => {
   // render as two identical headings.
   const awarded = a.releaseGroups.find((g) => g.type === "awardedRelease")
   assert.equal(awarded.items.length, 17)
-  assert.equal(a.releaseGroups[0].label, "ÁLBUMES")
+  assert.equal(a.releaseGroups[0].type, "album", "the heading is looked up by type at render time")
 })
 
 test("normalizeDiscover orders the rails and picks the right kind per rail", () => {
   const rails = M.normalizeDiscover(fixture("discover-index.json"))
   assert.equal(rails.length > 0, true)
   assert.equal(rails[0].key, "album_of_the_week", "editorial order, not map order")
-  assert.equal(rails[0].label, "ÁLBUM DE LA SEMANA")
 
   const albums = rails.find((r) => r.key === "new_releases")
   assert.equal(albums.items[0].kind, "album")
@@ -733,11 +733,12 @@ test("artistsLabel credits the artist wherever the endpoint put them", () => {
     artists: [{ name: "A", roles: ["main-artist"] }, { name: "B", roles: ["featured-artist"] }]
   }), "A")
 
-  // A long collaboration list is summarised rather than swamping the row.
+  // A long collaboration list is summarised rather than swamping the row,
+  // with an ellipsis so the model carries no language of its own.
   assert.equal(M.artistsLabel({
     artists: [{ name: "A", roles: ["main-artist"] }, { name: "B", roles: ["main-artist"] },
               { name: "C", roles: ["main-artist"] }, { name: "D", roles: ["main-artist"] }]
-  }), "A, B y 2 más")
+  }), "A, B…")
 
   assert.equal(M.artistsLabel({}), "")
   assert.equal(M.artistsLabel(null), "")

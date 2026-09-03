@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell.Io
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // Headless singleton: owns the one connection to qbzd and the one copy of the
 // playback state. Declared as a `service` kind because the bar instantiates a
@@ -18,6 +19,15 @@ Item {
   property var manifest: null
 
   property string host: "127.0.0.1:8182"
+
+  // "auto" | "en" | "es". Pushed in by the bar widget, like `host`; every
+  // surface reads the resolved value off the service so both stay in step.
+  property string languageSetting: "auto"
+  readonly property string lang: Strings.resolve(languageSetting, Qt.locale().name)
+
+  // Convenience so components can call service.t("key") instead of threading
+  // the language through every binding.
+  function t(key, a, b) { return Strings.t(lang, key, a, b) }
 
   // The whole reduced state, replaced wholesale so QML bindings re-evaluate.
   property var playerState: Model.emptyState()
@@ -252,8 +262,7 @@ Item {
   }
 
   function secondaryLabel(item) {
-    if (Model.isBrowsable(item)) return "Clic: abrir · Clic derecho: reproducir"
-    return "Clic: reproducir · Clic derecho: añadir a la cola"
+    return t(Model.isBrowsable(item) ? "hint.openOrPlay" : "hint.playOrQueue")
   }
 
   function loadLyrics() {
@@ -461,8 +470,8 @@ Item {
       // A failed search must not leave the spinner up forever.
       service.apply(Object.assign({}, service.playerState, {
         searchRunning: false,
-        searchError: code === 3 ? "qbzd no responde"
-                   : (code === 4 ? "Sin sesión" : "La búsqueda falló")
+        searchError: code === 3 ? t("state.daemonUnreachable")
+                   : (code === 4 ? t("state.noSession") : t("search.failed"))
       }))
     }
   }

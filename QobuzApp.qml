@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // The full-screen surface. An `overlay`-kind plugin: shell.qml owns the
 // Loader, keeps it alive between summons (keepLoaded), and injects
@@ -29,6 +30,9 @@ Item {
 
   readonly property var playerState: service ? service.playerState : Model.emptyState()
   readonly property bool browsing: !statusSelected && playerState.view === Model.VIEW_BROWSE
+
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
 
   // The app is themed off the popup surface tokens, like every other overlay.
   readonly property color background: Color.popups.background
@@ -244,21 +248,21 @@ Item {
   }
 
   readonly property string headerTitle: {
-    if (statusSelected) return "Estado"
-    if (browsing) return playerState.browse ? playerState.browse.title : "Cargando…"
+    if (statusSelected) return t("view.status")
+    if (browsing) return playerState.browse ? playerState.browse.title : t("word.loading")
     switch (playerState.view) {
-      case Model.VIEW_SEARCH: return "Buscar"
+      case Model.VIEW_SEARCH: return t("view.search")
       case Model.VIEW_LIBRARY: {
         switch (playerState.libraryType) {
-          case "tracks": return "Pistas favoritas"
-          case "artists": return "Artistas favoritos"
-          case "playlists": return "Tus playlists"
-          default: return "Álbumes favoritos"
+          case "tracks": return t("library.titleTracks")
+          case "artists": return t("library.titleArtists")
+          case "playlists": return t("library.titlePlaylists")
+          default: return t("library.titleAlbums")
         }
       }
-      case Model.VIEW_LYRICS: return "Letra"
-      case Model.VIEW_QUEUE: return "Cola"
-      default: return "Descubrir"
+      case Model.VIEW_LYRICS: return t("view.lyrics")
+      case Model.VIEW_QUEUE: return t("view.queue")
+      default: return t("view.discover")
     }
   }
 }

@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // The app's main area: whichever view the shared state says, laid out for a
 // full screen rather than a 440px panel. Collections become cover grids;
@@ -21,6 +22,9 @@ Column {
 
   function showing(view) { return playerState.view === view }
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   spacing: Style.space(20)
 
   // ---- Empty and loading states -----------------------------------------
@@ -28,7 +32,7 @@ Column {
   Text {
     width: parent.width
     visible: root.playerState.authState === "needs_auth"
-    text: "Sin sesión de Qobuz. Ejecuta «qbzd login» en una terminal."
+    text: root.t("state.loginPrompt")
     color: Qt.darker(root.foreground, 1.3)
     font.family: root.fontFamily
     font.pixelSize: Style.font.body
@@ -46,7 +50,7 @@ Column {
     Text {
       width: parent.width
       visible: root.playerState.discoverRunning
-      text: "Cargando novedades…"
+      text: root.t("discover.loading")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -62,7 +66,7 @@ Column {
         width: parent.width
         bar: root.bar
         service: root.service
-        label: modelData.label
+        label: Strings.railLabel(root.service ? root.service.lang : Strings.DEFAULT_LANG, modelData.key)
         items: modelData.items
         maxItems: 12
       }
@@ -90,7 +94,7 @@ Column {
       width: parent.width
       visible: !root.playerState.searchRunning && root.playerState.searchError === ""
                && root.results.query !== "" && root.results.total === 0
-      text: "Sin resultados para «" + root.results.query + "»."
+      text: root.t("search.noResults", root.results.query)
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -100,7 +104,7 @@ Column {
     Text {
       width: parent.width
       visible: root.results.query === "" && !root.playerState.searchRunning
-      text: "Escribe arriba para buscar en el catálogo."
+      text: root.t("search.prompt")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -111,7 +115,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "ÁLBUMES"
+      label: root.t("section.albums")
       items: root.results.albums
     }
 
@@ -120,7 +124,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "PISTAS"
+      label: root.t("section.tracks")
       items: root.results.tracks
       maxItems: 20
     }
@@ -129,7 +133,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "ARTISTAS"
+      label: root.t("section.artists")
       items: root.results.artists
       targetCoverSize: Style.space(120)
     }
@@ -138,7 +142,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "PLAYLISTS"
+      label: root.t("section.playlists")
       items: root.results.playlists
     }
   }
@@ -153,7 +157,7 @@ Column {
     Text {
       width: parent.width
       visible: root.playerState.libraryRunning
-      text: "Cargando…"
+      text: root.t("word.loading")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -163,8 +167,8 @@ Column {
     Text {
       width: parent.width
       visible: !root.playerState.libraryRunning && (root.playerState.library || []).length === 0
-      text: root.playerState.libraryType === "playlists"
-        ? "No tienes playlists." : "No tienes favoritos en esta categoría."
+      text: root.t(root.playerState.libraryType === "playlists"
+        ? "library.emptyPlaylists" : "library.emptyFavourites")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -201,7 +205,7 @@ Column {
       bar: root.bar
       service: root.service
       label: root.playerState.queueLength > 0
-        ? "A CONTINUACIÓN · " + root.playerState.queueLength + " EN COLA" : "COLA"
+        ? root.t("section.upNext", root.playerState.queueLength) : root.t("section.queue")
       items: root.playerState.upcoming
       numbered: true
       maxItems: 100
@@ -210,8 +214,7 @@ Column {
     Text {
       width: parent.width
       visible: (root.playerState.upcoming || []).length === 0
-      text: root.playerState.queueLength > 0
-        ? "Última pista de la cola." : "La cola está vacía."
+      text: root.t(root.playerState.queueLength > 0 ? "queue.last" : "queue.empty")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -238,7 +241,7 @@ Column {
     Text {
       width: parent.width
       visible: root.playerState.browseRunning
-      text: "Cargando…"
+      text: root.t("browse.loading")
       color: Qt.darker(root.foreground, 1.4)
       font.family: root.fontFamily
       font.pixelSize: Style.font.bodySmall
@@ -327,7 +330,7 @@ Column {
             text: {
               if (!root.detail) return ""
               var bits = []
-              if (root.detail.trackCount > 0) bits.push(root.detail.trackCount + " pistas")
+              if (root.detail.trackCount > 0) bits.push(root.t("browse.trackCount", root.detail.trackCount))
               if (root.detail.duration > 0) bits.push(Model.formatDuration(root.detail.duration))
               return bits.join("  ·  ")
             }
@@ -343,7 +346,7 @@ Column {
           topPadding: Style.space(4)
 
           Button {
-            text: "Reproducir"
+            text: root.t("action.play")
             iconText: "󰐊"
             bordered: true
             foreground: root.foreground
@@ -353,8 +356,8 @@ Column {
 
           Button {
             iconText: root.service && root.service.isFavorite(root.detail) ? "󰋑" : "󰋕"
-            tooltipText: root.service && root.service.isFavorite(root.detail)
-              ? "Quitar de favoritos" : "Añadir a favoritos"
+            tooltipText: root.t(root.service && root.service.isFavorite(root.detail)
+              ? "action.favouriteRemove" : "action.favouriteAdd")
             bordered: true
             foreground: root.foreground
             fontFamily: root.fontFamily
@@ -371,7 +374,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "PISTAS"
+      label: root.t("section.tracks")
       numbered: true
       maxItems: 200
       items: root.detail && !root.isArtist ? (root.detail.tracks || []) : []
@@ -382,7 +385,7 @@ Column {
       width: parent.width
       bar: root.bar
       service: root.service
-      label: "MÁS ESCUCHADAS"
+      label: root.t("section.topTracks")
       numbered: true
       maxItems: 10
       items: root.isArtist ? (root.detail.topTracks || []) : []
@@ -397,7 +400,7 @@ Column {
         width: parent.width
         bar: root.bar
         service: root.service
-        label: modelData.label
+        label: Strings.releaseGroupLabel(root.service ? root.service.lang : Strings.DEFAULT_LANG, modelData.type)
         items: modelData.items
         maxItems: 18
       }

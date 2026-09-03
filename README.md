@@ -74,6 +74,25 @@ Set with `omarchy bar set javih.qobuz <key> <value>`.
 | `showLabel` | `true` | Off leaves just the play/pause glyph. A vertical bar always collapses to the glyph. |
 | `maxLabelChars` | `32` | Elision point for the bar label. |
 | `hideWhenIdle` | `false` | Collapse the widget out of the bar while qbzd is stopped. |
+| `language` | `auto` | UI language: `auto`, `en` or `es`. |
+
+### Language
+
+Every word this plugin writes lives in `QobuzStrings.js`, in English and
+Spanish. `auto` follows `$LANG` and falls back to English for anything else:
+
+```bash
+omarchy bar set javih.qobuz language es
+```
+
+What it does **not** change is catalogue text, which arrives in whatever
+language Qobuz serves the account — playlist names, an artist's `performer`
+category, "Qobuz España" as a playlist owner. No plugin setting reaches that.
+
+Adding a language means adding one block to `STRINGS` in `QobuzStrings.js` and
+listing its code in `LANGUAGES`. `tests/strings.test.js` then enforces that it
+has exactly the same keys as English, none of them empty, with matching `{0}`
+placeholders — the failure mode of every hand-rolled translation table.
 
 ## Controls
 

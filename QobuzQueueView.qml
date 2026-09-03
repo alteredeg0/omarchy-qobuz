@@ -17,12 +17,15 @@ Column {
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property var upcoming: playerState.upcoming || []
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   spacing: Style.space(4)
 
   PanelSectionHeader {
     text: root.upcoming.length > 0
-      ? "A CONTINUACIÓN · " + root.playerState.queueLength + " EN COLA"
-      : "COLA"
+      ? root.t("section.upNext", root.playerState.queueLength)
+      : root.t("section.queue")
     foreground: root.foreground
     fontFamily: root.fontFamily
   }
@@ -30,7 +33,7 @@ Column {
   Text {
     visible: root.upcoming.length === 0
     width: parent.width
-    text: root.playerState.queueLength > 0 ? "Última pista de la cola." : "La cola está vacía."
+    text: root.t(root.playerState.queueLength > 0 ? "queue.last" : "queue.empty")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -60,7 +63,7 @@ Column {
 
   Text {
     visible: root.upcoming.length > 12
-    text: "+" + (root.upcoming.length - 12) + " más"
+    text: root.t("hint.more", root.upcoming.length - 12)
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.caption

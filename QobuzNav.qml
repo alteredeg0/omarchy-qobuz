@@ -17,6 +17,9 @@ Item {
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property bool browsing: playerState.view === Model.VIEW_BROWSE
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   implicitHeight: browsing ? backRow.implicitHeight : tabRow.implicitHeight
 
   Row {
@@ -26,11 +29,11 @@ Item {
 
     Repeater {
       model: [
-        { view: Model.VIEW_QUEUE,    label: "Cola",      icon: "󰲸" },
-        { view: Model.VIEW_SEARCH,   label: "Buscar",    icon: "󰍉" },
-        { view: Model.VIEW_LIBRARY,  label: "Biblioteca", icon: "󰋕" },
-        { view: Model.VIEW_DISCOVER, label: "Descubrir", icon: "󰉹" },
-        { view: Model.VIEW_LYRICS,   label: "Letra",     icon: "󰊄" }
+        { view: Model.VIEW_QUEUE,    label: root.t("view.queue"),    icon: "󰲸" },
+        { view: Model.VIEW_SEARCH,   label: root.t("view.search"),   icon: "󰍉" },
+        { view: Model.VIEW_LIBRARY,  label: root.t("view.library"),  icon: "󰋕" },
+        { view: Model.VIEW_DISCOVER, label: root.t("view.discover"), icon: "󰉹" },
+        { view: Model.VIEW_LYRICS,   label: root.t("view.lyrics"),   icon: "󰊄" }
       ]
 
       // Five labelled tabs do not fit the panel width, so only the active
@@ -70,11 +73,11 @@ Item {
 
   readonly property string backLabel: {
     switch (playerState.browseFrom) {
-      case Model.VIEW_SEARCH: return "Resultados"
-      case Model.VIEW_LIBRARY: return "Biblioteca"
-      case Model.VIEW_DISCOVER: return "Descubrir"
-      case Model.VIEW_LYRICS: return "Letra"
-      default: return "Cola"
+      case Model.VIEW_SEARCH: return t("view.results")
+      case Model.VIEW_LIBRARY: return t("view.library")
+      case Model.VIEW_DISCOVER: return t("view.discover")
+      case Model.VIEW_LYRICS: return t("view.lyrics")
+      default: return t("view.queue")
     }
   }
 }

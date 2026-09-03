@@ -104,9 +104,11 @@ Item {
     }
   }
 
+  function t(key, a) { return service ? service.t(key, a) : String(key) }
+
   function placeholderTitle() {
-    if (!playerState.daemonUp) return "qbzd no responde"
-    if (playerState.authState === "needs_auth") return "Sin sesión de Qobuz"
-    return "Nada sonando"
+    if (!playerState.daemonUp) return t("state.daemonUnreachable")
+    if (playerState.authState === "needs_auth") return t("state.noSessionTitle")
+    return t("state.nothingPlaying")
   }
 }

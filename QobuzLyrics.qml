@@ -18,12 +18,15 @@ Column {
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property var lines: lyrics ? (lyrics.lines || []) : []
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   spacing: Style.space(4)
 
   Text {
     width: parent.width
     visible: root.playerState.lyricsRunning
-    text: "Buscando la letra…"
+    text: root.t("lyrics.loading")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -34,9 +37,9 @@ Column {
     width: parent.width
     visible: !root.playerState.lyricsRunning && root.lines.length === 0
     text: {
-      if (!root.playerState.track) return "No hay nada sonando."
+      if (!root.playerState.track) return root.t("lyrics.noTrack")
       if (root.lyrics && root.lyrics.message) return root.lyrics.message
-      return "Esta pista no tiene letra en Qobuz."
+      return root.t("lyrics.none")
     }
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily

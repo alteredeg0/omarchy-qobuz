@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "javih.qobuz",
   "name": "Qobuz",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Javier Herrera",
   "license": "MIT",
   "description": "Qobuz for Omarchy: a bar widget with a full-screen player, driven by the qbzd headless daemon.",
@@ -26,7 +26,8 @@
       "host": "127.0.0.1:8182",
       "showLabel": true,
       "maxLabelChars": 32,
-      "hideWhenIdle": false
+      "hideWhenIdle": false,
+      "language": "auto"
     },
     "schema": [
       {
@@ -58,6 +59,13 @@
         "label": "Hide when nothing is playing",
         "description": "Collapse the widget out of the bar while qbzd is stopped.",
         "defaultValue": false
+      },
+      {
+        "key": "language",
+        "type": "string",
+        "label": "Language",
+        "description": "UI language: auto (follows $LANG), en, or es. Catalogue text still comes from Qobuz in whatever language your account is served.",
+        "defaultValue": "auto"
       }
     ]
   },

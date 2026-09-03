@@ -28,26 +28,37 @@ Panel {
   readonly property bool showLabel: setting("showLabel", true) !== false
   readonly property int maxLabelChars: setting("maxLabelChars", 32)
   readonly property bool hideWhenIdle: setting("hideWhenIdle", false) === true
+  readonly property string languageSetting: setting("language", "auto")
+
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
 
   readonly property bool idle: !playerState.track && playerState.playback === Model.PLAYBACK_STOPPED
   readonly property string playGlyph: playerState.playback === Model.PLAYBACK_PLAYING ? "󰏤" : "󰐊"
+  readonly property var labelFallbacks: ({
+    daemonDown: "qbzd",
+    noSession: t("state.noSession"),
+    idle: t("app.name")
+  })
   readonly property string label: root.vertical || !showLabel
-    ? "" : Model.trackLabel(playerState, maxLabelChars)
+    ? "" : Model.trackLabel(playerState, maxLabelChars, labelFallbacks)
 
   readonly property string tooltip: {
-    if (!playerState.daemonUp) return "qbzd no responde en " + hostSetting
-    if (playerState.authState === "needs_auth") return "Qobuz — sin sesión (qbzd login)"
-    if (!playerState.track) return "Qobuz — nada sonando"
+    if (!playerState.daemonUp) return t("state.daemonDown", hostSetting)
+    if (playerState.authState === "needs_auth") return t("state.noSessionTooltip")
+    if (!playerState.track) return t("state.nothingPlayingTooltip")
     var q = Model.qualityLabel(playerState.track)
-    return Model.trackLabel(playerState, 0) + (q ? "  ·  " + q : "")
+    return Model.trackLabel(playerState, 0, labelFallbacks) + (q ? "  ·  " + q : "")
   }
 
   // Services get no `settings` injection, so the widget hands the host over.
   function syncService() {
-    if (service && service.host !== hostSetting) service.host = hostSetting
+    if (!service) return
+    if (service.host !== hostSetting) service.host = hostSetting
+    if (service.languageSetting !== languageSetting) service.languageSetting = languageSetting
   }
   onServiceChanged: syncService()
   onHostSettingChanged: syncService()
+  onLanguageSettingChanged: syncService()
   Component.onCompleted: syncService()
 
   visible: !(hideWhenIdle && idle)
@@ -199,7 +210,7 @@ Panel {
 
             Text {
               width: parent.width
-              text: "qbzd no responde en " + root.hostSetting + ".\nArráncalo con: systemctl --user start qbzd"
+              text: root.t("state.daemonDownHint", root.hostSetting)
               color: root.barForeground
               font.family: root.bar ? root.bar.fontFamily : Style.font.family
               font.pixelSize: Style.font.bodySmall
@@ -208,7 +219,7 @@ Panel {
             }
 
             Button {
-              text: "Reintentar"
+              text: root.t("action.retry")
               bordered: true
               foreground: root.barForeground
               onClicked: if (root.service) root.service.refresh()
@@ -224,7 +235,7 @@ Panel {
 
             Text {
               width: parent.width
-              text: "El login de Qobuz es OAuth por navegador; se abrirá una terminal."
+              text: root.t("state.loginHint")
               color: root.barForeground
               font.family: root.bar ? root.bar.fontFamily : Style.font.family
               font.pixelSize: Style.font.bodySmall
@@ -233,7 +244,7 @@ Panel {
             }
 
             Button {
-              text: "Iniciar sesión"
+              text: root.t("action.login")
               bordered: true
               foreground: root.barForeground
               onClicked: {
@@ -275,7 +286,7 @@ Panel {
           Button {
             width: parent.width
             visible: content.live
-            text: "Abrir Qobuz"
+            text: root.t("action.openApp")
             iconText: "󰊓"
             bordered: true
             leftAlign: true

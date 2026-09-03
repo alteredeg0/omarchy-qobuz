@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // One cell of the app's cover grid. Left click opens an album, artist or
 // playlist; right click plays it. Same two service calls the panel rows use,
@@ -141,11 +142,16 @@ Item {
     }
   }
 
+  readonly property string lang: service ? service.lang : Strings.DEFAULT_LANG
+
   readonly property string subtitleText: {
     if (!item) return ""
-    if (item.kind === "playlist" && item.trackCount > 0)
-      return item.subtitle ? item.subtitle + "  ·  " + item.trackCount + " pistas"
-                           : item.trackCount + " pistas"
+    if (item.kind === "artist" && item.albumsCount > 0)
+      return Strings.albumsCountLabel(lang, item.albumsCount)
+    if (item.kind === "playlist" && item.trackCount > 0) {
+      var count = Strings.t(lang, "browse.trackCount", item.trackCount)
+      return item.subtitle ? item.subtitle + "  ·  " + count : count
+    }
     return item.subtitle || ""
   }
 

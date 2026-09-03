@@ -113,7 +113,9 @@ function artistsLabel(raw) {
     }
   }
   if (!main.length) main = [nameOf(list[0])]
-  if (main.length > 2) return main.slice(0, 2).join(", ") + " y " + (main.length - 2) + " más"
+  // An ellipsis rather than "and N more": the model stays language-free, and
+  // the UI language is decided in QobuzStrings.
+  if (main.length > 2) return main.slice(0, 2).join(", ") + "…"
   return main.join(", ")
 }
 
@@ -425,11 +427,6 @@ function needsQueueRefetch(event) {
 // filter excluded it.
 var SEARCH_KINDS = ["albums", "tracks", "artists", "playlists"]
 
-function albumsCountLabel(count) {
-  if (count <= 0) return ""
-  return count === 1 ? "1 álbum" : count + " álbumes"
-}
-
 // One shape for every result kind, so the list delegate stays simple and the
 // play action knows which id field qbzd wants.
 function normalizeSearchItem(kind, raw) {
@@ -465,7 +462,9 @@ function normalizeSearchItem(kind, raw) {
       return {
         kind: "artist", id: id,
         title: str(raw.name),
-        subtitle: albumsCountLabel(num(raw.albums_count, 0)),
+        // A count, not a sentence: QobuzStrings turns it into "5 albums".
+        subtitle: "",
+        albumsCount: num(raw.albums_count, 0),
         imageUrl: imageUrl(raw, false),
         duration: 0, trackCount: 0, hires: false
       }
@@ -621,12 +620,6 @@ function normalizePlaylistDetail(payload) {
 
 // /api/artist?id=<n> -> {view, page: {name: {display}, images: {portrait},
 //                        top_tracks, releases: [{type, items, has_more}]}}
-var RELEASE_GROUP_LABELS = {
-  album: "ÁLBUMES", live: "EN DIRECTO", compilation: "RECOPILATORIOS",
-  epSingle: "EPS Y SINGLES", download: "SOLO DESCARGA",
-  awardedRelease: "PREMIADOS", other: "OTROS"
-}
-
 // An artist page gives its portrait as {hash, format}, not a URL — unlike
 // search results, which hand over the finished link. The path is the one
 // those links use:
@@ -661,7 +654,8 @@ function normalizeArtistPage(payload) {
       continue
     }
     seen[type] = groups.length
-    groups.push({ type: type, label: RELEASE_GROUP_LABELS[type] || type.toUpperCase(), items: items })
+    // The heading is looked up by `type` in QobuzStrings at render time.
+    groups.push({ type: type, items: items })
   }
 
   return {
@@ -677,16 +671,6 @@ function normalizeArtistPage(payload) {
 }
 
 // /api/discover?section=index -> {section, data: {containers: {<key>: {id, data: {items}}}}}
-var DISCOVER_LABELS = {
-  new_releases: "NOVEDADES",
-  most_streamed: "MÁS ESCUCHADOS",
-  press_awards: "PREMIOS DE LA PRENSA",
-  qobuzissims: "QOBUZISSIMS",
-  album_of_the_week: "ÁLBUM DE LA SEMANA",
-  ideal_discography: "DISCOGRAFÍA IDEAL",
-  playlists: "PLAYLISTS",
-  playlists_tags: "POR GÉNERO"
-}
 // Order matters more than the map iteration order the daemon happens to use.
 var DISCOVER_ORDER = ["album_of_the_week", "new_releases", "most_streamed",
                       "qobuzissims", "press_awards", "ideal_discography", "playlists"]
@@ -711,7 +695,8 @@ function normalizeDiscover(payload) {
     var kind = keys[j].indexOf("playlist") === 0 ? "playlists" : "albums"
     var items = normalizeItems(kind, itemsOf(bucket))
     if (!items.length) continue
-    out.push({ key: keys[j], label: DISCOVER_LABELS[keys[j]] || keys[j].replace(/_/g, " ").toUpperCase(), items: items })
+    // The rail heading is looked up by `key` in QobuzStrings at render time.
+    out.push({ key: keys[j], items: items })
   }
   return out
 }
@@ -915,10 +900,13 @@ function qualityLabel(track) {
   return track.hires === true ? "Hi-Res" : ""
 }
 
-function trackLabel(state, maxChars) {
-  if (!state.daemonUp) return "qbzd"
-  if (state.authState === "needs_auth") return "Sin sesión"
-  if (!state.track) return "Qobuz"
+// `fallbacks` carries the already-translated {daemonDown, noSession, idle}
+// texts. The model stays data-only — it has no business picking a language.
+function trackLabel(state, maxChars, fallbacks) {
+  var f = fallbacks || {}
+  if (!state.daemonUp) return f.daemonDown || "qbzd"
+  if (state.authState === "needs_auth") return f.noSession || "No session"
+  if (!state.track) return f.idle || "Qobuz"
   var text = state.track.artist
     ? state.track.artist + " — " + state.track.title
     : state.track.title

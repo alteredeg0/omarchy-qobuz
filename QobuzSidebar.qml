@@ -22,6 +22,9 @@ Flickable {
   readonly property bool showingPlaylists: playerState.libraryType === "playlists"
   readonly property var playlists: showingPlaylists ? (playerState.library || []) : []
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   contentHeight: column.implicitHeight
   clip: true
   boundsBehavior: Flickable.StopAtBounds
@@ -51,7 +54,7 @@ Flickable {
         spacing: 0
 
         Text {
-          text: "Qobuz"
+          text: root.t("app.name")
           color: root.foreground
           font.family: root.fontFamily
           font.pixelSize: Style.font.subtitle
@@ -74,10 +77,10 @@ Flickable {
 
     Repeater {
       model: [
-        { view: Model.VIEW_DISCOVER, label: "Descubrir", icon: "󰉹" },
-        { view: Model.VIEW_SEARCH,   label: "Buscar",    icon: "󰍉" },
-        { view: Model.VIEW_QUEUE,    label: "Cola",      icon: "󰲸" },
-        { view: Model.VIEW_LYRICS,   label: "Letra",     icon: "󰊄" }
+        { view: Model.VIEW_DISCOVER, label: root.t("view.discover"), icon: "󰉹" },
+        { view: Model.VIEW_SEARCH,   label: root.t("view.search"),   icon: "󰍉" },
+        { view: Model.VIEW_QUEUE,    label: root.t("view.queue"),    icon: "󰲸" },
+        { view: Model.VIEW_LYRICS,   label: root.t("view.lyrics"),   icon: "󰊄" }
       ]
 
       delegate: Button {
@@ -101,7 +104,7 @@ Flickable {
     // ---- Library ---------------------------------------------------------
 
     PanelSectionHeader {
-      text: "TU BIBLIOTECA"
+      text: root.t("library.heading")
       foreground: root.foreground
       fontFamily: root.fontFamily
       topPadding: Style.space(14)
@@ -110,10 +113,10 @@ Flickable {
 
     Repeater {
       model: [
-        { kind: "albums",    label: "Álbumes",  icon: "󰀥" },
-        { kind: "tracks",    label: "Pistas",   icon: "󰝚" },
-        { kind: "artists",   label: "Artistas", icon: "󰠃" },
-        { kind: "playlists", label: "Playlists", icon: "󰲹" }
+        { kind: "albums",    label: root.t("library.albums"),    icon: "󰀥" },
+        { kind: "tracks",    label: root.t("library.tracks"),    icon: "󰝚" },
+        { kind: "artists",   label: root.t("library.artists"),   icon: "󰠃" },
+        { kind: "playlists", label: root.t("library.playlists"), icon: "󰲹" }
       ]
 
       delegate: Button {
@@ -178,7 +181,7 @@ Flickable {
     Button {
       width: root.width
       leftAlign: true
-      text: "Estado"
+      text: root.t("view.status")
       iconText: "󰋼"
       fontSize: Style.font.body
       foreground: root.foreground

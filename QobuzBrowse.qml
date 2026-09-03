@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // A drilled-into album, artist or playlist. Albums and playlists show their
 // track listing; an artist shows top tracks and its release groups.
@@ -17,12 +18,15 @@ Column {
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property bool isArtist: detail && detail.kind === "artist"
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   spacing: Style.space(8)
 
   Text {
     width: parent.width
     visible: root.playerState.browseRunning
-    text: "Cargando…"
+    text: root.t("browse.loading")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -32,7 +36,7 @@ Column {
   Text {
     width: parent.width
     visible: !root.playerState.browseRunning && !root.detail
-    text: "No se pudo abrir."
+    text: root.t("browse.failed")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -121,7 +125,7 @@ Column {
           text: {
             if (!root.detail) return ""
             var bits = []
-            if (root.detail.trackCount > 0) bits.push(root.detail.trackCount + " pistas")
+            if (root.detail.trackCount > 0) bits.push(root.t("browse.trackCount", root.detail.trackCount))
             if (root.detail.duration > 0) bits.push(Model.formatDuration(root.detail.duration))
             return bits.join("  ·  ")
           }
@@ -136,7 +140,7 @@ Column {
         spacing: Style.space(4)
 
         Button {
-          text: "Reproducir"
+          text: root.t("action.play")
           iconText: "󰐊"
           bordered: true
           fontSize: Style.font.caption
@@ -149,8 +153,8 @@ Column {
           // Artists cannot be favourited through a track/album/artist pair
           // any differently — the same route takes all three.
           iconText: root.service && root.service.isFavorite(root.detail) ? "󰋑" : "󰋕"
-          tooltipText: root.service && root.service.isFavorite(root.detail)
-            ? "Quitar de favoritos" : "Añadir a favoritos"
+          tooltipText: root.t(root.service && root.service.isFavorite(root.detail)
+            ? "action.favouriteRemove" : "action.favouriteAdd")
           fontSize: Style.font.caption
           foreground: root.foreground
           fontFamily: root.fontFamily
@@ -168,7 +172,7 @@ Column {
     width: parent.width
     bar: root.bar
     service: root.service
-    label: "PISTAS"
+    label: root.t("section.tracks")
     numbered: true
     maxItems: 100
     items: root.detail && !root.isArtist ? (root.detail.tracks || []) : []
@@ -179,7 +183,7 @@ Column {
     width: parent.width
     bar: root.bar
     service: root.service
-    label: "MÁS ESCUCHADAS"
+    label: root.t("section.topTracks")
     numbered: true
     maxItems: 10
     items: root.isArtist ? (root.detail.topTracks || []) : []
@@ -194,7 +198,7 @@ Column {
       width: root.width
       bar: root.bar
       service: root.service
-      label: modelData.label
+      label: Strings.releaseGroupLabel(root.service ? root.service.lang : Strings.DEFAULT_LANG, modelData.type)
       items: modelData.items
       maxItems: 8
     }

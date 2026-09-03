@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // One catalogue row — search result, favourite, playlist, discover item or
 // track listing. Left click activates it (opens an album/artist/playlist,
@@ -21,6 +22,7 @@ Item {
   property string hintText: ""
   // Track listings show a position number where a cover would otherwise go.
   property string indexLabel: ""
+  property string lang: Strings.DEFAULT_LANG
 
   // Catalogue items carry `imageUrl`; tracks that came from the player
   // endpoints carry `artworkUrl`. Both land in this same row.
@@ -158,6 +160,9 @@ Item {
   // `artist`/`album`. Same row renders both.
   readonly property string subtitleText: {
     if (!item) return ""
+    // Artists carry a count rather than a phrase, so it is worded here.
+    if (item.kind === "artist" && item.albumsCount > 0)
+      return Strings.albumsCountLabel(root.lang, item.albumsCount)
     var who = String(item.subtitle || item.artist || "")
     var album = String(item.albumTitle || item.album || "")
     if (item.kind === "track" && album)

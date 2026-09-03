@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // A titled list of catalogue rows. Every view in the panel — search sections,
 // favourites, playlists, discover rails, album and playlist track listings —
@@ -20,6 +21,9 @@ Column {
   readonly property color foreground: bar ? bar.foreground : Color.popups.text
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property var shown: (items || []).slice(0, maxItems)
+
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
 
   spacing: Style.space(2)
   visible: (items || []).length > 0
@@ -43,6 +47,7 @@ Column {
       bar: root.bar
       item: modelData
       indexLabel: root.numbered ? String(index + 1) : ""
+      lang: root.service ? root.service.lang : Strings.DEFAULT_LANG
       fallbackGlyph: root.glyphFor(modelData.kind)
       hintText: root.service ? root.service.secondaryLabel(modelData) : ""
       onActivated: if (root.service) root.service.activateItem(modelData)
@@ -52,7 +57,7 @@ Column {
 
   Text {
     visible: (root.items || []).length > root.maxItems
-    text: "+" + ((root.items || []).length - root.maxItems) + " más"
+    text: root.t("hint.more", (root.items || []).length - root.maxItems)
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.caption

@@ -2,6 +2,7 @@ import QtQuick
 import qs.Commons
 import qs.Ui
 import "QobuzModel.js" as Model
+import "QobuzStrings.js" as Strings
 
 // Catalogue search. Results are grouped by kind; clicking one plays it,
 // right-clicking a track appends it to the queue instead.
@@ -22,6 +23,9 @@ Column {
   readonly property bool searching: playerState.searchRunning
   readonly property bool hasResults: results && results.total > 0
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
+
   function focusField() { field.forceActiveFocus() }
 
   spacing: Style.space(6)
@@ -33,7 +37,7 @@ Column {
     TextField {
       id: field
       width: parent.width - clearButton.width - Style.space(6)
-      placeholderText: "Buscar en Qobuz"
+      placeholderText: root.t("search.placeholder")
       foreground: root.foreground
       accent: Color.accent
       font.family: root.fontFamily
@@ -70,7 +74,7 @@ Column {
       id: clearButton
       iconText: root.searching ? "󰑐" : (root.hasResults ? "󰅖" : "󰍉")
       iconSpinning: root.searching
-      tooltipText: root.hasResults ? "Limpiar" : "Buscar"
+      tooltipText: root.t(root.hasResults ? "action.clear" : "action.search")
       bordered: true
       foreground: root.foreground
       fontFamily: root.fontFamily
@@ -97,7 +101,7 @@ Column {
     width: parent.width
     visible: !root.searching && root.playerState.searchError === ""
              && root.results.query !== "" && !root.hasResults
-    text: "Sin resultados para «" + root.results.query + "»."
+    text: root.t("search.noResults", root.results.query)
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -108,10 +112,10 @@ Column {
   // One section per result kind, in the order that matches how people search.
   Repeater {
     model: [
-      { key: "albums", label: "ÁLBUMES" },
-      { key: "tracks", label: "PISTAS" },
-      { key: "artists", label: "ARTISTAS" },
-      { key: "playlists", label: "PLAYLISTS" }
+      { key: "albums", label: root.t("section.albums") },
+      { key: "tracks", label: root.t("section.tracks") },
+      { key: "artists", label: root.t("section.artists") },
+      { key: "playlists", label: root.t("section.playlists") }
     ]
 
     delegate: Column {
@@ -139,6 +143,7 @@ Column {
           bar: root.bar
           item: modelData
           fallbackGlyph: root.glyphFor(modelData.kind)
+          lang: root.service ? root.service.lang : Strings.DEFAULT_LANG
           onActivated: if (root.service) root.service.playItem(modelData)
           onQueued: if (root.service) root.service.queueTrack(modelData)
         }

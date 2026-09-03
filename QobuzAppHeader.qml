@@ -21,6 +21,8 @@ Column {
   readonly property color foreground: bar ? bar.foreground : Color.popups.text
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
   function focusSearch() { field.forceActiveFocus() }
 
   spacing: Style.space(12)
@@ -38,7 +40,7 @@ Column {
         anchors.verticalCenter: parent.verticalCenter
         visible: root.showBack
         iconText: "󰁍"
-        tooltipText: "Volver"
+        tooltipText: root.t("action.back")
         bordered: true
         foreground: root.foreground
         fontFamily: root.fontFamily
@@ -64,7 +66,7 @@ Column {
 
       Button {
         iconText: "󰑐"
-        tooltipText: "Actualizar"
+        tooltipText: root.t("action.refresh")
         foreground: root.foreground
         fontFamily: root.fontFamily
         onClicked: if (root.service) root.service.refresh()
@@ -73,7 +75,7 @@ Column {
       Button {
         id: closeButton
         iconText: "󰅖"
-        tooltipText: "Cerrar"
+        tooltipText: root.t("action.close")
         foreground: root.foreground
         fontFamily: root.fontFamily
         onClicked: root.closeRequested()
@@ -89,7 +91,7 @@ Column {
     TextField {
       id: field
       width: parent.width - searchButton.width - Style.space(8)
-      placeholderText: "Buscar álbumes, pistas, artistas y playlists en Qobuz"
+      placeholderText: root.t("search.placeholderLong")
       foreground: root.foreground
       accent: Color.accent
       font.family: root.fontFamily
@@ -119,7 +121,7 @@ Column {
       iconText: root.playerState.searchRunning ? "󰑐"
               : (root.playerState.search.total > 0 ? "󰅖" : "󰍉")
       iconSpinning: root.playerState.searchRunning
-      tooltipText: root.playerState.search.total > 0 ? "Limpiar" : "Buscar"
+      tooltipText: root.t(root.playerState.search.total > 0 ? "action.clear" : "action.search")
       bordered: true
       foreground: root.foreground
       fontFamily: root.fontFamily

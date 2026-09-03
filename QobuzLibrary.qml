@@ -15,6 +15,8 @@ Column {
   readonly property color foreground: bar ? bar.foreground : Color.popups.text
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
 
+  function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
+
   spacing: Style.space(6)
 
   Row {
@@ -22,10 +24,10 @@ Column {
 
     Repeater {
       model: [
-        { key: "albums", label: "Álbumes" },
-        { key: "tracks", label: "Pistas" },
-        { key: "artists", label: "Artistas" },
-        { key: "playlists", label: "Playlists" }
+        { key: "albums", label: root.t("library.albums") },
+        { key: "tracks", label: root.t("library.tracks") },
+        { key: "artists", label: root.t("library.artists") },
+        { key: "playlists", label: root.t("library.playlists") }
       ]
 
       delegate: Button {
@@ -44,7 +46,7 @@ Column {
   Text {
     width: parent.width
     visible: root.playerState.libraryRunning
-    text: "Cargando…"
+    text: root.t("word.loading")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
@@ -54,9 +56,8 @@ Column {
   Text {
     width: parent.width
     visible: !root.playerState.libraryRunning && (root.playerState.library || []).length === 0
-    text: root.playerState.libraryType === "playlists"
-      ? "No tienes playlists."
-      : "No tienes favoritos en esta categoría."
+    text: root.t(root.playerState.libraryType === "playlists"
+      ? "library.emptyPlaylists" : "library.emptyFavourites")
     color: Qt.darker(root.foreground, 1.4)
     font.family: root.fontFamily
     font.pixelSize: Style.font.bodySmall
