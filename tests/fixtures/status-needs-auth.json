@@ -14,7 +14,7 @@
     "subscription": null,
     "user_id": null
   },
-  "data_root": "/home/javih/.local/share/qbzd",
+  "data_root": "/home/example-user/.local/share/qbzd",
   "driver_tick_age_ms": 141,
   "last_errors": {
     "auth": null,
@@ -36,7 +36,7 @@
     "volume": 0.75
   },
   "qconnect": {
-    "device_name": "QBZ (javier-herrera)",
+    "device_name": "QBZ (example-host)",
     "enabled": false,
     "last_transport_reconnect": null,
     "session_active": false,

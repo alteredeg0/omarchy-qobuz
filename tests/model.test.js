@@ -765,7 +765,7 @@ test("applyStatus keeps the daemon diagnostics", () => {
   assert.equal(s.daemon.online, true)
   assert.equal(s.daemon.audio.backend, "system")
   assert.equal(s.daemon.audio.sample_rate, 192000)
-  assert.equal(s.daemon.qconnect.device_name, "QBZ (javier-herrera)")
+  assert.equal(s.daemon.qconnect.device_name, "QBZ (example-host)")
   assert.deepEqual(s.daemon.errors, { auth: null, stream: null, transport: null })
 })
 

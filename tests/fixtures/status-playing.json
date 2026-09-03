@@ -12,9 +12,9 @@
   "auth": {
     "state": "logged_in",
     "subscription": "Studio",
-    "user_id": 2173359
+    "user_id": 1000001
   },
-  "data_root": "/home/javih/.local/share/qbzd",
+  "data_root": "/home/example-user/.local/share/qbzd",
   "driver_tick_age_ms": 106,
   "last_errors": {
     "auth": null,
@@ -36,7 +36,7 @@
     "volume": 0.5
   },
   "qconnect": {
-    "device_name": "QBZ (javier-herrera)",
+    "device_name": "QBZ (example-host)",
     "enabled": false,
     "last_transport_reconnect": null,
     "session_active": false,

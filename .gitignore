@@ -1,0 +1,11 @@
+# makepkg output, kept out of the plugin folder so `omarchy plugin validate`
+# does not trip over the symlinks it leaves in src/.
+packaging/src/
+packaging/pkg/
+packaging/*.pkg.tar.*
+packaging/*.tar.gz
+
+# Editor and OS noise
+*.swp
+*~
+.DS_Store
