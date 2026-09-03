@@ -22,6 +22,13 @@ Item {
   // Track listings show a position number where a cover would otherwise go.
   property string indexLabel: ""
 
+  // Catalogue items carry `imageUrl`; tracks that came from the player
+  // endpoints carry `artworkUrl`. Both land in this same row.
+  readonly property string imageSource: {
+    if (!item) return ""
+    return String(item.imageUrl || item.artworkUrl || "")
+  }
+
   readonly property color foreground: bar ? bar.foreground : Color.popups.text
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property real thumbSize: Style.space(34)
@@ -73,7 +80,7 @@ Item {
       Image {
         id: thumb
         anchors.fill: parent
-        source: root.item ? root.item.imageUrl : ""
+        source: root.imageSource
         fillMode: Image.PreserveAspectCrop
         asynchronous: true
         visible: status === Image.Ready
@@ -147,11 +154,15 @@ Item {
     }
   }
 
+  // Catalogue items say `subtitle`/`albumTitle`; player tracks say
+  // `artist`/`album`. Same row renders both.
   readonly property string subtitleText: {
     if (!item) return ""
-    if (item.kind === "track" && item.albumTitle)
-      return item.subtitle ? item.subtitle + "  ·  " + item.albumTitle : item.albumTitle
-    return item.subtitle || ""
+    var who = String(item.subtitle || item.artist || "")
+    var album = String(item.albumTitle || item.album || "")
+    if (item.kind === "track" && album)
+      return who ? who + "  ·  " + album : album
+    return who
   }
 
   // Albums and playlists read better as a track count than as a total runtime.

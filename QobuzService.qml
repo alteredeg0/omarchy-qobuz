@@ -35,9 +35,15 @@ Item {
   // 302 and sends no Origin header, so the CSRF guard stays happy; the ?t= is
   // cache-busting between tracks.
   readonly property string artworkUrl: {
-    if (!playerState.track || !playerState.track.id) return ""
-    if (playerState.track.artworkUrl) return playerState.track.artworkUrl
-    return "http://" + host + "/api/artwork/current?t=" + playerState.track.id
+    var t = playerState.track
+    if (!t || !t.id) return ""
+    if (t.artworkUrl) return t.artworkUrl
+    // /api/artwork/current derives from the track's artwork_url, which qbzd
+    // leaves null for anything queued from an album id — asking anyway just
+    // logs a 404 per repaint. Stay quiet while the album lookup is what will
+    // actually supply the cover.
+    if (Model.albumLookupId(playerState) !== "") return ""
+    return "http://" + host + "/api/artwork/current?t=" + t.id
   }
 
   readonly property string loginHint: "qbzd login"

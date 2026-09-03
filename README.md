@@ -1,7 +1,11 @@
 # javih.qobuz
 
-Qobuz in the Omarchy bar: the current track next to the clock, and a panel with
-cover art, transport, progress, volume and the queue.
+Qobuz for Omarchy, on two surfaces that share one session:
+
+- a **bar widget** — the current track next to the clock, and a panel with
+  cover art, transport, progress, volume and the queue;
+- a **full-screen app** — sidebar, cover grids, artist and album pages, search,
+  your library, the discover rails and lyrics.
 
 Qobuz has no public third-party API — partner credentials have to be requested
 from `api@qobuz.com` — so this plugin does not talk to Qobuz at all. It is a
@@ -76,18 +80,20 @@ Set with `omarchy bar set javih.qobuz <key> <value>`.
 **In the bar:** left click opens the panel · middle click toggles playback ·
 scroll changes volume.
 
-**In the panel:** `q` queue · `/` search · `b` library · `d` discover ·
-`t` lyrics · `Space` play/pause · `←`/`→` previous/next · `s` shuffle ·
-`l` repeat · `r` refresh · `Esc` back out of a page, or close the panel ·
-`Tab` next panel.
+**In the panel:** `Space` play/pause · `←`/`→` previous/next · `s` shuffle ·
+`l` repeat · `r` refresh · `o` open the app · `Esc` close · `Tab` next panel.
+
+**In the app:** `/` search · `Space` play/pause · `←`/`→` previous/next ·
+`Esc` back out of a page, or close the app. Clicking outside closes it.
 
 **In any list:** left click **opens** an album, artist or playlist and
 **plays** a track; right click does the other one — plays the album, or
 appends the track to the queue. Hovering a row says which.
 
-**IPC:** `omarchy-shell javih.qobuz {open,close,toggle,refresh,status}`, plus
-`search <query>`, `results`, `view <queue|search|library|discover|lyrics>` and
-`browse <album|artist|playlist> <id>`. Handy for keybindings:
+**IPC:** `omarchy-shell javih.qobuz {open,close,toggle,refresh,status}` drives
+the panel; `search <query>`, `view <queue|search|library|discover|lyrics>` and
+`browse <album|artist|playlist> <id>` open the **app** at that spot, because
+that is where the results have room. `results` prints the current search.
 
 ```lua
 o.bind("SUPER SHIFT, Q", "Search Qobuz", "omarchy-shell javih.qobuz search ''")
@@ -98,27 +104,49 @@ Media keys need no setup: qbzd publishes MPRIS as
 `org.mpris.MediaPlayer2.com.blitzfc.qbz`, which Omarchy's own media bindings
 already drive.
 
-## The panel
+## Two surfaces, one session
 
-Now playing and the transport stay put at the top; everything below is one
-view at a time, chosen from the tab strip:
-
-| View | What it holds |
+| Gesture | Opens |
 |---|---|
-| **Cola** | The upcoming queue. Click a track to jump to it. |
-| **Buscar** | Catalogue search across albums, tracks, artists and playlists. |
-| **Biblioteca** | Your favourite albums, tracks and artists, and your playlists. |
+| `omarchy-shell shell toggle javih.qobuz` — bind it to a key | the **app** |
+| Clicking the bar widget · `omarchy-shell javih.qobuz toggle` | the **panel** |
+
+```lua
+o.bind("SUPER, M", "Qobuz", "omarchy-shell shell toggle javih.qobuz")
+```
+
+The split is not a convention this plugin invented: declaring the `overlay`
+kind alongside `bar-widget` takes the plugin off the bar-widget path in
+`shell.qml`'s `isBarWidgetPanelPlugin`, which is what re-points `shell toggle`
+at the app. The panel keeps its own `IpcHandler`, which never went through that
+route.
+
+**The panel** is the glanceable half: what is playing, transport, and the queue,
+plus an *Abrir Qobuz* button. Nothing that needs room.
+
+**The app** is a full-screen overlay with a sidebar, a main area and a player
+bar along the bottom:
+
+| Section | What it holds |
+|---|---|
 | **Descubrir** | Qobuz's editorial rails — album of the week, new releases, most streamed, press awards. |
+| **Buscar** | Catalogue search across albums, tracks, artists and playlists. |
+| **Cola** | The upcoming queue. Click a track to jump to it. |
 | **Letra** | Lyrics for the current track. |
+| **Tu biblioteca** | Favourite albums, tracks and artists, and your playlists — each one also listed in the sidebar. |
+| **Estado** | The half of `/api/status` the bar has no room for: daemon version and uptime, audio backend and device, bit-perfect, format, Qobuz Connect and the last errors. |
 
-Opening an album, artist or playlist drills into its own page — cover, a play
-button, a favourite toggle, and the track listing (an artist gets top tracks
-plus every release group). The back button names wherever you came from, so
-the same album row behaves identically whether you reached it from search,
-your library or a discover rail.
+Collections are cover grids; tracks are dense numbered lists. Opening an album,
+artist or playlist drills into its own page — big cover, a play button, a
+favourite toggle, and the track listing (an artist gets top tracks plus every
+release group). The back button names wherever you came from, so the same album
+behaves identically whether you reached it from search, your library or a
+discover rail.
 
-Each view fetches only when first opened, and the library keeps whichever tab
-you were on.
+Both surfaces read the same `QobuzService` singleton: `shell.qml` injects it
+into the overlay (`item.service = shell.serviceFor(pluginId)`), so playing
+something in the app moves the bar widget in the same tick, with no state to
+reconcile. Each section fetches on first open and not before.
 
 ## The Hi-Res mark
 
@@ -145,6 +173,7 @@ carrying only its format still gets marked correctly.
 `QobuzService.qml` is a `service`-kind singleton — the bar instantiates widgets
 once *per monitor*, so the daemon connection and the state live there rather
 than in the widget, which reaches it via `bar.shell.serviceFor("javih.qobuz")`.
+The app gets the same instance handed to it by the shell's panel loader.
 
 Two shell helpers do all the I/O, because qbzd answers **403 to any request
 carrying an `Origin` header** (its CSRF guard) and QML's `XMLHttpRequest` sends

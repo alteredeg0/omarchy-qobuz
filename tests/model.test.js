@@ -752,3 +752,28 @@ test("every album source ends up with an artist on screen", () => {
   assert.equal(M.normalizeAlbumDetail(fixture("album.json")).subtitle, "Miles Davis")
   assert.equal(M.normalizeFavorites(fixture("favorites-albums.json")).items[0].subtitle, "Mastodon")
 })
+
+// ---------------------------------------------------------------------------
+// The diagnostics half of /api/status, which only the app's status page shows.
+// ---------------------------------------------------------------------------
+
+test("applyStatus keeps the daemon diagnostics", () => {
+  const s = M.applyStatus(M.emptyState(), fixture("status-playing.json"))
+  assert.equal(s.daemon.version, "2.0.2")
+  assert.equal(s.daemon.apiVersion, 1)
+  assert.equal(s.daemon.online, true)
+  assert.equal(s.daemon.audio.backend, "system")
+  assert.equal(s.daemon.audio.sample_rate, 192000)
+  assert.equal(s.daemon.qconnect.device_name, "QBZ (javier-herrera)")
+  assert.deepEqual(s.daemon.errors, { auth: null, stream: null, transport: null })
+})
+
+test("daemon diagnostics survive a logged-out daemon", () => {
+  const s = M.applyStatus(M.emptyState(), fixture("status-needs-auth.json"))
+  assert.equal(s.daemon.version, "2.0.2", "status answers before login, and so must this")
+  assert.equal(s.authState, "needs_auth")
+})
+
+test("emptyState has no daemon block until a status poll lands", () => {
+  assert.equal(M.emptyState().daemon, null)
+})

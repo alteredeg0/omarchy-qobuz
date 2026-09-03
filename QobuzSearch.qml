@@ -46,6 +46,9 @@ Column {
       // field, and typing still owns it the rest of the time.
       Connections {
         target: root.service
+        // `service` is injected after this component is built, so the target
+        // is null at creation time and Qt cannot match the signal yet.
+        ignoreUnknownSignals: true
         function onSearchQueryChanged() {
           if (field.text !== root.service.searchQuery) field.text = root.service.searchQuery
         }

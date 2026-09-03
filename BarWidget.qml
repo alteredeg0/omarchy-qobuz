@@ -73,7 +73,8 @@ Panel {
     // panel: `omarchy-shell javih.qobuz search "kind of blue"`.
     function search(query: string): string {
       if (!root.service) return "no service"
-      root.open()
+      // Results need room, so this opens the app rather than the panel.
+      if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
       root.service.goTo(Model.VIEW_SEARCH)
       root.service.search(query)
       return "searching: " + query
@@ -86,7 +87,7 @@ Panel {
       var allowed = [Model.VIEW_QUEUE, Model.VIEW_SEARCH, Model.VIEW_LIBRARY,
                      Model.VIEW_DISCOVER, Model.VIEW_LYRICS]
       if (allowed.indexOf(wanted) === -1) return "unknown view: " + wanted + " (" + allowed.join(", ") + ")"
-      root.open()
+      if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
       root.service.goTo(wanted)
       return wanted
     }
@@ -96,7 +97,7 @@ Panel {
       if (!root.service) return "no service"
       var item = { kind: String(kind).toLowerCase(), id: String(id) }
       if (!Model.isBrowsable(item)) return "not browsable: " + item.kind + " (album, artist, playlist)"
-      root.open()
+      if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
       root.service.openItem(item)
       return "opening " + item.kind + " " + item.id
     }
@@ -147,11 +148,7 @@ Panel {
     PanelKeyCatcher {
       id: keys
       anchors.fill: parent
-      onCloseRequested: {
-        // Back out of a drill-down before closing the whole panel.
-        if (root.service && root.playerState.view === Model.VIEW_BROWSE) root.service.closeBrowse()
-        else root.close()
-      }
+      onCloseRequested: root.close()
       onTabRequested: function (direction) { root.switchPanel(direction) }
       onActivateRequested: if (root.service) root.service.togglePlayback()
       onMoveRequested: function (dx, dy) {
@@ -162,16 +159,15 @@ Panel {
       onTextKey: function (t) {
         if (!root.service) return
         var key = String(t).toLowerCase()
-        if (key === "/") { root.service.goTo(Model.VIEW_SEARCH); search.focusField(); return }
         if (key === " ") root.service.togglePlayback()
         else if (key === "r") root.service.refresh()
         else if (key === "s") root.service.toggleShuffle()
         else if (key === "l") root.service.cycleRepeat()
-        // Jump straight to a view: q ueue, b iblioteca, d escubrir, t exto.
-        else if (key === "q") root.service.goTo(Model.VIEW_QUEUE)
-        else if (key === "b") root.service.goTo(Model.VIEW_LIBRARY)
-        else if (key === "d") root.service.goTo(Model.VIEW_DISCOVER)
-        else if (key === "t") root.service.goTo(Model.VIEW_LYRICS)
+        // Anything that needs room opens the app instead.
+        else if (key === "o" || key === "/") {
+          if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
+          root.close()
+        }
       }
 
       Flickable {
@@ -248,6 +244,11 @@ Panel {
           }
 
           // ---- Normal operation -------------------------------------------
+          //
+          // The panel is deliberately the glanceable half: what is playing,
+          // the transport and what comes next. Searching, the library,
+          // discover and detail pages live in the full-screen app, which
+          // shares this very same service instance.
 
           readonly property bool live: root.playerState.daemonUp
                                        && root.playerState.authState !== "needs_auth"
@@ -271,56 +272,29 @@ Panel {
             visible: content.live
           }
 
-          // Everything below here is one view at a time.
-          QobuzNav {
+          Button {
             width: parent.width
-            bar: root.bar
-            service: root.service
             visible: content.live
-          }
-
-          QobuzSearch {
-            id: search
-            width: parent.width
-            bar: root.bar
-            service: root.service
-            keyCatcher: keys
-            visible: content.live && root.playerState.view === Model.VIEW_SEARCH
+            text: "Abrir Qobuz"
+            iconText: "󰊓"
+            bordered: true
+            leftAlign: true
+            foreground: root.barForeground
+            fontFamily: root.bar ? root.bar.fontFamily : Style.font.family
+            onClicked: {
+              // shell.summon routes to the overlay, not back to this panel:
+              // declaring the overlay kind takes the plugin off the
+              // bar-widget path in shell.qml's isBarWidgetPanelPlugin.
+              if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
+              root.close()
+            }
           }
 
           QobuzQueueView {
             width: parent.width
             bar: root.bar
             service: root.service
-            visible: content.live && root.playerState.view === Model.VIEW_QUEUE
-          }
-
-          QobuzLibrary {
-            width: parent.width
-            bar: root.bar
-            service: root.service
-            visible: content.live && root.playerState.view === Model.VIEW_LIBRARY
-          }
-
-          QobuzDiscover {
-            width: parent.width
-            bar: root.bar
-            service: root.service
-            visible: content.live && root.playerState.view === Model.VIEW_DISCOVER
-          }
-
-          QobuzLyrics {
-            width: parent.width
-            bar: root.bar
-            service: root.service
-            visible: content.live && root.playerState.view === Model.VIEW_LYRICS
-          }
-
-          QobuzBrowse {
-            width: parent.width
-            bar: root.bar
-            service: root.service
-            visible: content.live && root.playerState.view === Model.VIEW_BROWSE
+            visible: content.live
           }
 
         }

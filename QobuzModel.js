@@ -53,7 +53,10 @@ function emptyState() {
     discover: [],
     discoverRunning: false,
     lyrics: null,
-    lyricsRunning: false
+    lyricsRunning: false,
+    // The diagnostic half of /api/status, which the bar has no room for but
+    // the app's status page shows: audio backend, device, Connect, errors.
+    daemon: null
   }
 }
 
@@ -206,6 +209,16 @@ function applyStatus(state, status) {
   var authState = str(auth.state)
   next.authState = authState === "" ? "unknown" : (authState === "needs_auth" ? "needs_auth" : "ok")
   next.subscription = str(auth.subscription)
+
+  next.daemon = {
+    version: str(status.version),
+    apiVersion: num(status.api_version, 0),
+    uptime: num(status.uptime_secs, 0),
+    online: !status.network || status.network.online !== false,
+    audio: status.audio || {},
+    qconnect: status.qconnect || {},
+    errors: status.last_errors || {}
+  }
 
   var pb = status.playback || {}
   next.playback = normalizePlayback(pb.state)

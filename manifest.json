@@ -2,21 +2,23 @@
   "schemaVersion": 1,
   "id": "javih.qobuz",
   "name": "Qobuz",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Javier Herrera",
   "license": "MIT",
-  "description": "Now playing and playback control for Qobuz, driven by the qbzd headless daemon.",
+  "description": "Qobuz for Omarchy: a bar widget with a full-screen player, driven by the qbzd headless daemon.",
   "kinds": [
     "bar-widget",
-    "service"
+    "service",
+    "overlay"
   ],
   "entryPoints": {
     "barWidget": "BarWidget.qml",
-    "service": "QobuzService.qml"
+    "service": "QobuzService.qml",
+    "overlay": "QobuzApp.qml"
   },
   "barWidget": {
     "displayName": "Qobuz",
-    "description": "Track in the bar; cover art, transport, progress, volume and queue in a panel.",
+    "description": "Now playing, transport and the queue in the bar; the full library opens as an app.",
     "category": "Audio",
     "allowMultiple": false,
     "defaultSection": "right",
@@ -58,5 +60,6 @@
         "defaultValue": false
       }
     ]
-  }
+  },
+  "keepLoaded": true
 }
