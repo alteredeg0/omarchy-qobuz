@@ -78,22 +78,22 @@ omarchy plugin add https://github.com/alteredeg0/omarchy-qobuz --enable
 Or manually:
 
 ```bash
-git clone https://github.com/alteredeg0/omarchy-qobuz ~/.config/omarchy/plugins/PLUGIN_ID
+git clone https://github.com/alteredeg0/omarchy-qobuz ~/.config/omarchy/plugins/javih.qobuz
 omarchy-shell shell rescanPlugins
-omarchy plugin enable PLUGIN_ID right
+omarchy plugin enable javih.qobuz right
 ```
 
 Optionally bind the app to a key, in `~/.config/hypr/bindings.lua`:
 
 ```lua
-o.bind("SUPER, M", "Qobuz", "omarchy-shell shell toggle PLUGIN_ID")
+o.bind("SUPER, M", "Qobuz", "omarchy-shell shell toggle javih.qobuz")
 ```
 
 ## Removal
 
 ```bash
 # 1. The plugin
-omarchy plugin remove PLUGIN_ID
+omarchy plugin remove javih.qobuz
 
 # 2. The keybinding, if you added one
 #    Delete the o.bind line from ~/.config/hypr/bindings.lua, then:
@@ -126,7 +126,7 @@ The bar panel: what is playing, transport, the queue, and a button into the app.
 
 ## Settings
 
-Set with `omarchy bar set PLUGIN_ID <key> <value>`.
+Set with `omarchy bar set javih.qobuz <key> <value>`.
 
 | Key | Default | What it does |
 |---|---|---|
@@ -155,8 +155,8 @@ Slavic or Arabic ones.
 
 | Gesture | Opens |
 |---|---|
-| `omarchy-shell shell toggle PLUGIN_ID` | the **app** |
-| Clicking the bar widget · `omarchy-shell PLUGIN_ID toggle` | the **panel** |
+| `omarchy-shell shell toggle javih.qobuz` | the **app** |
+| Clicking the bar widget · `omarchy-shell javih.qobuz toggle` | the **panel** |
 
 Declaring the `overlay` kind alongside `bar-widget` is what routes
 `shell toggle` to the app rather than the bar popup — see
@@ -175,7 +175,7 @@ scroll changes volume.
 **In any list:** left click **opens** an album, artist or playlist and **plays**
 a track; right click does the other one. Hovering a row says which.
 
-**IPC:** `omarchy-shell PLUGIN_ID {open,close,toggle,refresh,status}` drives the
+**IPC:** `omarchy-shell javih.qobuz {open,close,toggle,refresh,status}` drives the
 panel; `search <query>`, `view <queue|search|library|discover|lyrics>` and
 `browse <album|artist|playlist> <id>` open the app at that spot. `results`
 prints the current search.
@@ -201,7 +201,7 @@ specification's threshold: at least 24-bit **and** 96 kHz.
 `QobuzService.qml` is a `service`-kind singleton. The bar instantiates widgets
 once *per monitor*, so the daemon connection and the state live there rather
 than in the widget, which reaches it with
-`bar.shell.serviceFor("PLUGIN_ID")`. The app gets the same instance handed to
+`bar.shell.serviceFor("javih.qobuz")`. The app gets the same instance handed to
 it by the shell's panel loader (`item.service = shell.serviceFor(pluginId)`),
 so both surfaces share one session with no state to reconcile.
 
