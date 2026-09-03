@@ -24,8 +24,12 @@ relationship the Omarchy Spotify plugin has with `spotifyd`.
 
 ```bash
 cd packaging
-makepkg -si
+BUILDDIR=/tmp/qbzd-build SRCDEST=/tmp/qbzd-build PKGDEST=/tmp/qbzd-build makepkg -si
 ```
+
+The three variables keep `src/`, `pkg/` and the downloaded tarball out of the
+plugin folder — `omarchy plugin validate` rejects the symlinks makepkg would
+otherwise leave behind.
 
 That installs `/usr/bin/qbzd` plus the upstream systemd **user** unit and shell
 completions. Then log in and start it:
