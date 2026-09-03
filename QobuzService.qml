@@ -149,6 +149,45 @@ Item {
     post("/api/queue/jump", { index: index })
   }
 
+  function queueClear() { post("/api/queue/clear", {}) }
+
+  // ---- Search ------------------------------------------------------------
+
+  property string searchQuery: ""
+  property int searchLimit: 8
+
+  function search(query) {
+    var q = String(query || "").trim()
+    searchQuery = q
+    if (q === "") { clearSearch(); return }
+    if (!authenticated) return
+    apply(Object.assign({}, playerState, { searchRunning: true, searchError: "" }))
+    searchProcess.running = false
+    searchProcess.command = [apiHelper,
+      "/api/search?q=" + encodeURIComponent(q) + "&type=all&limit=" + searchLimit]
+    searchProcess.running = true
+  }
+
+  function clearSearch() {
+    searchQuery = ""
+    apply(Object.assign({}, playerState, {
+      search: Model.normalizeSearch(null), searchRunning: false, searchError: ""
+    }))
+  }
+
+  // Replace what is playing with this album/track/artist/playlist.
+  function playItem(item) {
+    var body = Model.playBodyFor(item)
+    if (!body) return
+    post("/api/play", body)
+  }
+
+  // Append a single track without disturbing what is playing.
+  function queueTrack(item) {
+    if (!item || item.kind !== "track" || !item.id) return
+    post("/api/queue/add", { track_ids: [Number(item.id)] })
+  }
+
   // ---- Reads: process plumbing -------------------------------------------
 
   Process {
@@ -199,6 +238,27 @@ Item {
         // can only be decided after it lands.
         service.refreshAlbum()
       }
+    }
+  }
+
+  Process {
+    id: searchProcess
+    environment: service.helperEnv
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: {
+        var payload = service.parseJson(text)
+        service.apply(Model.applySearch(service.playerState, payload, service.searchQuery))
+      }
+    }
+    onExited: function (code) {
+      if (code === 0) return
+      // A failed search must not leave the spinner up forever.
+      service.apply(Object.assign({}, service.playerState, {
+        searchRunning: false,
+        searchError: code === 3 ? "qbzd no responde"
+                   : (code === 4 ? "Sin sesión" : "La búsqueda falló")
+      }))
     }
   }
 

@@ -69,6 +69,27 @@ Panel {
     // refreshes, not just whichever one answered the IPC call.
     function refresh(): string { root.broadcast("refreshFromIpc"); return "ok" }
     function status(): string { return root.tooltip }
+    // Lets a Hyprland binding or a script drop a query straight into the
+    // panel: `omarchy-shell javih.qobuz search "kind of blue"`.
+    function search(query: string): string {
+      if (!root.service) return "no service"
+      root.open()
+      root.service.search(query)
+      return "searching: " + query
+    }
+    function results(): string {
+      var r = root.playerState.search
+      if (!r || r.total === 0) return root.playerState.searchError || "no results"
+      var out = []
+      var kinds = ["albums", "tracks", "artists", "playlists"]
+      for (var i = 0; i < kinds.length; i++) {
+        var list = r[kinds[i]] || []
+        for (var j = 0; j < list.length; j++)
+          out.push(kinds[i].slice(0, -1) + ": " + list[j].title
+                   + (list[j].subtitle ? " — " + list[j].subtitle : ""))
+      }
+      return out.join("\n")
+    }
   }
 
   function refreshFromIpc() { if (service) service.refresh() }
@@ -114,6 +135,7 @@ Panel {
       onTextKey: function (t) {
         if (!root.service) return
         var key = String(t).toLowerCase()
+        if (key === "/") { search.focusField(); return }
         if (key === " ") root.service.togglePlayback()
         else if (key === "r") root.service.refresh()
         else if (key === "s") root.service.toggleShuffle()
@@ -214,11 +236,30 @@ Panel {
             visible: root.playerState.daemonUp && root.playerState.authState === "ok"
           }
 
+          QobuzSearch {
+            id: search
+            width: parent.width
+            bar: root.bar
+            service: root.service
+            keyCatcher: keys
+            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
+          }
+
+          PanelSeparator {
+            width: parent.width
+            foreground: root.barForeground
+            visible: root.playerState.daemonUp && root.playerState.authState === "ok"
+                     && root.playerState.search.total === 0
+          }
+
           QobuzQueueView {
             width: parent.width
             bar: root.bar
             service: root.service
+            // Results take over the lower half of the panel while a search is
+            // on screen; the queue comes back when it is cleared.
             visible: root.playerState.daemonUp && root.playerState.authState === "ok"
+                     && root.playerState.search.total === 0
           }
         }
       }

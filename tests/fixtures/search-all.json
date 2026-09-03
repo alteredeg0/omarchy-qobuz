@@ -1,0 +1,579 @@
+{
+  "albums": {
+    "items": [
+      {
+        "artist": {
+          "albums": null,
+          "albums_count": 5864,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "artists": [
+          {
+            "id": 6760,
+            "name": "Miles Davis",
+            "roles": [
+              "main-artist"
+            ]
+          }
+        ],
+        "audio_info": null,
+        "awards": null,
+        "composer": null,
+        "dates": null,
+        "description": null,
+        "duration": 2723,
+        "genre": {
+          "id": 80,
+          "name": "Jazz",
+          "path": [
+            80
+          ]
+        },
+        "goodies": null,
+        "hires": true,
+        "hires_streamable": true,
+        "id": "5099749522428",
+        "image": {
+          "back": null,
+          "extralarge": null,
+          "large": "https://static.qobuz.com/images/covers/28/24/5099749522428_600.jpg",
+          "mega": null,
+          "small": "https://static.qobuz.com/images/covers/28/24/5099749522428_230.jpg",
+          "thumbnail": "https://static.qobuz.com/images/covers/28/24/5099749522428_50.jpg"
+        },
+        "label": {
+          "id": 4592,
+          "name": "Columbia"
+        },
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 192.0,
+        "parental_warning": false,
+        "release_date_original": "1959-08-17",
+        "release_date_stream": "1959-08-17",
+        "release_type": null,
+        "streamable": true,
+        "title": "Kind Of Blue",
+        "track_count": null,
+        "tracks": null,
+        "tracks_count": 5,
+        "upc": "5099749522428",
+        "version": null
+      },
+      {
+        "artist": {
+          "albums": null,
+          "albums_count": 5860,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "artists": [
+          {
+            "id": 6760,
+            "name": "Miles Davis",
+            "roles": [
+              "main-artist"
+            ]
+          }
+        ],
+        "audio_info": null,
+        "awards": null,
+        "composer": null,
+        "dates": null,
+        "description": null,
+        "duration": 2515,
+        "genre": {
+          "id": 80,
+          "name": "Jazz",
+          "path": [
+            80
+          ]
+        },
+        "goodies": null,
+        "hires": true,
+        "hires_streamable": true,
+        "id": "0886444505321",
+        "image": {
+          "back": null,
+          "extralarge": null,
+          "large": "https://static.qobuz.com/images/covers/21/53/0886444505321_600.jpg",
+          "mega": null,
+          "small": "https://static.qobuz.com/images/covers/21/53/0886444505321_230.jpg",
+          "thumbnail": "https://static.qobuz.com/images/covers/21/53/0886444505321_50.jpg"
+        },
+        "label": {
+          "id": 10106072,
+          "name": "Columbia/Legacy"
+        },
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 88.2,
+        "parental_warning": false,
+        "release_date_original": "1960-07-18",
+        "release_date_stream": "1960-07-18",
+        "release_type": null,
+        "streamable": true,
+        "title": "Sketches of Spain",
+        "track_count": null,
+        "tracks": null,
+        "tracks_count": 5,
+        "upc": "0886444505321",
+        "version": null
+      },
+      {
+        "artist": {
+          "albums": null,
+          "albums_count": 5860,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "artists": [
+          {
+            "id": 6760,
+            "name": "Miles Davis",
+            "roles": [
+              "main-artist"
+            ]
+          }
+        ],
+        "audio_info": null,
+        "awards": null,
+        "composer": null,
+        "dates": null,
+        "description": null,
+        "duration": 5644,
+        "genre": {
+          "id": 86,
+          "name": "Jazz fusión & Jazz rock",
+          "path": [
+            80,
+            86
+          ]
+        },
+        "goodies": null,
+        "hires": true,
+        "hires_streamable": true,
+        "id": "0886443874428",
+        "image": {
+          "back": null,
+          "extralarge": null,
+          "large": "https://static.qobuz.com/images/covers/28/44/0886443874428_600.jpg",
+          "mega": null,
+          "small": "https://static.qobuz.com/images/covers/28/44/0886443874428_230.jpg",
+          "thumbnail": "https://static.qobuz.com/images/covers/28/44/0886443874428_50.jpg"
+        },
+        "label": {
+          "id": 10106072,
+          "name": "Columbia/Legacy"
+        },
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 96.0,
+        "parental_warning": false,
+        "release_date_original": "1970-03-30",
+        "release_date_stream": "1970-03-30",
+        "release_type": null,
+        "streamable": true,
+        "title": "Bitches Brew",
+        "track_count": null,
+        "tracks": null,
+        "tracks_count": 6,
+        "upc": "0886443874428",
+        "version": null
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "total": 1000
+  },
+  "artists": {
+    "items": [
+      {
+        "albums": null,
+        "albums_count": 5870,
+        "biography": null,
+        "id": 6760,
+        "image": {
+          "back": null,
+          "extralarge": "https://static.qobuz.com/images/artists/covers/large/33a9c9bc1f351aa593ac0f7658299e27.jpg",
+          "large": "https://static.qobuz.com/images/artists/covers/large/33a9c9bc1f351aa593ac0f7658299e27.jpg",
+          "mega": "https://static.qobuz.com/images/artists/covers/large/33a9c9bc1f351aa593ac0f7658299e27.jpg",
+          "small": "https://static.qobuz.com/images/artists/covers/small/33a9c9bc1f351aa593ac0f7658299e27.jpg",
+          "thumbnail": null
+        },
+        "name": "Miles Davis",
+        "playlists": null,
+        "tracks_appears_on": null
+      },
+      {
+        "albums": null,
+        "albums_count": 401,
+        "biography": null,
+        "id": 50709,
+        "image": {
+          "back": null,
+          "extralarge": "https://static.qobuz.com/images/artists/covers/large/cf5e1961e8386b7b549d4260d4d9e570.jpg",
+          "large": "https://static.qobuz.com/images/artists/covers/large/cf5e1961e8386b7b549d4260d4d9e570.jpg",
+          "mega": "https://static.qobuz.com/images/artists/covers/large/cf5e1961e8386b7b549d4260d4d9e570.jpg",
+          "small": "https://static.qobuz.com/images/artists/covers/small/cf5e1961e8386b7b549d4260d4d9e570.jpg",
+          "thumbnail": null
+        },
+        "name": "Miles Davis Quintet",
+        "playlists": null,
+        "tracks_appears_on": null
+      },
+      {
+        "albums": null,
+        "albums_count": 1,
+        "biography": null,
+        "id": 8720258,
+        "image": null,
+        "name": "Miles Davis (trumpet), Barney Wilen (tenor sax), Rene Urtreger (piano), Pierre Michelot (bass), Kenny Clarke (drums)",
+        "playlists": null,
+        "tracks_appears_on": null
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "total": 122
+  },
+  "limit": 3,
+  "offset": 0,
+  "playlists": {
+    "items": [
+      {
+        "description": "¡Las 1000 facetas de Miles Davis! Acústico, eléctrico, en quinteto, en octeto, con su hard bop o la fusión pura y dura, Miles atravesó la segunda mitad del siglo XX sin dejar de cuestionarse. ¡He aquí la prueba!",
+        "duration": 22257,
+        "genres": [
+          {
+            "id": 80,
+            "name": "Jazz",
+            "slug": "jazz"
+          }
+        ],
+        "id": 6217029,
+        "images": [
+          "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_50.jpg",
+          "https://static.qobuz.com/images/covers/47/07/0886444350747_50.jpg",
+          "https://static.qobuz.com/images/covers/31/39/0886444333931_50.jpg",
+          "https://static.qobuz.com/images/covers/09/31/0886446473109_50.jpg"
+        ],
+        "images150": [
+          "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_150.jpg",
+          "https://static.qobuz.com/images/covers/47/07/0886444350747_150.jpg",
+          "https://static.qobuz.com/images/covers/31/39/0886444333931_150.jpg",
+          "https://static.qobuz.com/images/covers/09/31/0886446473109_150.jpg"
+        ],
+        "images300": [
+          "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_300.jpg",
+          "https://static.qobuz.com/images/covers/47/07/0886444350747_300.jpg",
+          "https://static.qobuz.com/images/covers/31/39/0886444333931_300.jpg",
+          "https://static.qobuz.com/images/covers/09/31/0886446473109_300.jpg"
+        ],
+        "is_public": true,
+        "name": "Hi-Res Masters: Miles Davis",
+        "owner": {
+          "id": 691362,
+          "name": "Qobuz España"
+        },
+        "slug": "hi-res-masters-miles-davis",
+        "tracks": null,
+        "tracks_count": 41,
+        "users_count": 136
+      },
+      {
+        "description": "¡Las 1000 caras de Miles Davis! Acústico, eléctrico, en octeto, hard bop o en modo fusión, Miles Davis no ha dejado de proponer nuevas y audaces fórmulas durante toda la segunda mitad del siglo XX. Aquí proponemos una playlist para degustar todas sus épocas, todos sus estilos y todos los mejores sidemen del trompetista más influyente de la historia del jazz.",
+        "duration": 15459,
+        "genres": [
+          {
+            "id": 80,
+            "name": "Jazz",
+            "slug": "jazz"
+          },
+          {
+            "id": 2,
+            "name": "Blues/Country/Folk",
+            "slug": "blues-country-folk"
+          }
+        ],
+        "id": 1580507,
+        "images": [
+          "https://static.qobuz.com/images/covers/32/24/0060075372432_50.jpg",
+          "https://static.qobuz.com/images/covers/24/54/0828768845424_50.jpg",
+          "https://static.qobuz.com/images/covers/28/03/5099708520328_50.jpg",
+          "https://static.qobuz.com/images/covers/25/19/0074646591925_50.jpg"
+        ],
+        "images150": [
+          "https://static.qobuz.com/images/covers/32/24/0060075372432_150.jpg",
+          "https://static.qobuz.com/images/covers/24/54/0828768845424_150.jpg",
+          "https://static.qobuz.com/images/covers/28/03/5099708520328_150.jpg",
+          "https://static.qobuz.com/images/covers/25/19/0074646591925_150.jpg"
+        ],
+        "images300": [
+          "https://static.qobuz.com/images/covers/32/24/0060075372432_300.jpg",
+          "https://static.qobuz.com/images/covers/24/54/0828768845424_300.jpg",
+          "https://static.qobuz.com/images/covers/28/03/5099708520328_300.jpg",
+          "https://static.qobuz.com/images/covers/25/19/0074646591925_300.jpg"
+        ],
+        "is_public": true,
+        "name": "Las muchas caras de Miles Davis",
+        "owner": {
+          "id": 691362,
+          "name": "Qobuz España"
+        },
+        "slug": "las-muchas-caras-de-miles-davis",
+        "tracks": null,
+        "tracks_count": 28,
+        "users_count": 42
+      },
+      {
+        "description": "El 26 de mayo de 2026 se conmemora el centenario de Miles Davis. Para celebrar su genio, pedimos a varios de los mejores músicos de la escena actual que eligieran su tema favorito de Miles y nos contaran por qué les fascina. Como era de esperar, las respuestas llegaron rápidamente y con pasión, demostrando el alcance increíble de su obra. Miles tenía muchas facetas, lo que permite a cada músico y fan conectar con su música a su manera.\r\n</p>\r\n<strong>\"Miles Ahead\" – Miles Ahead (Columbia, 1957)</strong>\r\nEl tema que elijo es \"Miles Ahead\", del álbum del mismo nombre. Aunque no fue la primera vez que Gil Evans y Miles trabajaron juntos, en esta pieza lograron una sincronía única. Es una melodía que compusieron sentados al piano, probando acordes, progresiones y frases musicales. Yo mismo tuve la suerte de verlos trabajar así en los años 80. En esta ocasión, Gil adaptó la música para una gran orquesta (big band).<br>\r\nMiles me dijo una vez que su mayor aporte a la música era su sonido, y este tema es el ejemplo perfecto de lo especial, magnético y cautivador que era ese sonido. – John Scofield\r\n</p>\r\n<strong>\"Yesterdays\" – The Complete Live at the Plugged Nickel 1965 (Legacy, 1995)</strong>\r\nDicen que esta pieza se grabó la misma semana en que Miles firmó el divorcio con el amor de su vida, y el dolor se siente en cada nota. Los cuatro golpes secos con los que Tony Williams arranca en la batería lo dicen todo. Otro momento increíble es cuando Wayne Shorter baja cromáticamente con la melodía justo antes de que la banda entre con todo en el swing. – Nicholas Payton (Nota del editor: Aunque Miles y Frances Taylor se separaron en 1965, el divorcio se legalizó formalmente en 1968).\r\n</p>\r\n<strong>\"Sivad\" – Live-Evil (Columbia, 1971)</strong>\r\nPara la mayoría de los críticos y fanáticos, el álbum Bitches Brew mark la línea divisoria en la carrera de Miles. Con la guitarra afilada de John McLaughlin, las congas de Don Alias, el sonido misterioso del clarinete bajo de Bennie Maupin y el eco con efectos en la trompeta de Miles, ese disco fue un adiós definitivo a su época clásica de Kind of Blue.\r\n</p>\r\nSin embargo, para mí, \"Sivad\" —el tema que abre Live-Evil (1971)— hace que Bitches Brew parezca música tranquila. Aquí Miles toca con una energía salvaje y visceral. Usa un pedal wah-wah en su trompeta, distorsionando el sonido tanto que parece que está hablando; como un predicador o incluso como un rapero antes de que existiera el rap. Airto Moreira no para un segundo, sumando un torbellino de percusiones y silbatos, mientras los amplificadores acoplan y rugen de fondo. Es música que te golpea de frente.\r\n</p>\r\nLa parte en vivo de Live-Evil se grabó en diciembre de 1970 en el Cellar Door de Washington, D.C., un club muy pequeño donde apenas cabían 160 personas. Cuesta creer cómo tanto sonido pudo entrar en ese espacio. No es solo una banda improvisando; es una pared de energía pura, un caos organizado y totalmente desatado. En ese ambiente, \"Sivad\" suena peligrosa, impredecible y oscura. ¿Y saben qué? Es una genialidad. – Christian McBride\r\n</p>\r\nEste tema y este álbum me marcaron profundamente como bajista, improvisador y editor musical. De hecho, el disco entero inspiró al grupo Medeski Martin and Wood en los años 90. El arte de la portada es hermoso, atrevido y encaja perfecto con la música. Además, el título es un palíndromo perfecto (se lee igual al derecho y al revés: Live-Evil), lo que refleja muy bien los extremos de belleza y crudeza que conviven en el proyecto.\r\n</p>\r\nLa canción nació como una larga improvisación en el Cellar Door en 1970. El productor, Teo Macero, tomó fragmentos de esa larga sesión (o de varias distintas, nunca lo sabremos con certeza) y los editó juntos. La música ya era cruda y hermosa por sí sola, pero el trabajo de edición en el estudio la hizo aún más atractiva, dándole una estructura y una forma interesantes que probablemente no tenía en la improvisación original.\r\n</p>\r\nEn el bajo está el gran Michael Henderson, a quien Miles prácticamente le \"robó\" a la banda de Stevie Wonder. Si lo hubieras escuchado con Stevie, entenderías perfectamente por qué Miles lo quería. Su forma de tocar en \"Sivad\", especialmente cuando la música cambia cerca del minuto cuatro, fue una gran influencia para nosotros. Esta música no sigue reglas tradicionales; tiene ritmo, melodía, contrapunto y espacio. Todo eso hace que funcione, pero también tiene una libertad total para llevar los instrumentos al límite. Eso nos cambió la cabeza a los tres en Medeski Martin and Wood. – Chris Wood (Medeski Martin and Wood / The Wood Brothers)\r\n</p>\r\n<strong>\"Nothing Like You\" – Sorcerer (Columbia, 1967)</strong>\r\nSorcerer es, por mucho, mi álbum favorito de Miles Davis. Si tuviera que explicar por qué en una sola palabra, sería: \"atmósfera\". El sonido de este disco, sus texturas, tonos y melodías te transportan de inmediato a un estado emocional muy específico y único. Además, este álbum incluye \"Nothing Like You\" (grabada en 1962), que fue la primera vez que Wayne Shorter grabó en el estudio junto a Miles.\r\n</p>\r\nPero lo más sorprendente y genial del disco es la aparición del cantante Bob Dorough en ese mismo tema (a quien muchos conocen más por sus canciones infantiles en el programa educativo Schoolhouse Rock! que por colaborar con la figura más sagrada del jazz). Es una pieza que no tiene el piano de Herbie Hancock y que mezcla humor, oscuridad y profundidad de una forma que desafía lo lógico. Una colaboración cantada es algo rarísimo en un disco de Miles, y en papel no debería encajar con el resto del álbum; sin embargo, lo hace a la perfección. Es más, brilla con luz propia. – Michael League (Snarky Puppy)\r\n</p>\r\n<strong>\"So What\" – Kind of Blue (Columbia, 1959)</strong>\r\nCuando pienso en Miles Davis, no veo solo a un trompetista; veo a un artista que vivía en una evolución constante. Siempre estaba buscando algo nuevo, avanzando y sin repetirse jamás.\r\n</p>\r\nDe todas sus grabaciones, el disco Kind of Blue —y en especial el tema \"So What\"— tiene un lugar sagrado en mi corazón. Es una obra atemporal; cada vez que la escucho, descubro un detalle nuevo. Tiene una calma, un aire y una libertad que me siguen inspirando profundamente.\r\n</p>\r\nLo que más se me quedó grabado con los años no fue cuántas notas tocaba Miles, sino cómo pensaba la música. Nunca le interesó tocar rápido o poner muchas notas, sino elegir únicamente las correctas. Su sonido, sobre todo cuando usaba la sordina para tapar la trompeta, tenía una intimidad y una honestidad tan grandes que se sentía como una conversación privada. La idea de que la intención importa más que la cantidad me ha guiado durante toda mi carrera.\r\n</p>\r\nTuve el honor de conocerlo una vez. En 1989, mientras yo tocaba con mi mentor Dizzy Gillespie en un festival de jazz, Dizzy me preguntó si conocía a Miles. Le dije que no, sonrió y me dijo: \"Ven conmigo\". Me llevó al camerino de Miles and nos presentó. Fue un momento corto, pero jamás lo olvidaré. – Arturo Sandoval\r\n</p>\r\n<strong>\"Maiysha\" – Get Up With It (Columbia, 1974)</strong>\r\nCuando pienso en el impacto de Miles Davis en mi vida, me vienen muchas emociones a la cabeza. Pero por encima de todo, hay una idea clara: Miles es el ejemplo perfecto de lo que significa ser totalmente original.\r\n</p>\r\nSu originalidad no se limitaba a cómo tocaba la trompeta; estaba en sus conceptos, sus composiciones, su enfoque, su forma de liderar a sus músicos y mucho más. Con su trabajo, Miles nos enseña que uno de los elementos más importantes en la música es conocerse a uno mismo y tocar con honestidad, sin pedirle disculpas a nadie.\r\n</p>\r\nEn este tema, que es uno de mis favoritos de siempre, se nota claramente esa libertad, esa apertura y esa sensibilidad. Gracias por todo lo que nos diste, Miles, y por el legado que dejaste. – Marquis Hill\r\n</p>\r\n<strong>\"Tout De Suite\" – Filles De Kilimanjaro (Columbia, 1969)</strong>\r\nMiles Davis y Gil Evans crearon una de las alianzas más grandes de la música moderna. Este es un álbum muy especial dentro de la carrera de Miles: es un disco de formato pequeño (quinteto), pero él y Gil Evans compusieron la música juntos, y Gil hizo los arreglos. Es una de las mejores orquestaciones para un grupo pequeño que he escuchado en mi vida. Me impactó muchísimo la primera vez que lo oí con atención, y todo este álbum sigue siendo una fuente constante de inspiración para mí. – Jeff Parker\r\n</p>\r\nA mí \"Tout De Suite\" siempre me ha fascinado por su estructura larga y la forma misteriosa en que la banda se mueve a través de ella. A veces parece que los músicos están improvisando libremente y, de golpe, suena completamente planeado y ensayado; pero nunca sabes del todo dónde termina la improvisación y dónde empieza la composición escrita. Esa tensión es lo que la hace tan profunda.\r\n</p>\r\nLo que cambió mi forma de pensar como músico fue escuchar cómo la banda podía improvisar siguiendo solo la idea de la melodía, sin depender de los acordes tradicionales o de estructuras fijas. La unión del grupo venía exclusivamente de escucharse profundamente y de confiar los unos en los otros. Además, la melodía es hermosa y muy evocadora: lo bastante simple para recordarla, pero abierta para ir en cualquier dirección.\r\n</p>\r\nPara mí, \"Tout De Suite\" ayudó a abrir el camino para los temas largos que vinieron después en el jazz fusión, como \"Sleeping Giant\" de Herbie Hancock, la versión extendida de \"Chameleon\", el grupo Return to Forever de Chick Corea o la Mahavishnu Orchestra. Como compositor y arreglista, esta grabación me enseñó que la música puede ser como un viaje que equilibra estructura, ritmo, ambiente y espontaneidad. – John Beasley\r\n</p>\r\n<strong>\"Joshua\" – Seven Steps to Heaven (Columbia, 1963)</strong>\r\nMi canción favorita de Miles Davis es \"Joshua\". Salió unos años después de su famoso disco Kind of Blue, pero \"Joshua\" toma ese estilo hipnótico y moderno y lo transforma con un ritmo rápido y lleno de energía. A mediados de los años 90, cuando yo era nuevo en el mundo del jazz, escuché una versión genial de Joe Henderson con John Scofield y quise buscar la original. El álbum completo, Seven Steps to Heaven, se convirtió rápido en uno de mis favoritos, y \"Joshua\" era mi tema preferido.\r\n</p>\r\nA la mitad de la canción, el tema cambia de tono y de ritmo de forma muy llamativa (la sección B), pero vuelve suavemente al estilo de la melodía principal. Parece un adelanto de los caminos atrevidos que Miles tomaría con su último quinteto clásico a finales de los 60. Tocar cada nota con fuerza, pero con total claridad y suavidad, es el sello de Miles, pero en este álbum —y en esta canción— esa cualidad se nota todavía más. Suena fácil y natural, aunque es una de las composiciones más difíciles de tocar de Miles. – Alex Skolnick (Guitarrista de la banda de metal Testament y de jazz)\r\n</p>\r\n<strong>\"Bags' Groove\" – Bags' Groove (Prestige, 1957)</strong>\r\nEste disco estaba en la colección de vinilos de mi papá y fue la primera grabación de Miles que escuché una y otra vez. ¡Tenía a músicos increíbles que yo escuchaba por primera vez en mi vida! Me voló la cabeza. El sonido de Miles era único y puro, y sus ideas melódicas no paraban de brotar mientras avanzaba su solo. Podía cantarlo nota por nota de memoria, ¡y todavía lo hago!\r\n</p>\r\n¡Y además estaban Thelonious Monk y Milt Jackson! Cuando me enteré de que a Milt le decían \"Bags\" por las ojeras (bags) que tenía bajo los ojos, me dio mucha risa. ¡El título me pareció genial! El ritmo de Bags... ¡y realmente era su propio ritmo! ¿Qué podía ser más genial que eso?\r\n</p>\r\nEl sonido de todo el álbum es fantástico y tiene mucho espacio. Además, está la famosa leyenda de que Miles le pidió a Monk que no tocara el piano durante su solo de trompeta. Así que Monk se levantó y se quedó parado justo al lado de él, mirándolo desde arriba porque Monk era muy alto y Miles muy bajito... ¡Me habría encantado ver eso! ¡Un clásico! – Randy Brecker\r\n</p>\r\n<strong>\"Fat Time\" – The Man With the Horn (Columbia, 1981)</strong>\r\nEste álbum salió cuando yo estudiaba en la escuela de música de Berklee y era lo único que quería escuchar y tocar. Marcus Miller toca el bajo con un ritmo (groove) incomparable y el solo de guitarra de Mike Stern todavía me da escalofríos. Si sumas a Al Foster, Bill Evans y Sammy Figueroa, tienes otra obra maestra en la historia del jazz. Una prueba más de que Miles Davis, además de un gran líder de banda, era un compositor brillante. – Dave Douglas\r\n</p>\r\n<strong>\"Seven Steps to Heaven\" – Seven Steps to Heaven (Columbia, 1963)</strong>\r\nYo no empecé a escuchar jazz en serio hasta que entré a la universidad. De niño casi solo me dejaban escuchar música de la iglesia, especialmente góspel. En la secundaria mezclé eso con el rock alternativo y los cantautores que escuchaba con mis compañeros, y el R&B clásico que me ponía mi papá. También escuchaba a D'Angelo, Erykah Badu y Raphael Saadiq gracias a mis primos.\r\n</p>\r\nEn mi primer año en la banda de jazz de la Universidad de Ohio tocamos un arreglo de \"Seven Steps to Heaven\" e inmediatamente busqué la versión original. Miles es famoso por reinventarse siempre, y aunque me gustan todas sus épocas, amo especialmente la alegría que transmite esta canción: desde lo ligero y fresco del arreglo hasta lo animado que suena Miles al tocar. ¡Larga vida a Miles! – Jon Lampley\r\n</p>\r\n<strong>\"E.S.P.\" – E.S.P. (Columbia, 1965)</strong>\r\n\"E.S.P.\" es el impactante tema que abre el primer disco de estudio del Segundo Gran Quinteto de Miles Davis, donde tocaba el increíble Wayne Shorter. Cuando grabaron esto en enero de 1965, Shorter llevaba solo unos meses en la banda. Es emocionante pensar que para casi todo el mundo —los que no habían tenido la suerte de ver sus primeros conciertos en vivo— esta canción fue la presentación oficial de la banda con Wayne a bordo.\r\n</p>\r\nEs un tema de ritmo rápido que arranca con una melodía muy fuerte y memorable, y rápido se convierte en un terreno de juego —casi de combate amigable— para la increíble conexión entre los músicos. Lo que más me gusta del solo de Miles es cómo se comunica con la sección rítmica, especialmente con la batería de Tony Williams. Miles deja espacios libres entre sus frases para que haya una especie de conversación con la batería (un llamado y respuesta). Junto al saxo ágil de Wayne Shorter, el piano de Herbie Hancock que responde a todo y el contrabajo firme de Ron Carter, esta canción resume todo lo que amo de este grupo histórico. – Linda May Han Oh\r\n</p>\r\n<strong>\"My Funny Valentine\" – Miles Davis in Concert (Columbia, 1965)</strong>\r\nMi versión favorita de todas las que tocó Miles es \"My Funny Valentine\". Nunca olvidaré la tremenda belleza y sensibilidad con la que tocó esa melodía. Siempre intento tener ese ejemplo en mente cada vez que me subo a un escenario a tocar. – Eddie Henderson\r\n</p>\r\n<strong>\"Catémbe\" – Amandla (Warner Bros., 1989)</strong><br>\r\n Yo tenía 11 años y mi profesor de música de la escuela me regaló dos discos de Miles: Kind of Blue y Amandla. Puse Amandla primero y la primera canción cambió mi mundo para siempre. ¡Con \"Catémbe\", Marcus Miller compuso un tema que tiene toda el alma, la elegancia y las ganas de avanzar que definen a un artista como Miles Davis! – Sean Jones\r\n</p>\r\n<strong>\"Bitches Brew\" – Bitches Brew (Columbia, 1970)</strong>\r\n  La canción que da título a Bitches Brew me abrió un universo nuevo de sonidos y cambió por completo mi forma de entender el jazz. En cuanto escuché esta música tan salvaje y poderosa, sentí la necesidad de armar un nuevo quinteto con clarinete bajo, piano eléctrico Fender Rhodes y bajo eléctrico, rompiendo con la formación tradicional de jazz para la que escribía siempre. También empecé a usar pedales de efectos y electrónica para transformar el sonido acústico de mi trompeta.\r\n</p>\r\nMe fascinó cómo usaron la edición en el estudio para darle orden y estructura a la improvisación. El productor Teo Macero cortó y pegó los trozos de las grabaciones originales del estudio. Eso me inspiró a usar el estudio de grabación como una herramienta creativa más en mis propios proyectos y a dejar espacio para la improvisación libre en mis canciones. ¡Feliz centenario, Miles! – Yazz Ahmed\r\n</p>\r\n<strong>\"Right Off\" – Jack Johnson (Columbia, 1971)</strong>\r\nTengo una relación muy larga con la música de Miles Davis; copié nota por nota sus dos primeros bloques de solo en \"Trane's Blues\" hace más de 50 años. Ha habido mucho de Miles en mi vida.\r\n</p>\r\n\"Right Off\" llegó a mí en una época de muchos descubrimientos. Vivía en Nueva York a principios de los 80, cuando experimentábamos mucho con la vida nocturna, la literatura y la cultura de la ciudad (Burroughs, Kesey, el club Danceteria, 55 Grand...), y esta canción encajaba perfecto con ese momento. Fue una guía para muchos músicos de nuestra escena. Además de su tremenda intensidad, la trompeta de Miles suena superpoderosa. Guió a esos músicos jóvenes hacia lo desconocido, que era exactamente donde queríamos estar.\r\n</p>\r\nMiles dijo una vez que él escuchaba melodías perfectas en su cabeza. Hace 25 años, el grupo Sexmob (junto a Bill Frisell y DJ Logic) tocó en un concierto maratón de 12 horas dedicado a su legado. Mientras el saxofonista Briggan Krauss y yo practicábamos el solo de Miles de \"Right Off\" en el pasillo, el legendario baterista Victor Lewis se acercó y cantó todo el solo completo de memoria con nosotros. Por eso todos amamos a Miles Davis. – Steven Bernstein\r\n</p>\r\n<strong>\"There's a Boat That's Leaving Soon for New York\" – Porgy and Bess (Columbia, 1959)</strong>\r\nUna de las cosas que Miles hacía mejor que nadie era controlar una situación musical con elegancia, sutileza y suavidad, y esta canción es el mejor ejemplo. El tema pasa por muchos cambios orquestales en solo tres minutos y medio, y Miles logra dirigir el rumbo con su fraseo y, a la vez, mezclarse con los colores de la banda. Resalta, pero nunca compite ni domina.\r\n</p>\r\nEl calor de su sonido se mezcla a la perfección con los cornos franceses de fondo. Hacia el final, se acerca al límite de romper ese equilibrio al tocar en el mismo registro que la trompeta principal, desafinando un poco a propósito para darle drama al momento, pero manteniéndolo dentro de la armonía. Todo esto lo hace superconectado con el baterista Jimmy Cobb. Es la unión de ellos dos lo que le da tanta ligereza, ritmo y balance a toda la orquesta. – Adam O'Farrill\r\n</p>\r\n<strong>\"You Won't Forget Me\" – Shirley Horn, You Won't Forget Me (Verve, 1991)</strong>\r\nMiles Davis es mi trompetista favorito. Si me piden elegir mi canción preferida, ¡tengo como 100 canciones en el primer puesto! Mi favorita de hoy es una de las últimas grabaciones de Miles antes de morir en 1991. Es un tema con la cantante Shirley Horn llamado \"You Won't Forget Me\".\r\n</p>\r\nMiles ya se escuchaba mayor y débil físicamente, pero la voz de su trompeta suena más fuerte que nunca, mostrando destellos de genialidad a través de una vida completamente vivida. Tuve el honor de conocer a la señora Horn en 1997. Le pregunté cómo era estar cerca de Miles Davis. Me miró sonriendo durante al menos 20 segundos, le dio un trago muy lento a su coñac, me miró otra vez y dijo: \"Lo amaba\". – Marcus Printup (Jazz at Lincoln Center Orchestra)\r\n</p>\r\n<strong>\"So What\" – Miles Davis at Carnegie Hall (Columbia, 1962)</strong>\r\nEra septiembre de 1991 y yo acababa de empezar el décimo grado en la escuela. Miles había muerto un día o dos antes de empezar las clases y yo estaba en el salón de la banda de jazz. Desde que empecé a tocar la trompeta de niño me había preparado para ser músico clásico, así que el jazz era algo nuevo a lo que nunca le había prestado atención en serio.\r\n</p>\r\nUno de los alumnos mayores pidió que tocáramos \"So What\" en honor a Miles. Mi profesor aceptó y tocamos la canción. Después de clase fui corriendo a la tienda de discos a buscar el casete, ¡y elegí el primero que vi que tenía \"So What\", que resultó ser esta grabación en vivo en el Carnegie Hall! Lo puse en mi Walkman y en los 15 minutos que tardé en caminar a mi casa quedé completamente atrapado. Ese mismo día decidí que el jazz sería el camino de mi vida. – Jeremy Pelt\r\n</p>\r\n<strong>\"Dark Magus – Moja\" – Dark Magus (CBS/Sony, 1977)</strong>\r\nBuscando a fondo en la época de fusión eléctrica de Miles Davis, elijo Dark Magus, grabado en vivo en el Carnegie Hall en 1974. La leyenda dice que en la banda había dos músicos —el saxofonista Azar Lawrence y el guitarrista Dominique Gaumont— que llegaron a tocar directamente al escenario, sin que nadie se los presentara antes al grupo y sin haber ensayado jamás. Miles incluso toca el órgano en gran parte del disco.\r\n</p>\r\nEl ambiente es un experimento de resistencia total basado en la improvisación más pura y cruda. El disco abre de forma atrevida con un ritmo intenso y psicodélico durante los primeros 25 minutos antes de pasar a sonidos más oscuros, fríos y con más espacio. Me encanta cómo Miles and su grupo mostraban todo su poder, autoridad y una falta total de interés por lo que el oyente o la crítica esperaba escuchar. – E L U C I D (Del dúo de rap Armand Hammer)\r\n</p>\r\nTexto y entrevistas: Evan Haga\r\nArte: Yoshiyuki Makino",
+        "duration": 14805,
+        "genres": [
+          {
+            "id": 80,
+            "name": "Jazz",
+            "slug": "jazz"
+          }
+        ],
+        "id": 64679315,
+        "images": [
+          "https://static.qobuz.com/images/covers/62/30/0886446473062_50.jpg",
+          "https://static.qobuz.com/images/covers/70/02/0886444520270_50.jpg",
+          "https://static.qobuz.com/images/covers/21/35/0074646513521_50.jpg",
+          "https://static.qobuz.com/images/covers/da/6k/u9ece0avf6kda_50.jpg"
+        ],
+        "images150": [
+          "https://static.qobuz.com/images/covers/62/30/0886446473062_150.jpg",
+          "https://static.qobuz.com/images/covers/70/02/0886444520270_150.jpg",
+          "https://static.qobuz.com/images/covers/21/35/0074646513521_150.jpg",
+          "https://static.qobuz.com/images/covers/da/6k/u9ece0avf6kda_150.jpg"
+        ],
+        "images300": [
+          "https://static.qobuz.com/images/covers/62/30/0886446473062_300.jpg",
+          "https://static.qobuz.com/images/covers/70/02/0886444520270_300.jpg",
+          "https://static.qobuz.com/images/covers/21/35/0074646513521_300.jpg",
+          "https://static.qobuz.com/images/covers/da/6k/u9ece0avf6kda_300.jpg"
+        ],
+        "is_public": true,
+        "name": "100 años de Miles Davis (análisis y testimonios)",
+        "owner": {
+          "id": 691362,
+          "name": "Qobuz España"
+        },
+        "slug": "100-anos-de-miles-davis-analisis-y-testimonios",
+        "tracks": null,
+        "tracks_count": 23,
+        "users_count": 31
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "total": 418
+  },
+  "query": "miles davis",
+  "tracks": {
+    "items": [
+      {
+        "album": {
+          "genre": {
+            "id": 80,
+            "name": "Jazz",
+            "path": [
+              80
+            ]
+          },
+          "id": "5099749522428",
+          "image": {
+            "back": null,
+            "extralarge": null,
+            "large": "https://static.qobuz.com/images/covers/28/24/5099749522428_600.jpg",
+            "mega": null,
+            "small": "https://static.qobuz.com/images/covers/28/24/5099749522428_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/28/24/5099749522428_50.jpg"
+          },
+          "label": {
+            "id": 4592,
+            "name": "Columbia"
+          },
+          "title": "Kind Of Blue"
+        },
+        "composer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+        "duration": 547,
+        "hires": true,
+        "hires_streamable": true,
+        "id": 13176083,
+        "isrc": "USSM15900113",
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 192.0,
+        "media_number": 1,
+        "parental_warning": false,
+        "performer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Bill Evans, Piano\r - Paul Chambers, Bass\r - Julian \"Cannonball\" Adderley, Alto Saxophone\r - John Coltrane, Tenor Saxophone",
+        "playlist_track_id": null,
+        "streamable": true,
+        "title": "So What",
+        "track_number": 1,
+        "version": null,
+        "work": null
+      },
+      {
+        "album": {
+          "genre": {
+            "id": 80,
+            "name": "Jazz",
+            "path": [
+              80
+            ]
+          },
+          "id": "po8isu85cyvoc",
+          "image": {
+            "back": null,
+            "extralarge": null,
+            "large": "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_600.jpg",
+            "mega": null,
+            "small": "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/oc/yv/po8isu85cyvoc_50.jpg"
+          },
+          "label": {
+            "id": 1218,
+            "name": "Fontana"
+          },
+          "title": "Ascenseur pour l'échafaud"
+        },
+        "composer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "copyright": "℗ 1958 Decca Records France",
+        "duration": 168,
+        "hires": true,
+        "hires_streamable": true,
+        "id": 50324227,
+        "isrc": "FRZ035800010",
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 96.0,
+        "media_number": 1,
+        "parental_warning": false,
+        "performer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "performers": "Miles Davis, MainArtist, Composer - Marcel Romano, Producer",
+        "playlist_track_id": null,
+        "streamable": true,
+        "title": "Générique",
+        "track_number": 1,
+        "version": "Bande originale du film \"Ascenseur pour l'échafaud\"",
+        "work": null
+      },
+      {
+        "album": {
+          "genre": {
+            "id": 80,
+            "name": "Jazz",
+            "path": [
+              80
+            ]
+          },
+          "id": "5099749522428",
+          "image": {
+            "back": null,
+            "extralarge": null,
+            "large": "https://static.qobuz.com/images/covers/28/24/5099749522428_600.jpg",
+            "mega": null,
+            "small": "https://static.qobuz.com/images/covers/28/24/5099749522428_230.jpg",
+            "thumbnail": "https://static.qobuz.com/images/covers/28/24/5099749522428_50.jpg"
+          },
+          "label": {
+            "id": 4592,
+            "name": "Columbia"
+          },
+          "title": "Kind Of Blue"
+        },
+        "composer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "copyright": "Originally released 1959. All rights reserved by Columbia Records, a division of Sony Music Entertainment",
+        "duration": 335,
+        "hires": true,
+        "hires_streamable": true,
+        "id": 13176085,
+        "isrc": "USSM15900115",
+        "maximum_bit_depth": 24,
+        "maximum_sampling_rate": 192.0,
+        "media_number": 1,
+        "parental_warning": false,
+        "performer": {
+          "albums": null,
+          "albums_count": null,
+          "biography": null,
+          "id": 6760,
+          "image": null,
+          "name": "Miles Davis",
+          "playlists": null,
+          "tracks_appears_on": null
+        },
+        "performers": "Miles Davis, Associated Performer, Main Artist, Trumpet, Associated Performer, Trumpet\r - Irving Townsend, Producer\r - Jimmy Cobb, Drums\r - M. Davis, Composer, Lyricist\r - Patti Matheny\r - Bill Evans, Piano\r - Darren Salmieri\r - Seth Foster, Mastering Engineer\r - Paul Chambers, Bass\r - Fred Plaut, Recording Engineer\r - John Coltrane, Tenor Saxophone",
+        "playlist_track_id": null,
+        "streamable": true,
+        "title": "Blue in Green",
+        "track_number": 3,
+        "version": null,
+        "work": null
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "total": 1000
+  },
+  "type": "all"
+}

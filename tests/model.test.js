@@ -359,3 +359,109 @@ test("applyQueue on the real 5-track queue", () => {
   assert.equal(s.upcoming[0].duration, 588)
   assert.equal(s.track.title, "So What")
 })
+
+// ---------------------------------------------------------------------------
+// Search. Catalogue endpoints nest what the playback endpoints keep flat.
+// ---------------------------------------------------------------------------
+
+test("nameOf unwraps the object form the catalogue endpoints use", () => {
+  assert.equal(M.nameOf("Miles Davis"), "Miles Davis")
+  assert.equal(M.nameOf({ id: 6760, name: "Miles Davis" }), "Miles Davis")
+  assert.equal(M.nameOf({ id: 1, title: "Kind Of Blue" }), "Kind Of Blue")
+  assert.equal(M.nameOf(null), "")
+  assert.equal(M.nameOf(undefined), "")
+})
+
+test("normalizeTrack never stringifies an object into the UI", () => {
+  // Regression: search tracks carry performer/album as objects, and
+  // String({}) would have put "[object Object]" on screen.
+  const t = M.normalizeTrack({
+    id: 1, title: "So What",
+    performer: { id: 6760, name: "Miles Davis" },
+    album: { id: "509", title: "Kind Of Blue", image: { large: "http://c/l.jpg" } }
+  })
+  assert.equal(t.artist, "Miles Davis")
+  assert.equal(t.album, "Kind Of Blue")
+  assert.equal(t.artworkUrl, "http://c/l.jpg")
+  assert.equal(t.artist.indexOf("object"), -1)
+})
+
+test("imageUrl walks the null-riddled Qobuz image objects", () => {
+  assert.equal(M.imageUrl({ image: { small: null, large: "http://l", thumbnail: "http://t" } }, true), "http://l")
+  assert.equal(M.imageUrl({ image: { small: null, large: "http://l", thumbnail: "http://t" } }, false), "http://t")
+  assert.equal(M.imageUrl({ images300: ["http://p300"] }, false), "http://p300")
+  assert.equal(M.imageUrl({ image: { small: null, large: null } }, false), "")
+  assert.equal(M.imageUrl(null, false), "")
+})
+
+test("normalizeSearch on the real all-kinds response", () => {
+  const r = M.normalizeSearch(fixture("search-all.json"))
+  assert.equal(r.query, "miles davis")
+  assert.equal(r.total, 12)
+  assert.equal(r.albums.length, 3)
+  assert.equal(r.tracks.length, 3)
+  assert.equal(r.artists.length, 3)
+  assert.equal(r.playlists.length, 3)
+
+  assert.deepEqual(
+    { ...r.albums[0], imageUrl: r.albums[0].imageUrl.length > 0 },
+    { kind: "album", id: "5099749522428", title: "Kind Of Blue", subtitle: "Miles Davis",
+      imageUrl: true, duration: 2723, trackCount: 5, hires: true })
+
+  assert.equal(r.tracks[0].title, "So What")
+  assert.equal(r.tracks[0].subtitle, "Miles Davis", "from performer.name; artist is null")
+  assert.equal(r.tracks[0].albumTitle, "Kind Of Blue")
+
+  assert.equal(r.artists[0].title, "Miles Davis")
+  // Playlists use `name`; their `title` is always null.
+  assert.equal(r.playlists[0].title, "Hi-Res Masters: Miles Davis")
+  assert.equal(r.playlists[0].trackCount, 41)
+})
+
+test("normalizeSearch tolerates missing buckets and junk", () => {
+  for (const bad of [null, undefined, {}, { albums: null }, { albums: { items: null } }, "x"]) {
+    const r = M.normalizeSearch(bad)
+    assert.equal(r.total, 0)
+    assert.deepEqual(r.albums, [])
+  }
+})
+
+test("playBodyFor uses the typed id field, not the wiki's content selector", () => {
+  assert.deepEqual(M.playBodyFor({ kind: "album", id: "5099749522428" }), { album_id: "5099749522428" })
+  assert.deepEqual(M.playBodyFor({ kind: "track", id: "13176083" }), { track_id: 13176083 })
+  assert.deepEqual(M.playBodyFor({ kind: "artist", id: "6760" }), { artist_id: 6760 })
+  assert.deepEqual(M.playBodyFor({ kind: "playlist", id: "6217029" }), { playlist_id: 6217029 })
+  assert.equal(M.playBodyFor({ kind: "nonsense", id: "1" }), null)
+  assert.equal(M.playBodyFor(null), null)
+})
+
+test("applySearch clears the running flag on success and on error", () => {
+  const busy = { ...M.emptyState(), searchRunning: true }
+
+  const ok = M.applySearch(busy, fixture("search-all.json"), "miles davis")
+  assert.equal(ok.searchRunning, false)
+  assert.equal(ok.searchError, "")
+  assert.equal(ok.search.total, 12)
+
+  const failed = M.applySearch(busy, fixture("error-needs-auth.json"), "miles davis")
+  assert.equal(failed.searchRunning, false)
+  assert.equal(failed.searchError, "not logged in to Qobuz")
+  assert.equal(failed.search.total, 0)
+  assert.equal(failed.search.query, "miles davis", "the query survives so the UI can say what failed")
+})
+
+test("search results do not disturb playback state", () => {
+  let s = M.applyStatus(M.emptyState(), fixture("status-playing.json"))
+  const before = { track: s.track, position: s.position, playback: s.playback }
+  s = M.applySearch(s, fixture("search-all.json"), "miles davis")
+  assert.deepEqual({ track: s.track, position: s.position, playback: s.playback }, before)
+})
+
+test("artist album counts are pluralised", () => {
+  const one = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 1 })
+  assert.equal(one.subtitle, "1 álbum")
+  const many = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 11 })
+  assert.equal(many.subtitle, "11 álbumes")
+  const none = M.normalizeSearchItem("artists", { id: 1, name: "X", albums_count: 0 })
+  assert.equal(none.subtitle, "")
+})

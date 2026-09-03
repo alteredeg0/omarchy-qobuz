@@ -34,7 +34,10 @@ function emptyState() {
     queueLength: 0,
     queueIndex: -1,
     upcoming: [],
-    lastError: ""
+    lastError: "",
+    search: { query: "", albums: [], tracks: [], artists: [], playlists: [], total: 0 },
+    searchRunning: false,
+    searchError: ""
   }
 }
 
@@ -47,13 +50,48 @@ function str(value) {
   return value === null || value === undefined ? "" : String(value)
 }
 
+// The same logical field is a plain string on the playback endpoints and a
+// nested object on the catalogue ones: now-playing's `artist` is "Miles
+// Davis", search's `performer` is {id, name, ...} and its `album` is
+// {id, title, image, ...}. Unwrap both rather than stringifying an object.
+function nameOf(value) {
+  if (value === null || value === undefined) return ""
+  if (typeof value === "object") return str(value.name || value.title)
+  return str(value)
+}
+
 // qbzd fills `album` with the literal string "Unknown Album" for anything it
 // has not resolved, and it never resolves it for tracks queued from an album
 // id. Showing that to the user is worse than showing nothing — the real title
 // arrives later via applyAlbum().
 function albumTitle(raw) {
-  var value = str(raw.album_title || raw.album)
+  var value = nameOf(raw.album_title !== undefined ? raw.album_title : raw.album)
   return value === "Unknown Album" ? "" : value
+}
+
+// Qobuz images come as {thumbnail, small, large, extralarge, mega}, any of
+// which may be null. Playlists use images150/images300 arrays instead.
+function imageUrl(raw, preferLarge) {
+  if (!raw) return ""
+  var img = raw.image || raw
+  if (img && typeof img === "object" && !Array.isArray(img)) {
+    var order = preferLarge
+      ? ["large", "extralarge", "small", "thumbnail", "mega"]
+      : ["small", "thumbnail", "large", "extralarge", "mega"]
+    for (var i = 0; i < order.length; i++) {
+      var candidate = str(img[order[i]])
+      if (candidate) return candidate
+    }
+  }
+  var arrays = [raw.images300, raw.images150, raw.images]
+  for (var j = 0; j < arrays.length; j++) {
+    var list = arrays[j]
+    if (list && list.length) {
+      var first = str(list[0])
+      if (first) return first
+    }
+  }
+  return ""
 }
 
 // qbzd spells the same field several ways across endpoints (status carries a
@@ -66,9 +104,9 @@ function normalizeTrack(raw) {
   return {
     id: id,
     title: title,
-    artist: str(raw.artist_name || raw.artist || raw.performer),
+    artist: nameOf(raw.artist_name || raw.artist || raw.performer),
     album: albumTitle(raw),
-    artworkUrl: str(raw.artwork_url || raw.album_image_url || raw.image),
+    artworkUrl: str(raw.artwork_url || raw.album_image_url) || imageUrl(raw.album, true),
     duration: num(raw.duration_secs !== undefined ? raw.duration_secs : raw.duration, 0),
     // now-playing reports kHz (192.0), /api/status reports Hz (192000).
     sampleRate: num(raw.sample_rate, 0),
@@ -312,6 +350,121 @@ function needsQueueRefetch(event) {
   return type === "QueueUpdated" || type === "TrackStarted" || type === "TrackEnded"
 }
 
+// ---- Search ---------------------------------------------------------------
+
+// /api/search?q=&type=<all|albums|tracks|artists|playlists>  — note the
+// plurals; the wiki's singular values are rejected with bad_request. Each
+// bucket comes back as {items, total, limit, offset}, or null when the type
+// filter excluded it.
+var SEARCH_KINDS = ["albums", "tracks", "artists", "playlists"]
+
+function albumsCountLabel(count) {
+  if (count <= 0) return ""
+  return count === 1 ? "1 álbum" : count + " álbumes"
+}
+
+// One shape for every result kind, so the list delegate stays simple and the
+// play action knows which id field qbzd wants.
+function normalizeSearchItem(kind, raw) {
+  if (!raw) return null
+  var id = str(raw.id)
+  if (!id) return null
+
+  switch (kind) {
+    case "albums":
+      return {
+        kind: "album", id: id,
+        title: str(raw.title),
+        subtitle: nameOf(raw.artist),
+        imageUrl: imageUrl(raw, false),
+        duration: num(raw.duration, 0),
+        trackCount: num(raw.tracks_count !== undefined ? raw.tracks_count : raw.track_count, 0),
+        hires: raw.hires === true
+      }
+    case "tracks":
+      return {
+        kind: "track", id: id,
+        title: str(raw.title),
+        // The track's own `artist` is null in search results; the name lives
+        // under `performer`, and the album title under `album.title`.
+        subtitle: nameOf(raw.performer || raw.artist) ,
+        imageUrl: imageUrl(raw.album, false),
+        duration: num(raw.duration, 0),
+        trackCount: 0,
+        hires: raw.hires === true,
+        albumTitle: nameOf(raw.album)
+      }
+    case "artists":
+      return {
+        kind: "artist", id: id,
+        title: str(raw.name),
+        subtitle: albumsCountLabel(num(raw.albums_count, 0)),
+        imageUrl: imageUrl(raw, false),
+        duration: 0, trackCount: 0, hires: false
+      }
+    case "playlists":
+      return {
+        kind: "playlist", id: id,
+        // Playlists carry `name`; `title` is always null on them.
+        title: str(raw.name || raw.title),
+        subtitle: nameOf(raw.owner),
+        imageUrl: imageUrl(raw, false),
+        duration: num(raw.duration, 0),
+        trackCount: num(raw.tracks_count, 0),
+        hires: false
+      }
+  }
+  return null
+}
+
+function normalizeSearch(payload) {
+  var out = { query: "", albums: [], tracks: [], artists: [], playlists: [], total: 0 }
+  if (!payload || typeof payload !== "object" || errorOf(payload)) return out
+  out.query = str(payload.query)
+
+  for (var i = 0; i < SEARCH_KINDS.length; i++) {
+    var kind = SEARCH_KINDS[i]
+    var bucket = payload[kind]
+    if (!bucket || typeof bucket !== "object") continue
+    var items = bucket.items || bucket
+    if (!items || !items.length) continue
+    for (var j = 0; j < items.length; j++) {
+      var item = normalizeSearchItem(kind, items[j])
+      if (item) { out[kind].push(item); out.total++ }
+    }
+  }
+  return out
+}
+
+function applySearch(state, payload, query) {
+  var next = shallowCopy(state)
+  next.searchRunning = false
+  var err = errorOf(payload)
+  if (err) {
+    next.searchError = err.message
+    next.search = normalizeSearch(null)
+    next.search.query = str(query)
+    return next
+  }
+  next.searchError = ""
+  next.search = normalizeSearch(payload)
+  if (!next.search.query) next.search.query = str(query)
+  return next
+}
+
+// Which POST body /api/play wants for a given result. The wiki's
+// {"content": "album:ID"} is rejected — the daemon wants a typed id field.
+function playBodyFor(item) {
+  if (!item || !item.id) return null
+  switch (item.kind) {
+    case "album": return { album_id: String(item.id) }
+    case "track": return { track_id: Number(item.id) }
+    case "artist": return { artist_id: Number(item.id) }
+    case "playlist": return { playlist_id: Number(item.id) }
+  }
+  return null
+}
+
 function errorOf(payload) {
   if (!payload || typeof payload !== "object" || !payload.error) return null
   var e = payload.error
@@ -416,6 +569,13 @@ if (typeof module !== "undefined" && module.exports) {
     applyAlbum: applyAlbum,
     albumLookupId: albumLookupId,
     albumTitle: albumTitle,
+    nameOf: nameOf,
+    imageUrl: imageUrl,
+    SEARCH_KINDS: SEARCH_KINDS,
+    normalizeSearchItem: normalizeSearchItem,
+    normalizeSearch: normalizeSearch,
+    applySearch: applySearch,
+    playBodyFor: playBodyFor,
     reduceEvent: reduceEvent,
     needsQueueRefetch: needsQueueRefetch,
     errorOf: errorOf,
