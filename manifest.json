@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "id": "javih.qobuz",
-  "name": "Qobuz",
-  "version": "0.3.0",
+  "name": "Omarchy Qobuz",
+  "version": "0.3.1",
   "author": "Javier Herrera",
   "license": "MIT",
   "description": "Qobuz for Omarchy: a bar widget with a full-screen player, driven by the qbzd headless daemon.",
