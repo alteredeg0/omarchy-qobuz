@@ -40,13 +40,38 @@ Flickable {
       spacing: Style.space(8)
       bottomPadding: Style.space(10)
 
-      Text {
+      // Qobuz's own mark, shipped as it comes — see assets/README.md on the
+      // trademark. Like the hi-res badge it carries its own contrast, so it
+      // is the second thing here that does not follow the theme. If Qt's SVG
+      // subset ever fails on it, the note glyph takes the slot back rather
+      // than leaving a hole at the top of the rail.
+      Item {
         anchors.verticalCenter: parent.verticalCenter
-        text: "󰝚"
-        color: Color.accent
-        font.family: root.fontFamily
-        font.pixelSize: Style.font.heading
-        textFormat: Text.PlainText
+        implicitWidth: Style.space(22)
+        implicitHeight: Style.space(22)
+
+        Image {
+          id: mark
+          anchors.fill: parent
+          visible: status === Image.Ready
+          source: Qt.resolvedUrl("assets/qobuz-mark.svg")
+          // The source is square; rasterising at the target size keeps it
+          // sharp instead of scaling a default-sized bitmap.
+          sourceSize.width: Math.round(Style.space(22) * 2)
+          sourceSize.height: Math.round(Style.space(22) * 2)
+          smooth: true
+          asynchronous: true
+        }
+
+        Text {
+          anchors.centerIn: parent
+          visible: mark.status !== Image.Ready
+          text: "󰝚"
+          color: Color.accent
+          font.family: root.fontFamily
+          font.pixelSize: Style.font.heading
+          textFormat: Text.PlainText
+        }
       }
 
       Column {

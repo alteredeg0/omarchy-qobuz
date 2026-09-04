@@ -4,7 +4,7 @@ Your Qobuz subscription on the Omarchy bar, with a full-screen player behind it.
 
 ![The Qobuz app: Qobuz's discover rails in cover grids, the sidebar, and the player bar](preview.png)
 
-**In the bar:** the track, next to the clock. Click for transport and what's up next, middle-click to play/pause, scroll to change the volume.
+**In the bar:** the Qobuz mark, with the artist and track beside it while something is playing. Click for transport and what's up next, middle-click to play/pause, scroll to change the volume.
 
 **Behind it:** your albums, tracks, artists and playlists in cover grids; search; album and artist pages; Qobuz's own discover rails; and lyrics.
 
@@ -126,7 +126,7 @@ Set with `omarchy bar set javih.qobuz <key> <value>`.
 | Key | Default | What it does |
 |---|---|---|
 | `host` | `127.0.0.1:8182` | qbzd control API. Point it at another machine to drive a remote player. |
-| `showLabel` | `true` | Off leaves just the play/pause glyph. A vertical bar always collapses to the glyph. |
+| `showLabel` | `true` | Off leaves just the Qobuz mark. The mark is also all you get while nothing is playing, and a vertical bar always collapses to it. |
 | `maxLabelChars` | `32` | Elision point for the bar label. |
 | `hideWhenIdle` | `false` | Collapse the widget out of the bar while qbzd is stopped. |
 | `language` | `auto` | UI language: `auto`, `en` or `es`. `auto` follows `$LANG` and falls back to English. |
@@ -219,9 +219,10 @@ Removing `~/.config/qbzd` also drops your Qobuz OAuth token, so keep it if you o
 |---|---|---|
 | [qbzd](https://github.com/vicrodh/qbz) | External daemon, not bundled. Packaged by `packaging/PKGBUILD`. | MIT |
 | [Hi-Res AUDIO mark](https://en.wikipedia.org/wiki/File:Hi-Res_Audio_(logo).svg) | `assets/hi-res-audio.svg` | Public domain (PD-textlogo); JAS trademark |
+| [Qobuz mark](https://commons.wikimedia.org/wiki/File:Qobuz_qbz_icon.svg) | `assets/qobuz-mark.svg`, and `assets/qobuz-mark-symbolic.svg` for the bar | Public domain (PD-textlogo); Qobuz trademark |
 | Cover art and catalogue text | Fetched at runtime from Qobuz | © the respective rights holders |
 
-Wikipedia tags the Hi-Res mark **PD-textlogo** — too simple to attract copyright, so shipping it is fine. It remains a **JAS trademark**, used here descriptively to mark content, not to certify this software. See [assets/README.md](assets/README.md).
+Both marks are tagged **PD-textlogo** — too simple to attract copyright, so shipping them is fine — and both are still **trademarks**. The Hi-Res mark is the JAS's, used descriptively to mark content rather than to certify this software; the "qbz" mark is Qobuz's, used nominatively to say which service the plugin plays from. The bar carries a single-colour variant so it can be tinted to your theme, with the letterforms lifted verbatim from the original. See [assets/README.md](assets/README.md).
 
 ## Licence
 

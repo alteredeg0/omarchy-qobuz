@@ -41,7 +41,7 @@
         "key": "showLabel",
         "type": "boolean",
         "label": "Show the track in the bar",
-        "description": "Off leaves just the play/pause glyph. A vertical bar always collapses to the glyph.",
+        "description": "Off leaves just the Qobuz mark. The mark is also all you get while nothing is playing, and a vertical bar always collapses to it.",
         "defaultValue": true
       },
       {

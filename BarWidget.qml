@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import Quickshell.Io
 import qs.Commons
 import qs.Ui
@@ -32,14 +33,24 @@ Panel {
 
   function t(key, a, b) { return service ? service.t(key, a, b) : String(key) }
 
+  // Ui/Panel is a bare Item — unlike Ui/BarWidget it carries no `vertical` —
+  // so the rail check below read `undefined` and a vertical bar never
+  // collapsed to the glyph the way the manifest says it does.
+  readonly property bool vertical: bar ? bar.vertical : false
+
   readonly property bool idle: !playerState.track && playerState.playback === Model.PLAYBACK_STOPPED
-  readonly property string playGlyph: playerState.playback === Model.PLAYBACK_PLAYING ? "󰏤" : "󰐊"
   readonly property var labelFallbacks: ({
     daemonDown: "qbzd",
     noSession: t("state.noSession"),
     idle: t("app.name")
   })
-  readonly property string label: root.vertical || !showLabel
+
+  // The mark is the widget; the title is what it says while music is coming
+  // out. Nothing playing — paused, stopped, no session, no daemon — leaves the
+  // mark on its own rather than a stale title or a transport glyph the bar
+  // cannot act on, and the tooltip still has the detail for all of those.
+  readonly property bool playing: playerState.playback === Model.PLAYBACK_PLAYING
+  readonly property string label: root.vertical || !showLabel || !playing
     ? "" : Model.trackLabel(playerState, maxLabelChars, labelFallbacks)
 
   readonly property string tooltip: {
@@ -129,13 +140,96 @@ Panel {
 
   function refreshFromIpc() { if (service) service.refresh() }
 
+  // Qobuz's mark, and the track title beside it while something is playing.
+  // WidgetButton centres its own label, which leaves no room next to it, so the
+  // stock label is switched off and laid out below — the button still owns
+  // hover, the tooltip, clicks and the dimming.
   WidgetButton {
     id: button
     bar: root.bar
     tooltipText: root.tooltip
-    text: root.label === "" ? root.playGlyph : root.playGlyph + "  " + root.label
+    labelVisible: false
+    hasVisualContent: true
+    fixedWidth: root.vertical ? -1 : Math.round(barContent.implicitWidth + scaledHorizontalMargin * 2)
+    fixedHeight: root.vertical ? Math.round(barContent.implicitHeight + scaledVerticalPadding * 2) : -1
     dimmed: !root.playerState.daemonUp || root.playerState.authState === "needs_auth"
     active: root.opened
+
+    // Two cells: the mark, and the title when there is one. Grid rather than
+    // Row for the vertical centring, and it closes the row up on its own when
+    // the title cell goes invisible — which is most of the time, so the mark
+    // has to stand alone without looking like something failed to load.
+    Grid {
+      id: barContent
+      anchors.centerIn: parent
+      columns: 2
+      spacing: Style.space(6)
+      verticalItemAlignment: Grid.AlignVCenter
+
+      // What the button would have painted its own label in. The mark and the
+      // title share it so the pair turns together.
+      readonly property color ink: button.active && button.useActiveColor
+                                 ? button.activeColor : button.foreground
+
+      // The single-colour "qbz" wordmark, tinted to whatever the button is
+      // painting in so it follows the theme like a glyph would. See
+      // assets/README.md on the trademark. The mark is now the only thing the
+      // widget is guaranteed to show, so if Qt's SVG subset ever fails on it
+      // the note glyph takes the slot rather than leaving the bar blank.
+      Item {
+        id: markSlot
+        implicitHeight: Math.round(button.fontSize * 1.15)
+        implicitWidth: Math.round(implicitHeight * 138 / 97)   // the mark's aspect
+
+        Image {
+          id: barMark
+          anchors.fill: parent
+          source: Qt.resolvedUrl("assets/qobuz-mark-symbolic.svg")
+          // Twice the slot keeps it crisp on fractional scaling.
+          sourceSize.width: Math.round(width * 2)
+          sourceSize.height: Math.round(height * 2)
+          fillMode: Image.PreserveAspectFit
+          smooth: true
+          visible: false   // painted through the effect below
+        }
+
+        MultiEffect {
+          anchors.fill: barMark
+          visible: barMark.status === Image.Ready
+          source: barMark
+          colorization: 1.0
+          colorizationColor: barContent.ink
+        }
+
+        Text {
+          anchors.centerIn: parent
+          visible: barMark.status !== Image.Ready
+          text: "󰝚"
+          color: barContent.ink
+          font.family: button.fontFamily
+          font.pixelSize: button.fontSize
+          renderType: Text.NativeRendering
+          textFormat: Text.PlainText
+        }
+      }
+
+      Text {
+        id: barLabel
+        visible: root.label !== ""
+        text: root.label
+        color: barContent.ink
+        font.family: button.fontFamily
+        font.pixelSize: button.fontSize
+        renderType: Text.NativeRendering
+        textFormat: Text.PlainText
+
+        Behavior on color {
+          enabled: !root.bar || root.bar.foregroundAnimationEnabled
+          ColorAnimation { duration: 160 }
+        }
+      }
+    }
+
     onPressed: function (code) {
       if (code === Qt.LeftButton) root.toggle()
       else if (code === Qt.MiddleButton && root.service) root.service.togglePlayback()
