@@ -110,8 +110,11 @@ Tracks Qobuz reports as hi-res carry the Japan Audio Society **Hi-Res AUDIO** ma
 ```bash
 omarchy-shell javih.qobuz search "kind of blue"
 omarchy-shell javih.qobuz view queue|search|library|discover|lyrics
+omarchy-shell javih.qobuz library albums|tracks|artists|playlists
 omarchy-shell javih.qobuz browse album|artist|playlist <id>
 ```
+
+`view library` lands on whichever kind was loaded last; `library <kind>` picks one.
 
 `results` prints the current search back as text.
 

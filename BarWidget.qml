@@ -113,6 +113,22 @@ Panel {
       root.service.goTo(wanted)
       return wanted
     }
+    // Open the library on one of its four kinds. `view library` lands on
+    // whichever kind was last loaded, which is no good for a script — or for
+    // retaking the README's screenshots:
+    // `omarchy-shell javih.qobuz library tracks`.
+    function library(kind: string): string {
+      if (!root.service) return "no service"
+      var wanted = String(kind).toLowerCase()
+      var kinds = ["albums", "tracks", "artists", "playlists"]
+      if (kinds.indexOf(wanted) === -1) return "unknown kind: " + wanted + " (" + kinds.join(", ") + ")"
+      if (root.bar && root.bar.shell) root.bar.shell.summon("javih.qobuz", "{}")
+      // Load first: goTo starts its own load when the library is empty, and
+      // loadLibrary bails while one is already in flight.
+      root.service.loadLibrary(wanted)
+      root.service.goTo(Model.VIEW_LIBRARY)
+      return wanted
+    }
     // Open an album, artist or playlist page directly:
     // `omarchy-shell javih.qobuz browse album 5099749522428`.
     function browse(kind: string, id: string): string {
